@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PromptDetailsView">
+        <attr name="scrollable" format="boolean"/>
+        <attr name="peek_top_padding" format="dimension"/>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_background"
+    android:fillViewport="true"
+    android:clickable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/ethics_view_container"
+            layout="@layout/view_ethics"
+            />
+
+        <LinearLayout
+            android:id="@+id/bottom_buttons_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/fragment_back_button"
+                style="@style/BackButton"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/fragment_continue_button"
+                style="@style/StockButton"
+                android:text="@string/continue_button"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="4"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

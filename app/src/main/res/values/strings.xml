@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Itinerum</string>
+    <string name="app_name_tm" translatable="false">Itinerum&#8482;</string>
+
+    <string name="feedback">Send Feedback</string>
+
+    <string name="info_url" translatable="false"> </string>
+    <string name="default_code"></string>
+
+    <string name="itinerum_url">http://www.itinerum.ca</string>
+
+    <!-- Menu -->
+    <string name="get_consent_form">Get Consent Form</string>
+    <string name="refresh">Refresh</string>
+    <string name="sync">Sync</string>
+    <string name="stop" translatable="false">Stop Recording</string>
+
+    <string name="pause">Location recording paused</string>
+    <string name="resume">Location recording resumed</string>
+
+    <string name="mapKey" translatable="false">0cKUmhW1P0QHi3T7ALM7kklzvknNCuWJwqNIZ6w</string>
+    <string name="map_title" translatable="false">Itinerum</string>
+
+    <string name="powered_by">Powered by Itinerum&#8482;</string>
+
+    <!-- Surveys -->
+    <string name="understand_button">I Understand</string>
+    <string name="continue_button">Continue</string>
+    <string name="start_button">Start</string>
+    <string name="send_button">Send</string>
+    <string name="submit_button">Submit</string>
+
+    <!-- Notification Message -->
+    <string name="notification_title" translatable="false">Itinerum</string>
+    <string name="notification_group_persistent">Persistent</string>
+    <string name="notification_group_persistent_description">Required notification - please hide</string>
+    <string name="notification_group_trip">Trip</string>
+    <string name="notification_group_trip_description"></string>
+    <string name="notification_text_not_recording" translatable="false">Not Recording: you are stopped or at a known
+        location</string>
+    <string name="notification_text_recording" translatable="false">Recording</string>
+    <string name="constant_notification_message">Recording in the background. Tap for more info</string>
+    <string name="notification_stopped_title">Stop detected</string>
+    <string name="notification_stopped_message">You seem to have stopped. Have you reached a destination?</string>
+
+    <!-- Feedback -->
+    <string name="feedback_email" translatable="false">itinerum@concordia.ca</string>
+    <string name="feedback_title">Itinerum Feedback on Android</string>
+
+    <!-- App Info -->
+    <string name="app_info_1_txt" translatable="false">This is an ongoing study. For the duration of your participation
+        (a maximum of two weeks), please leave Itinerum&#8482; running in the background. You can use
+        your phone as usual.
+    </string>
+    <string name="app_info_2_txt" translatable="false">While we have made our best efforts to minimize power consumption,
+        Itinerum&#8482; will still decrease the battery life of your phone because it uses location
+        services. It may be necessary to charge your phone if you spend a lot of time travelling on
+        a given day.
+    </string>
+
+    <string name="permissions_title">Permission</string>
+    <string name="permissions_body">Location services are required for this app to record your location. Please click below to allow this app permission to use location services.</string>
+    <string name="permissions_warning">You will not be able to record points and participate in the survey without enabling this permission.</string>
+    <string name="location_button">Enable Location</string>
+
+    <string name="location_hint">Search here</string>
+    <string name="location_not_found">Location not found. Try zooming out.</string>
+    <string name="location_search_error">Location not found. Please check your connection</string>
+
+    <string name="date_format_error" translatable="false">Internal error: date formatting exception.</string>
+    <string name="log_filename" translatable="false">%1$s%2$s%3$d%4$s</string>
+    <string name="no_resolution" translatable="false">Google Play services: unable to resolve connection error.</string>
+    <string name="unknown_activity_request_code" translatable="false">
+        Received an unknown activity request code %1$d in onActivityResult.
+    </string>
+
+    <string name="gpsprovider_unavailable">No GPS provider available. Please check your location
+        settings and enable a location provider.
+    </string>
+    <string name="started" translatable="false">Recording</string>
+    <string name="stopped" translatable="false">Stopped</string>
+
+    <string name="activity_in_vehicle" translatable="false">In Vehicle</string>
+    <string name="activity_confidence" translatable="false">Confidence</string>
+    <string name="activity_still" translatable="false">Still</string>
+    <string name="activity_on_bicycle" translatable="false">On bicycle</string>
+    <string name="activity_on_foot" translatable="false">On foot</string>
+    <string name="activity_running" translatable="false">Running</string>
+    <string name="activity_tilting" translatable="false">Tilting</string>
+    <string name="activity_walking" translatable="false">Walking</string>
+    <string name="activity_unknown" translatable="false">Unknown</string>
+
+    <string name="ethics_preamble">Itinerum&#8482; is an application developed as part of a research project between Concordia University and the survey administrator. Its use is governed by Concordia University’s ethics guidelines.</string>
+    <string name="ethics_title">Research Ethics</string>
+    <string name="ethics_body">
+        You are invited to closely read the following information before deciding whether or not to participate in a transportation study conducted on the Itinerum&#8482; platform. Take as much time as you need and consult other people if necessary.
+
+        \n\nA. PURPOSE
+        \n\nThe purpose of this research project is to collect and analyze travel behaviour data with smart phones and similar devices. The survey administrator and researchers at Concordia University will use travel behavioural data (origin and destination of trips, number of trips, transportation modes, etc.) to better understand behaviour. Reports showing anonymous, aggregate data will be used in conferences, publications or on the Internet.
+
+        \n\nB. PROCEDURES
+        \n\n• Participation in this survey will be done through my iOS/Android phone by using an app.
+        \n\n• I will be asked a few questions regarding socio-demographic information about me and my household.
+        \n\n• The duration of the survey will vary but you can cancel your participation at any time.
+        \n\n• During my participation in the survey, locational information will be collected automatically and then transmitted and recorded securely on servers hosted in Canada and administered by Professor Zachary Patterson of Concordia University.
+        \n\n• Should the survey administrator offer a draw for prizes, the terms of this draw will be spelled out within the survey information page of the app.
+        \n\n• Raw data collected as part of this survey will only be used in line with the purpose of this project. Raw data will only be available to researchers of the survey administrator and in Zachary Patterson’s TRIP Laboratory, subject to the <i>Act respecting Access to documents held by public bodies and the Protection of personal information</i> (chapter A-2.1) in the Province of Québec, Canada.
+        \n\n• The privacy of data collected will be respected and the information that could reveal the identity of participants, directly or indirectly, will not be disseminated.
+
+        \n\nC. RISKS
+        \n\nParticipation in this survey represents no known or foreseeable risk to me.
+
+        \n\nD. BENEFITS
+        \n\nTransportation behavioural data (trips origins and destinations, number of trips, transport modes, etc.) will allow the estimation of transportation demand and planning of the transportation system, representing thus a possible benefit to society.
+
+        \n\nIn addition, the survey administrator may offer participants a draw for prizes. Please verify the survey information page in the app for further details.
+
+        \n\nE. CONDITIONS OF PARTICIPATION
+        \n\nI understand that I must be 18 years of age or older to participate in this study.
+        \n\nI understand that my participation is entirely voluntary and that I am free to withdraw my consent and discontinue my participation at any time (by deleting the Itinerum&#8482; app) without negative consequences.
+        \n\nI understand that should I withdraw from the study, any data collected up until my withdrawal will remain as part of the survey database with the survey administrator and Concordia University.
+        \n\nI understand that my participation in this study is anonymous (i.e., researchers will not know my identity)
+        \n\nI understand that the results from analysis of this data may be published, but will not be presented in such a way that my identity could be revealed.
+
+        \n\nF. DECLARATION OF CONSENT
+
+        \n\n<b>I ACCEPT THESE CONDITIONS</b> (mandatory to participate in the study)
+
+        \n\nIf at any time you have questions or comments about the proposed research or this study, please send an email to: itinerum@concordia.ca
+
+
+    </string>
+    <string name="ethics_postamble">By pressing the button below, I confirm that I have attentively read and understood the above consent and the information presented, and I attest to the fact that my consent is informed, that all of my questions have been answered to my satisfaction and that I have had sufficient time to decide whether I want to participate in this study. I freely and voluntarily consent to participate in this study.</string>
+
+    <string name="welcome_title">Thank you for downloading Itinerum&#8482;. Your participation is appreciated.</string>
+    <string name="welcome_subtitle">To help our research, please answer the following survey.</string>
+
+    <string name="location_paragraph">Please indicate the location of your %s.</string>
+    <string name="location_title">%s Location</string>
+
+    <string name="location_home_component">Home</string>
+    <string name="location_work_component">Work</string>
+    <string name="location_school_component">School</string>
+    <string name="travel_work_component">work</string>
+    <string name="travel_school_component">school</string>
+
+    <string name="occupation_title">Occupation</string>
+    <string-array name="question_occupation">
+        <item>A full-time worker</item>
+        <item>A part-time worker</item>
+        <item>A student</item>
+        <item>A student and worker</item>
+        <item>Retired</item>
+        <item>At home</item>
+    </string-array>
+
+    <string name="primary_mode_question">How do you typically commute to your %s?</string>
+    <string-array name="primary_mode_question">
+        <item>On foot</item>
+        <item>Bicycle</item>
+        <item>Public Transportation (PT)</item>
+        <item>Car</item>
+        <item>Car + PT</item>
+        <item>Other modes</item>
+        <item>Other combinations</item>
+    </string-array>
+
+    <string name="secondary_mode_question">Do you use any alternative mode of travel to your %s?</string>
+    <string-array name="secondary_mode_question">
+        <item>N/A</item>
+        <item>On foot</item>
+        <item>Bicycle</item>
+        <item>Public Transportation (PT)</item>
+        <item>Car</item>
+        <item>Car + PT</item>
+        <item>Other modes</item>
+        <item>Other combinations</item>
+    </string-array>
+
+    <string name="question_sex_title">What is your gender?</string>
+    <string-array name="question_gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other/Neither</item>
+    </string-array>
+
+    <string name="question_age_title">What is your age-bracket?</string>
+    <string-array name="question_age">
+        <item>16 to 24</item>
+        <item>25 to 34</item>
+        <item>35 to 44</item>
+        <item>45 to 54</item>
+        <item>55 to 64</item>
+        <item>65 to 74</item>
+        <item>75 to 84</item>
+        <item>85 or older</item>
+    </string-array>
+
+    <string name="question_license_title">Do you have a driver’s licence and/or monthly transit pass?</string>
+    <string-array name="question_license">
+        <item>Driver’s Licence</item>
+        <item>Monthly Transit Pass</item>
+    </string-array>
+
+    <string name="question_household_title">Who do you live with?</string>
+    <string-array name="question_household">
+        <item>My parents</item>
+        <item>By myself</item>
+        <item>Roommates</item>
+        <item>My partner</item>
+        <item>My own family</item>
+    </string-array>
+
+    <string name="question_number_people_title">How many people live in your home?</string>
+    <string name="question_age_people_title">How many are under 16?</string>
+    <string name="question_number_cars_title">How many cars are at your home?</string>
+    <string name="question_email_title">Email address</string>
+    <string name="question_email_subtitle"></string>
+
+    <string name="title_points_recorded">Trips Validated</string>
+    <string name="title_days_remaining">Days Remaining</string>
+    <string name="title_days_incrementing">Days Recording</string>
+    <string name="delimiter" formatted="false">%d / %d</string>
+    <string name="title_displaying">Displaying</string>
+    <string name="date_range_pref" translatable="false">Date Range</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="dialog_settings">Go to Settings</string>
+
+    <string name="trip_purpose">Why did you make this trip?</string>
+    <string-array name="trip_purpose">
+
+        <item>Education</item>
+        <item>Health</item>
+        <item>Leisure</item>
+        <item>Meal/Snack/Coffee</item>
+        <item>Pick-up/Drop-off</item>
+        <item>Shopping/Errands</item>
+        <item>Return home</item>
+        <item>Work</item>
+        <item>Work Meeting</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="dialog_mode_title">How did you make this trip?</string>
+    <string-array name="trip_mode">
+        <item>On foot</item>
+        <item>Bicycle</item>
+        <item>Public Transportation (PT)</item>
+        <item>Car</item>
+        <item>Car + PT</item>
+        <item>Other modes</item>
+        <item>Other combinations</item>
+        <item>Cancel/Not a destination</item>
+    </string-array>
+
+    <string name="show_data_from_title">Choose a date range</string>
+
+    <string name="datetime_enum_today">Today</string>
+    <string name="datetime_enum_yesterday">Yesterday</string>
+    <string name="datetime_enum_last_seven">Last Seven Days</string>
+    <string name="datetime_enum_all">All Days</string>
+    <string name="datetime_enum_custom">Custom</string>
+
+    <string name="start_date_title">Start date:</string>
+    <string name="end_date_title">End date:</string>
+
+    <string name="survey_complete_message">Survey complete. Thank you for using Itinerum&#8482;! You may now uninstall the app</string>
+    <string name="home_location">Home</string>
+    <string name="school_location">School</string>
+    <string name="work_location">Work</string>
+    <string name="agree_box">I agree</string>
+    <string name="decline">I decline</string>
+    <string name="terms_of_service_title">Terms of Service</string>
+    <string name="notification_true">Yes</string>
+    <string name="notification_false">No</string>
+    <string name="days_remaining_done">DONE</string>
+    <string name="back_button">Back</string>
+    <string name="snackbar_sync_successful">Synchronized</string>
+    <string name="snackbar_sync_failed">Connection Error. Please check your phone settings.</string>
+    <string name="snackbar_no_points">No Points!</string>
+    <string name="about">About</string>
+    <string name="alert_location_settings">Location mode must be set to High Accuracy for recording to work properly. Please enable and leave on High Accuracy for the duration of this survey.</string>
+    <string name="about_details">Itinerum&#8482; is an ongoing study. The app will collect your location data for up to
+        the amount of time parametrized by your survey administrator (click on the survey administrator icon on the map
+        screen for more information) if you keep the app running.
+        The purpose of this app is to test and develop methods of better understanding travel behavior through the use of
+        smartphones. Your participation will allow us to develop methods to overtly collect and
+        analyze smartphone data to be used to improve transportation planning techniques.
+    </string>
+    <string name="about_version">Version: %s</string>
+    <string name="you_are_title">You are...</string>
+
+    <string name="max_trips_completed_message" formatted="false">Congratulations! You have validated %d trips. You will no longer be prompted to validate trips and can participate for up to %d days. If you no longer wish to participate, you can uninstall the app.</string>
+
+    <string name="should_pause_title">Pause Recording</string>
+    <string name="should_pause_message">Would you like to pause the recording of locations?</string>
+    <string name="paused_message">Recording is paused</string>
+    <string name="should_resume_title">Start Recording</string>
+    <string name="should_resume_message">Would you like to start the recording of locations?</string>
+    <string name="survey_selection_title">Survey Selection</string>
+    <string name="survey_selection_description">Please input the survey code you received below</string>
+    <string name="survey_selection_hint">Code</string>
+    <string name="survey_response_hint">respond here</string>
+    <string name="unable_to_join_message">Unable to join survey for unknown reason. Please try again.</string>
+
+    <string name="thanks">Thanks!</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="no_ongoing_message"/>
+    <string name="tester_site"/>
+
+    <string name="time_date_delimiter">at</string>
+    <string name="save_button">Save</string>
+
+    <string name="toast_provide_answer">Please provide a response</string>
+    <string name="saved_location_point">Saved Location Point</string>
+    <string name="validated_trip">Validated Trip</string>
+    <string name="more_info">More Info</string>
+    <string name="date_and_time">Date and Time</string>
+    <string name="no_prompts_warning">No Recorded Trips! :(</string>
+    <string name="ar_tilting">Tilting</string>
+    <string name="ar_still">Still</string>
+    <string name="ar_vehicle">In Vehicle</string>
+    <string name="ar_bicycle">Bicycle</string>
+    <string name="ar_on_foot">On Foot</string>
+    <string name="ar_walking">Walking</string>
+    <string name="ar_running">Running</string>
+    <string name="ar_unknown">Unknown</string>
+    <string name="mode_estimate">Estimated mode of travel: %s</string>
+    <string name="accuracy_estimate">Accurate to %.0f meters</string>
+    <string name="recorded_date_time">Recorded %s at %s</string>
+    <string name="invalid_survey_code">Invalid Survey Code</string>
+    <string name="title_create_trip">Create a new trip</string>
+    <string name="title_edit_existing_trip">Edit this Trip</string>
+    <string name="title_existing_trip">Trip Details</string>
+    <string name="snackbar_saved_trip">Saved!</string>
+    <string name="title_warning_generic">Are you sure?</string>
+    <string name="message_unsaved_new_trip">Unsaved new prompt will be discarded</string>
+    <string name="message_unsaved_existing_trip">Unsaved prompt changes will be discarded</string>
+    <string name="title_incomplete_new_trip">Incomplete form</string>
+    <string name="message_incomplete_new_trip">Please complete all survey questions</string>
+    <string name="message_warning_leave_survey">By changing surveys, all of the data from the current survey on your phone will be deleted. Are you sure you want to continue?</string>
+    <string name="message_unable_to_sync">Unable to sync your survey - Please try again</string>
+    <string name="message_terms_non_conforming">Are you sure? You cannot participate if you do not accept these terms</string>
+
+    <string name="pref_category_general">General</string>
+    <string name="pref_category_location">Location</string>
+    <string name="pref_category_app">App</string>
+    <string name="pref_title_sync">Sync</string>
+    <string name="pref_summary_sync">Manually sync data to backend. Last sync:</string>
+    <string name="pref_title_leave">Leave Survey</string>
+    <string name="pref_summary_leave">Leave the current survey and wipe data from device</string>
+    <string name="pref_title_pause">Pause Recording</string>
+    <string name="pref_summary_pause">Stop all location recording indefinitely. No trips will be recorded while paused.</string>
+    <string name="pref_title_contact">Contact Us</string>
+    <string name="pref_summary_contact">Report bugs, issues, enhancements, or suggestions</string>
+    <string name="pref_title_rate">Rate the app</string>
+    <string name="pref_summary_rate">Enjoying Itinerum? Give us a rating on the Play Store!</string>
+    <string name="pref_title_about">About Itinerum™</string>
+    <string name="pref_title_open_source">Open Source Licenses</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="dagger_title">Dagger 2</string>
+    <string translatable="false" name="dagger_url">https://github.com/google/dagger</string>
+    <string translatable="false" name="dagger_license">Copyright 2012 The Dagger Authors</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="apachecommons_title">Apache Commons&#8482;</string>
+    <string translatable="false" name="apachecommons_url">http://commons.apache.org/</string>
+
+    <!--MIT-->
+    <string translatable="false" name="fresco_title">Fresco</string>
+    <string translatable="false" name="fresco_url">https://github.com/facebook/fresco</string>
+    <string translatable="false" name="fresco_license">Copyright (c) 2015-present, Facebook, Inc.</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="rxjava_title">RXJava</string>
+    <string translatable="false" name="rxjava_url">https://github.com/ReactiveX/RxJava</string>
+    <string translatable="false" name="rxjava_license">Copyright (c) 2016-present, RxJava Contributors.</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="materialdatetimepicker_title">Material DateTime Picker</string>
+    <string translatable="false" name="materialdatetimepicker_url">https://github.com/wdullaer/MaterialDateTimePicker</string>
+    <string translatable="false" name="materialdatetimepicker_license">Copyright (c) 2015 Wouter Dullaert</string>
+
+    <!--MIT-->
+    <string translatable="false" name="fancybuttons_title">Fancybuttons</string>
+    <string translatable="false" name="fancybuttons_url">https://github.com/medyo/Fancybuttons</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="butterknife_title">Butterknife</string>
+    <string translatable="false" name="butterknife_url">https://github.com/JakeWharton/butterknife</string>
+    <string translatable="false" name="butterknife_license">Copyright 2013 Jake Wharton</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="retrofit_title">Retrofit</string>
+    <string translatable="false" name="retrofit_url">https://github.com/square/retrofit</string>
+    <string translatable="false" name="retrofit_license">Copyright 2013 Square, Inc.</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="androidmaputils_title">Google Maps Android API utility library</string>
+    <string translatable="false" name="androidmaputils_url">https://github.com/googlemaps/android-maps-utils</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="eventbus_title">Eventbus</string>
+    <string translatable="false" name="eventbus_url">https://github.com/greenrobot/EventBus</string>
+    <string translatable="false" name="eventbus_license">Copyright (C) 2012-2017 Markus Junginger, greenrobot (http://greenrobot.org)</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="okhttp_title">OkHttp</string>
+    <string translatable="false" name="okhttp_url">https://github.com/square/okhttp</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="androidjob_title">Android Job</string>
+    <string translatable="false" name="androidjob_url">https://github.com/evernote/android-job</string>
+    <string translatable="false" name="androidjob_license">Copyright (c) 2007-2017 by Evernote Corporation, All rights reserved.</string>
+
+    <!--APACHE-->
+    <string translatable="false" name="joda_title">Joda-Time</string>
+    <string translatable="false" name="joda_url">https://github.com/JodaOrg/joda-time</string>
+
+    <!--MIT-->
+    <string translatable="false" name="sectionedrecycler_title">SectionedRecyclerViewAdapter</string>
+    <string translatable="false" name="sectionedrecycler_url">https://github.com/luizgrp/SectionedRecyclerViewAdapter</string>
+    <string translatable="false" name="sectionedrecycler_license">Copyright (c) 2016 Gustavo Pagani</string>
+
+    <string translatable="false" name="mit_license">
+        MIT License
+
+         \n\nPermission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+
+         \n\nThe above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+
+         \n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+    </string>
+
+    <string translatable="false" name="apache_license">
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+         \n\n   http://www.apache.org/licenses/LICENSE-2.0
+
+         \n\nUnless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    </string>
+</resources>

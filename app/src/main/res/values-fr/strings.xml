@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_code"></string>
+    <string name="itinerum_url">http://www.itinerum.ca</string>
+    <string name="title_points_recorded">DÉPL VALIDÉS</string>
+    <string name="title_days_remaining">JOURS RESTANTS</string>
+    <string name="title_displaying">AFFICHER</string>
+    <string name="delimiter" formatted="false">%d sur %d</string>
+    <string name="understand_button">J\’accepte</string>
+
+    <string name="ethics_title">Éthique de la recherche</string>
+    <string name="ethics_preamble">Itinerum&#8482; est une application mobile développée dans le cadre d’un projet de recherche mené par l’Université Concordia et l’administrateur de l’enquête. Son utilisation est assujettie aux règles d’éthique de l’Université Concordia.</string>
+    <string name="ethics_body">
+
+        Nous vous invitons à lire attentivement les renseignements ci-dessous avant de participer ou non à cette étude de transport menée sur la plateforme Itinerum&#8482;. Prenez le temps nécessaire pour lire les renseignements et parlez à d’autres personnes, au besoin.
+
+        \n\nA. BUT
+        \n\nLe but de ce projet de recherche est de recueillir et d’analyser des données sur les comportements liés au déplacement d’usagers de la route à l’aide de leur téléphone intelligent. L’administrateur de l’enquête et les chercheurs à l’Université Concordia utiliseront les données recueillies (départ, destination, nombre de déplacements, modes de transport, etc.) afin de mieux comprendre les comportements en transport Des rapports exposant des données anonymes et agrégées seront présentées lors de conférences, au sein de publications et dans Internet.
+
+        \n\nB. PROCÉDURES
+        
+        \n\n• La participation à cette étude se déroulera grâce à l’utilisation d’une application sur mon téléphone intelligent iOS / Android.
+        \n\n• On me posera quelques questions et je devrai fournir des informations sociodémographiques sur moi et sur mon ménage.
+        \n\n• La durée du projet de recherche peut varier mais je peux annuler ma participation à tout moment.
+        \n\n• Au cours de l’étude, des informations sur les déplacements des participants seront automatiquement recueillies, puis transmises et enregistrées, de façon sécuritaire, sur des serveurs hébergés au Canada et gérés par le professeur Zachary Patterson de l’Université Concordia.
+        \n\n• Si l’administrateur du sondage offre un tirage de prix, les modalités seront expliquées sur la page d’information du sondage dans l’application.
+        \n\n• Les données brutes sur les déplacements et les données sociodémographiques recueillies ne seront utilisées qu’aux fins de ce projet et seront accessibles uniquement aux chercheurs de l’administrateur du sondage et du laboratoire TRIP de Zachary Patterson, sous réserve de la <i>Loi sur l’accès aux documents des organismes publics et sur la protection des renseignements personnels</i> (RLRQ, c. A-2.1) du Québec au Canada.
+        \n\n• La confidentialité des données recueillies sera respectée et les renseignements qui pourraient révéler l’identité des participants, directement ou indirectement, ne seront pas diffusés.
+
+        \n\nC. RISQUES
+        \n\nLa participation à cette étude n’est associée à aucun risque connu ou prévisible pour moi.
+
+        \n\nD. AVANTAGES
+
+        \n\nLes données qui seront recueillies sur les comportements liés au déplacement (départ, destination, nombre de déplacements, modes de transport, etc.) permettront de mieux prédire la demande de mobilité et mieux planifier le développement du réseau de transport en fonction des besoins des usagers et pour le mieux-être de la collectivité.
+
+        \n\nDe plus, l’administrateur du sondage peut offrir aux participants un tirage de prix. Veuillez vérifier la page d’information de ce sondage dans l’application pour connaître les modalités de participation.
+
+        \n\nE. CONDITIONS DE PARTICIPATION
+
+        \n\nJe comprends que je dois avoir 18 ans ou plus pour participer à cette étude.
+
+        \n\nJe comprends que ma participation est volontaire et que je suis libre d’arrêter de participer à cette étude à tout moment en supprimant l’application Itinerum™ de mon téléphone, sans aucune conséquence négative pour moi.
+
+        \n\nJe comprends que si je cesse de participer à cette étude, les données préalablement recueillies seront conservées dans la base de données de l’administrateur du sondage et de l’Université Concordia à des fins de recherche.
+
+        \n\nJe comprends que ma participation à cette étude est anonyme, c’est-à-dire que les chercheurs ne pourront, en aucun cas, connaitre mon identité, directement ou indirectement.
+
+        \n\nJe comprends que les résultats de l’analyse des dites données pourraient être publiés, mais qu’ils seront présentés de façon à protéger mon identité, directement ou indirectement.
+
+        \n\nF. DÉCLARATION DE CONSENTEMENT
+
+        \n\n<b>J’ACCEPTE CES CONDITIONS</b> (obligatoire pour participer à l’étude)
+
+        \n\nÀ tout moment, si vous avez des questions ou commentaires concernant le projet de recherche ou cette étude, vous pouvez envoyer un courriel à l’adresse itinerum@concordia.com
+
+    </string>
+    <string name="ethics_postamble">En appuyant sur le bouton ci-dessous, je confirme que j’ai lu attentivement et que j’ai compris le formulaire de consentement ci-dessus de même que les renseignements qui y sont présentés. J’atteste que mon consentement est éclairé, que j’ai obtenu des réponses satisfaisantes à toutes mes questions et que j’ai eu le temps nécessaire pour décider si je souhaite participer ou non à cette étude. Je souhaite librement et volontairement participer à cette étude.</string>
+    <string name="agree_box">J\’accepte</string>
+
+    <string name="occupation_title">Occupation</string>
+    <string-array name="question_occupation">
+        <item>Travailleur à temps plein</item>
+        <item>Travailleur à temps partiel</item>
+        <item>Étudiant</item>
+        <item>Étudiant et travailleur</item>
+        <item>Retraité</item>
+        <item>À la maison</item>
+    </string-array>
+
+    <string name="primary_mode_question">Quel moyen de transport utilisez-vous habituellement pour vous rendre %s?
+    </string>
+    <string-array name="primary_mode_question">
+        <item>À pied</item>
+        <item>Vélo</item>
+        <item>Transport collectif (TC)</item>
+        <item>Voiture</item>
+        <item>Voiture + TC</item>
+        <item>Autre mode unique</item>
+        <item>Autre combinaison</item>
+    </string-array>
+
+    <string name="secondary_mode_question">Utilisez-vous parfois un autre mode de transport pour vous rendre %s?</string>
+    <string-array name="secondary_mode_question">
+        <item>Non</item>
+        <item>À pied</item>
+        <item>Vélo</item>
+        <item>Transport collectif (TC)</item>
+        <item>Voiture</item>
+        <item>Voiture + TC</item>
+        <item>Autre mode unique</item>
+        <item>Autre combinaison</item>
+    </string-array>
+
+    <string name="question_age_title">Tranche d’âge</string>
+    <string-array name="question_age">
+        <item>16–24</item>
+        <item>25–34</item>
+        <item>35–44</item>
+        <item>45–54</item>
+        <item>55–64</item>
+        <item>65–74</item>
+        <item>75–84</item>
+        <item>85 ou plus</item>
+    </string-array>
+
+    <string name="question_sex_title">Genre</string>
+    <string-array name="question_gender">
+        <item>Homme</item>
+        <item>Femme</item>
+        <item>Autre / aucune de ces réponses</item>
+    </string-array>
+
+    <string name="question_license_title">Possédez-vous un permis de conduire ou un titre mensuel donnant accès au transport en commun?</string>
+    <string-array name="question_license">
+        <item>Permis de conduire</item>
+        <item>Titre de transport mensuel donnant accès au transport en commun </item>
+    </string-array>
+
+    <string name="question_household_title">Avec qui habitez-vous?</string>
+    <string-array name="question_household">
+        <item>Mes parents</item>
+        <item>J’habite seul</item>
+        <item>Des colocataires</item>
+        <item>Un conjoint</item>
+        <item>Ma propre famille</item>
+    </string-array>
+
+    <string name="question_number_people_title">Combien de personnes demeurent à votre adresse?</string>
+    <string name="question_age_people_title">Combien de personnes sont âgés de moins de 16 ans?</string>
+    <string name="question_number_cars_title">Combien de voitures possèdent l’ensemble des personnes demeurant à votre adresse?</string>
+    <string name="question_email_title">Courriel</string>
+    <string name="feedback">Envoyer un commentaire</string>
+    <string name="notification_stopped_title">Arrêt détecté</string>
+    <string name="notification_stopped_message">Vous semblez être arrêté. Êtes-vous arrivé à destination?</string>
+    <string name="dialog_settings">Paramètres</string>
+    <string name="refresh">Mettre à jour</string>
+
+    <string name="trip_purpose">Pour quelle raison avez-vous effectué ce déplacement?</string>
+    <string-array name="trip_purpose">
+
+        <item>Éducation</item>
+        <item>Santé</item>
+        <item>Loisir</item>
+        <item>Repas / collation / café</item>
+        <item>Reconduire / aller chercher une personne</item>
+        <item>Magasinage / emplettes</item>
+        <item>Retourner à mon domicile</item>
+        <item>Travail</item>
+        <item>Rendez-vous d’affaires</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string name="dialog_mode_title">Quel moyen de transport avez-vous utilisé pour votre déplacement?</string>
+    <string-array name="trip_mode">
+        <item>À pied</item>
+        <item>Vélo</item>
+        <item>Transport collectif (TC)</item>
+        <item>Voiture</item>
+        <item>Voiture + TC</item>
+        <item>Autre mode unique</item>
+        <item>Autre combinaison</item>
+        <item>Annuler / ce n’est pas une destination</item>
+    </string-array>
+
+    <string name="show_data_from_title">Afficher les données de</string>
+
+    <string name="datetime_enum_today">Aujourd’hui</string>
+    <string name="datetime_enum_yesterday">Hier</string>
+    <string name="datetime_enum_last_seven">Les sept derniers jours</string>
+    <string name="datetime_enum_all">Tous les jours</string>
+    <string name="datetime_enum_custom">Autre</string>
+
+    <string name="start_date_title">Commençant le:</string>
+    <string name="end_date_title">Se terminant le:</string>
+    <string name="survey_complete_message">Enquête complétée. Merci d’avoir utilisé Itinerum&#8482;! Vous pouvez maintenant désinstaller l’application.
+    </string>
+    <string name="location_paragraph">Veuillez indiquer votre %s.</string>
+    <string name="location_title">Emplacement du %s</string>
+    <string name="location_home_component">lieu de résidence</string>
+    <string name="location_work_component">lieu de travail</string>
+    <string name="location_school_component">lieu d’étude</string>
+    <string name="travel_work_component">au travail</string>
+    <string name="travel_school_component">à votre lieu d’étude</string>
+    <string name="feedback_title">Envoyer un commentaire sur Itinerum sur Androïde</string>
+    <string name="get_consent_form">Formulaire de consentement</string>
+    <string name="home_location">domicile</string>
+    <string name="school_location">lieu d’études</string>
+    <string name="work_location">lieu de travail</string>
+
+    <string name="notification_group_persistent">Persistant</string>
+    <string name="notification_group_persistent_description">Notification obligatoire - veuillez masquer</string>
+    <string name="notification_group_trip">Trajet</string>
+    <string name="notification_group_trip_description"></string>
+    <string name="constant_notification_message">Itinerum est toujours actif</string>
+    <string name="continue_button">Suivant</string>
+    <string name="start_button">Démarrer</string>
+    <string name="send_button">Envoyer</string>
+    <string name="gpsprovider_unavailable">Aucun fournisseur de position disponible. Vérifiez vos
+        paramètres de position et choisissez un fournisseur de position.
+    </string>
+    <string name="sync">Mis à jour</string>
+    <string name="title_activity_settings">Paramètres</string>
+    <string name="snackbar_no_points">aucun point reçu</string>
+    <string name="notification_false">Non</string>
+    <string name="notification_true">Oui</string>
+    <string name="days_remaining_done">COMPLET</string>
+    <string name="back_button">Retour</string>
+    <string name="submit_button">Soumettre</string>
+    <string name="snackbar_sync_successful">Synchronisé</string>
+    <string name="snackbar_sync_failed">Erreur de connexion. SVP vérifier les paramètres du
+        cellulaire.
+    </string>
+    <string name="about">À propos</string>
+    <string name="about_details">En utilisant Itinerum&#8482;, vous êtes au cœur d’un projet de recherche
+        en cours! En laissant l’application fonctionner sur votre téléphone, vous partagez vos
+        données de déplacement pour une période pouvant aller jusqu’au nombre de jours paramétrisé par
+        l’administrateur de votre enquête. L’application permet de développer et tester différentes
+        méthodes permettant de mieux comprendre les habitudes de déplacement des gens à l’aide de
+        leur téléphone intelligent. Votre participation appuie ultimement l’optimisation de la
+        planification du transport urbain.
+    </string>
+    <string name="about_version">Version: %s</string>
+    <string name="you_are_title">Vous êtes...</string>
+
+    <string name="powered_by">Par Itinerum&#8482;</string>
+
+    <string name="welcome_title">Merci d’avoir téléchargé Itinerum&#8482;. Votre participation est grandement appréciée.</string>
+    <string name="welcome_subtitle">Afin de faciliter l’analyse de vos données, SVP répondez aux questions suivantes.</string>
+
+    <string name="permissions_title">Permissions Autorisation</string>
+    <string name="permissions_body">Les services de localisation sont nécessaires au fonctionnement de cette application. Merci d’autoriser leurs utilisation afin d’enregistrer votre position.</string>
+    <string name="permissions_warning">L\’application ne pourra pas enregistrer vos données de localisation et vous ne pourrez pas participer à l\’enquête sans cette autorisation.</string>
+    <string name="location_button">Permettre la localisation</string>
+
+    <string name="question_email_subtitle">(Assurez-vous d’entrer l’adresse e-mail que vous avez utilisé dans l’enquête précédente)</string>
+    <string name="title_days_incrementing">Jours enregistrant</string>
+
+    <string name="location_hint">Rechercher ici</string>
+    <string name="location_not_found">Aucun résultat.</string>
+    <string name="location_search_error">Aucun résultat. Vérifiez votre connexion de données.</string>
+
+    <string name="max_trips_completed_message" formatted="false">Félicitations ! Vous avez validé %d déplacements. Vous ne recevrez plus d’alertes mais vous pourrez continuer à participer jusqu’à %d jours. Si vous ne voulez plus participer, vous pouvez simplement désinstaller l’application.</string>
+    <string name="pause"> L’enregistrement de vos déplacements sera mis en pause</string>
+    <string name="resume">L’enregistrement de vos déplacements reprendra</string>
+
+    <string name="alert_location_settings">Le mode de localisation doit être réglé à « Haute précision » afin que l’application puisse fonctionner correctement. Veuillez l’activer et le laisser en mode « Haute précision » pour la durée de cette étude.</string>
+
+    <string name="should_pause_title">Mettre l’enregistrement en pause</string>
+    <string name="should_pause_message">Voulez-vous mettre l’enregistrement de vos déplacements en pause?</string>
+    <string name="paused_message">L’enregistrement de vos déplacements est en pause</string>
+    <string name="should_resume_title">Commencer l’enregistrement</string>
+    <string name="should_resume_message">Voulez-vous commencer à enregistrer vos déplacements?</string>
+    <string name="decline">je refuse</string>
+    <string name="terms_of_service_title">"Conditions d’utilisation "</string>
+    <string name="survey_selection_title">Selection du sondage</string>
+    <string name="survey_selection_description">Veuillez SVP saisir ci-dessous le code de sondage que vous avez reçu</string>
+    <string name="survey_selection_hint">Nom du sondage</string>
+    <string name="survey_response_hint">répondez ici</string>
+    <string name="unable_to_join_message">Impossible de se connecter au sondage. Veuillez saisir de nouveau le code.</string>
+
+    <string name="thanks">Merci!</string>
+    <string name="no">Non</string>
+    <string name="yes">Oui</string>
+    <string name="no_ongoing_message"/>
+    <string name="tester_site"/>
+
+    <string name="time_date_delimiter">à</string>
+    <string name="save_button">Enregistrer</string>
+    <string name="no_prompts_warning">Aucun résultat! :(</string>
+
+    <string name="recorded_date_time">Enregistré le %s à %s</string>
+
+    <string name="toast_provide_answer">Veuillez SVP saisir une réponse</string>
+    <string name="saved_location_point">Point de localisation enregistré</string>
+    <string name="validated_trip">Déplacement validé</string>
+    <string name="more_info">Plus d’information</string>
+    <string name="date_and_time">Date et heure</string>
+    <string name="ar_tilting">Basculement</string>
+    <string name="ar_still">Immobile</string>
+    <string name="ar_vehicle">À bord d’un véhicule</string>
+    <string name="ar_bicycle">À vélo</string>
+    <string name="ar_on_foot">À pied</string>
+    <string name="ar_walking">Marche</string>
+    <string name="ar_running">Course</string>
+    <string name="ar_unknown">Inconnu</string>
+    <string name="mode_estimate">Mode de déplacement éstimé : %s</string>
+    <string name="accuracy_estimate">Distance de precision de %.0f metres</string>
+    <string name="invalid_survey_code">Code d’étude invalide</string>
+    <string name="title_create_trip">Créer un nouveau déplacement</string>
+    <string name="title_edit_existing_trip">Modifier ce déplacement</string>
+    <string name="title_existing_trip">Détails du déplacement</string>
+    <string name="snackbar_saved_trip">Enregistré !</string>
+    <string name="title_warning_generic">Êtes-vous certain ?</string>
+    <string name="message_unsaved_new_trip">La nouvelle alerte non-sauvegardée sera supprimée</string>
+    <string name="message_unsaved_existing_trip">Les changements apportés à cet alerte seront supprimés</string>
+    <string name="title_incomplete_new_trip">Questionnaire incomplet</string>
+    <string name="message_incomplete_new_trip">Merci de compléter toutes les questions du questionnaire</string>
+    <string name="message_warning_leave_survey">Vous êtes sur le point de quitter le sondage en cours. Toutes les données locales seront supprimées. Vous serez en mesure d’y retourner plus tard, mais votre historique ne sera pas conservé. Êtes-vous certain de vouloir quitter ?</string>
+    <string name="message_unable_to_sync">Impossible de syncroniser votre information. Merci de réessayer.</string>
+    <string name="message_terms_non_conforming">Êtes-vous certain ? Vous ne pourrez pas participer si vous n’acceptez pas ces conditions</string>
+
+    <string name="pref_category_general">Général</string>
+    <string name="pref_category_location">Localisation</string>
+    <string name="pref_category_app">Application</string>
+    <string name="pref_title_sync">Syncronisé</string>
+    <string name="pref_summary_sync">Syncroniser manuellement les données. Dernière syncronisation :</string>
+    <string name="pref_title_leave">Changer d’étude</string>
+    <string name="pref_summary_leave">Quitter la présenter étude et effacer les données</string>
+    <string name="pref_title_pause">Mettre l’enregistrement en pause</string>
+    <string name="pref_summary_pause">Arrêter tout enregistrement de localisation. Aucun déplacement ne sera enregistré.</string>
+    <string name="pref_title_contact">Contactez-nous</string>
+    <string name="pref_summary_contact">Signaler des problèmes, suggérer des amélioriations</string>
+    <string name="pref_title_rate">Évaluer l’application</string>
+    <string name="pref_summary_rate">Appréciez-vous Itinerum ? Évaluez-la sur le Play Store !</string>
+    <string name="pref_title_about">À propos d’Itinerum</string>
+    <string name="pref_title_open_source">Licenses Open Source</string>
+
+
+</resources>

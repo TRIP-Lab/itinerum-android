@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="centerInside"
+        android:layout_marginRight="@dimen/padding_large"
+        android:paddingTop="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_small"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/itinerum_logo_text"
+        android:scaleType="centerInside"
+        android:tint="@android:color/white"
+        android:paddingTop="@dimen/padding_large"
+        android:paddingBottom="@dimen/padding_large"/>
+
+
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="base_colour">#386af9</color>
+    <color name="transparent_grey">#CCaaaaaa</color>
+    <color name="fragment_background">#fefffe</color>
+    <color name="header_background">#eeeeee</color>
+
+    <color name="stop_colour">#BF8C9EFF</color>
+
+    <color name="highlight_incomplete">#FFEBEE</color>
+    <color name="toolbar_default">#212121</color>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/LargeTitle"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/question"
+        android:textAllCaps="true"
+        style="@style/EmphasisParagraph"
+        android:padding="8dp"/>
+
+    <EditText
+        android:id="@+id/response"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/survey_response_hint"
+        android:layout_margin="@dimen/padding_large"
+        android:maxLength="1000"/>
+
+</merge>

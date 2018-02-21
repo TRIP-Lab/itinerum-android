@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="time_selection_activity_title" translatable="false">Show My Locations</string>
+    <string name="time_selection_from_category_title" translatable="false">From</string>
+    <string name="time_selection_to_category_title" translatable="false">To</string>
+    <string name="time_selection_date_label_title" translatable="false">Date</string>
+    <string name="time_selection_time_label_title" translatable="false">Time</string>
+
+</resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<PreferenceScreen-->
+<android.support.v7.preference.PreferenceScreen
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_category_general">
+
+        <android.support.v7.preference.Preference
+            android:title="@string/pref_title_sync"
+            android:summary="@string/pref_summary_sync"
+            android:key="sync"
+            android:icon="@drawable/ic_sync_black_24dp"
+            />
+
+        <android.support.v7.preference.Preference
+            android:title="@string/pref_title_leave"
+            android:summary="@string/pref_summary_leave"
+            android:key="leave_survey"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            />
+
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_category_location">
+        <SwitchPreference
+            android:title="@string/pref_title_pause"
+            android:summary="@string/pref_summary_pause"
+            android:icon="@drawable/ic_location_on_black_24dp"
+            android:key="PAUSE_RECORDING"/>
+    </android.support.v7.preference.PreferenceCategory>
+
+    <!--<android.support.v7.preference.PreferenceCategory-->
+        <!--android:title="Notifications">-->
+    <!--</android.support.v7.preference.PreferenceCategory>-->
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="@string/pref_category_app">
+        <android.support.v7.preference.Preference
+            android:title="@string/pref_title_contact"
+            android:summary="@string/pref_summary_contact"
+            android:key="contact_us"
+            android:icon="@drawable/ic_error_outline_black_24dp"
+            />
+
+        <android.support.v7.preference.Preference
+            android:title="@string/pref_title_rate"
+            android:summary="@string/pref_summary_rate"
+            android:key="rate_app"
+            android:icon="@drawable/ic_star_black_24dp"
+            />
+
+        <android.support.v7.preference.Preference
+            android:title="@string/pref_title_about"
+            android:key="about"
+            android:icon="@drawable/ic_info_outline_black_24dp"
+            />
+
+        <android.support.v7.preference.Preference
+            android:title="@string/pref_title_open_source"
+            android:key="open_source"
+            android:icon="@drawable/ic_creative_commons_black_24dp"
+            />
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="DEBUG"
+        android:key="debug">
+        <android.support.v7.preference.Preference
+            android:title="Crash"
+            android:summary="Crashlytics crash"
+            android:key="crash"
+            android:icon="@drawable/ic_warning_black_36dp"
+            />
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

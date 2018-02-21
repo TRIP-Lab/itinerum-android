@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:actualImageScaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_margin="8dp"
+        />
+
+    <TextView
+        android:id="@+id/ethics_title"
+        style="@style/LargeTitle"
+        android:layout_margin="8dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/ethics_header"
+        style="@style/EmphasisParagraph"
+        android:layout_margin="8dp"/>
+
+    <TextView
+        android:id="@+id/ethics_body"
+        style="@style/BodyParagraph"
+        android:layout_margin="8dp"
+        android:autoLink="email"/>
+
+    <TextView
+        android:id="@+id/ethics_postamble"
+        android:text="@string/ethics_postamble"
+        style="@style/EmphasisParagraph"
+        android:layout_margin="8dp"
+        />
+
+</LinearLayout>

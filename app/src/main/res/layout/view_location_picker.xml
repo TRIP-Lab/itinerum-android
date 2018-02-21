@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:clickable="true"
+              android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/location_title"
+        style="@style/LargeTitle"
+        android:text="@string/location_title"/>
+
+    <TextView
+        android:id="@+id/location_paragraph"
+        style="@style/EmphasisParagraph"
+        android:layout_marginLeft="8dp"
+
+        android:text="@string/location_paragraph"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_medium"
+        android:layout_marginRight="@dimen/padding_medium"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/location_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/location_hint"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/location_search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@android:string/search_go"
+            android:enabled="false"/>
+
+    </LinearLayout>
+
+    <ca.itinerum.android.CrosshairMapView
+        android:id="@+id/crosshair_mapview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            android:background="#dddddd">
+
+            <LinearLayout
+                android:id="@+id/peek_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/cardview_light_background">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:paddingLeft="@dimen/padding_large"
+                    android:paddingTop="@dimen/padding_large"
+                    android:text="@string/date_and_time"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/padding_large">
+                        <TextView
+                            android:id="@+id/button_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:background="@drawable/button_rounded_corners"
+                            style="@style/TextAppearance.AppCompat.Button"/>
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time_date_delimiter"
+                        android:layout_gravity="center_vertical"
+                        />
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/padding_large">
+                        <TextView
+                            android:id="@+id/button_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:background="@drawable/button_rounded_corners"
+                            style="@style/TextAppearance.AppCompat.Button"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_footer_shadow"/>
+
+            <FrameLayout
+                android:id="@+id/map_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_prompt_details_map_height"
+                android:animateLayoutChanges="true">
+
+                <ca.itinerum.android.CrosshairMapView
+                    android:id="@+id/crosshair_mapview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <View
+                    android:id="@+id/map_masking_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <Button
+                    android:id="@+id/button_map_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_small"
+                    android:visibility="gone"
+                    android:layout_gravity="top|left"
+                    android:text="@android:string/cancel"/>
+
+                <Button
+                    android:id="@+id/button_map_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_small"
+                    android:visibility="gone"
+                    android:layout_gravity="top|right"
+                    android:text="@string/save_button"/>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/shadow_size"
+                android:background="@drawable/bottom_shadow"
+                android:paddingBottom="@dimen/shadow_size"/>
+
+            <LinearLayout
+                android:id="@+id/prompts_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#dddddd"
+                android:orientation="vertical"/>
+
+            <!--Add all prompts here programmatically-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/button_cancel"
+                    style="@style/StockButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/holo_red_dark"
+                    android:text="@string/back_button"/>
+
+                <Button
+                    android:id="@+id/button_submit"
+                    style="@style/StockButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/submit_button"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/masking_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+</merge>

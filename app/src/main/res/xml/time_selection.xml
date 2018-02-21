@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/time_selection_from_category_title" >
+        <ca.itinerum.android.utilities.DatePreference
+            android:key="from_date"
+            android:title="@string/time_selection_date_label_title" />
+
+        <ca.itinerum.android.utilities.TimePreference
+            android:key="from_time"
+            android:title="@string/time_selection_time_label_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/time_selection_to_category_title" >
+        <ca.itinerum.android.utilities.DatePreference
+            android:key="to_date"
+            android:title="@string/time_selection_date_label_title" />
+
+        <ca.itinerum.android.utilities.TimePreference
+            android:key="to_time"
+            android:title="@string/time_selection_time_label_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
