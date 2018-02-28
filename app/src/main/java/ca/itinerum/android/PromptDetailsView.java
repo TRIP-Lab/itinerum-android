@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,11 +49,12 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 	@BindView(R.id.button_time) TextView mButtonTime;
 	@BindView(R.id.button_submit) Button mButtonSubmit;
 	@BindView(R.id.button_cancel) Button mButtonCancel;
-	@BindView(R.id.map_masking_view) View mMapMaskingView;
+	@BindView(R.id.map_masking_view) FrameLayout mMapMaskingView;
 	@BindView(R.id.button_map_cancel) Button mButtonMapCancel;
 	@BindView(R.id.button_map_save) Button mButtonMapSave;
 	@BindView(R.id.peek_container) LinearLayout mPeekContainer;
 	@BindView(R.id.masking_view) View mMaskingView;
+	@BindView(R.id.textview_map_instruction) TextView mTextviewMapInstruction;
 
 	@BindDimen(R.dimen.default_prompt_details_map_height) int DEFAULT_MAP_HEIGHT;
 	@BindDimen(R.dimen.padding_large) int PADDING;
@@ -79,8 +81,6 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 		this(context, null);
 		onFinishInflate();
 	}
-
-	private boolean isEditingMap = false;
 
 	public PromptDetailsView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -204,11 +204,6 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 		mMapMaskingView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (isEditingMap) {
-				} else {
-
-				}
-
 				mCrosshairMapView.setMapGesturesEnabled(true);
 				mCrosshairMapView.setCrosshairVisible(true);
 				mMapMaskingView.setVisibility(GONE);
@@ -223,10 +218,10 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 			}
 		});
 
-//		mMaskingView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, mContainer.getHeight()));
 		mMaskingView.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View view) {}
+			public void onClick(View view) {
+			}
 		});
 
 	}
@@ -268,22 +263,23 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 
 	public void setEditable(boolean editable) {
 		mEditable = editable;
-		mMaskingView.setVisibility(mEditable ? GONE : VISIBLE);
 
-		if (editable) {
-			mButtonDate.setBackgroundResource(R.drawable.button_rounded_corners);
-			mButtonTime.setBackgroundResource(R.drawable.button_rounded_corners);
-		} else {
-			mButtonDate.setBackgroundResource(0);
-			mButtonTime.setBackgroundResource(0);
-		}
-
+		mMaskingView.setVisibility(editable ? GONE : VISIBLE);
+		mTextviewMapInstruction.setVisibility(editable ? VISIBLE : GONE);
+		mButtonDate.setBackgroundResource(editable ? R.drawable.button_rounded_corners : 0);
+		mButtonTime.setBackgroundResource(editable ? R.drawable.button_rounded_corners : 0);
 
 	}
 
 	boolean promptsAreValid() {
 
 		boolean isValid = true;
+
+		if (mLocation.equals(new LatLng(0, 0))) {
+			scrollTo(0, mMapContainer.getTop());
+			Toast.makeText(getContext(), R.string.toast_no_location_set, Toast.LENGTH_SHORT).show();
+			isValid = false;
+		}
 
 		for (PromptDialogListView promptList : mGeneratedPromptLists) {
 			if (promptList.getPromptAnswer() == null || promptList.getPromptAnswer().getAnswer() == null) {

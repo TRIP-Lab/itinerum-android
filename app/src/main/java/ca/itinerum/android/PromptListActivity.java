@@ -2,9 +2,11 @@ package ca.itinerum.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ public class PromptListActivity extends AppCompatActivity {
 	@BindView(R.id.toolbar) Toolbar mToolbar;
 	@BindView(R.id.prompts_recycler_view) PromptsRecyclerView mPromptsRecyclerView;
 	@BindView(R.id.fab) FloatingActionButton mFab;
+	@BindView(R.id.app_bar_layout) AppBarLayout mAppBarLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +70,10 @@ public class PromptListActivity extends AppCompatActivity {
 
 				List<Pair<View, String>> pairs = new ArrayList<>();
 
-				pairs.add(Pair.create(view.findViewById(R.id.textview_time), "time"));
-//				pairs.add(Pair.create(view.findViewById(R.id.textview_date), "date"));
-				pairs.add(Pair.create((View) mToolbar, "toolbar"));
-                
+				pairs.add(Pair.create((View) mToolbar, ViewCompat.getTransitionName(mToolbar)));
+				pairs.add(Pair.create(findViewById(R.id.textview_time), "time"));
+				pairs.add(Pair.create((View) mAppBarLayout, ViewCompat.getTransitionName(mAppBarLayout)));
+
                 // These are fixes for flickering nav and status bars
 				View statusBar = findViewById(android.R.id.statusBarBackground);
 				View navigationBar = findViewById(android.R.id.navigationBarBackground);

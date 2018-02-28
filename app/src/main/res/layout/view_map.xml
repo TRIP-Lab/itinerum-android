@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
        xmlns:tools="http://schemas.android.com/tools"
        android:id="@+id/map_container"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+    >
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapview"
@@ -22,13 +23,21 @@
         android:gravity="center"
         android:textSize="36sp"/>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@android:style/Widget.ProgressBar.Large"
-        android:indeterminate="true"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:animateLayoutChanges="true">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:indeterminate="true"
+            />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/powered_by"
