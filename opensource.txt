@@ -1,7 +1,0 @@
-`master` is an orphaned branch, based on `opensource`
-
-To modify:
-	- Merge changes from `develop` to `opensource`
-	- Orphan a new branch and rebase it to master
-	- Merge `new branch` to `master`
-	- git push opensource/master
