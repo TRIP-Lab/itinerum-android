@@ -17,8 +17,10 @@
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:transitionName="appbarlayout"
             style="@style/AppBar">
 
             <android.support.v7.widget.Toolbar
@@ -157,12 +159,11 @@
             </LinearLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <FrameLayout
-            android:id="@+id/map_container"
+        <ca.itinerum.android.MapTripView
+            android:id="@+id/map_trip_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@android:color/white"
             android:animateLayoutChanges="true"/>
 
     </LinearLayout>

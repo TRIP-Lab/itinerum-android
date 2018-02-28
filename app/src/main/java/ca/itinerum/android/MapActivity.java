@@ -16,14 +16,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,7 +35,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -121,7 +123,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	@BindView(R.id.content_points) TextView mContentPoints;
 	@BindView(R.id.title_time) TextView mTitleTime;
 	@BindView(R.id.info_button) SimpleDraweeView mInfoButton;
-	@BindView(R.id.map_container) FrameLayout mMapContainer;
+	@BindView(R.id.map_trip_view) MapTripView mMapTripView;
 	@BindView(R.id.coordinator) CoordinatorLayout mCoordinator;
 
 	@BindView(R.id.textview_date) TextView mTextViewPromptDetailsDate;
@@ -135,9 +137,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	@BindView(R.id.toolbar) Toolbar mToolbar;
 	@BindView(R.id.container) LinearLayout mContainer;
 	@BindView(R.id.button_more_info_prompt_details) Button mButtonMoreInfoPromptDetails;
+	@BindView(R.id.app_bar_layout) AppBarLayout mAppBarLayout;
 
 
-	private MapTripView mMapTripView;
 	private PromptsRecyclerView mPromptsRecyclerView;
 
 	@BindDimen(R.dimen.padding_large) int LARGE_PADDING;
@@ -193,8 +195,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		setContentView(R.layout.activity_map);
 		ButterKnife.bind(this);
 
-
-		mMapTripView = new MapTripView(this);
 		mMapTripView.setOnMapReadyCallback(this);
 
 		mPromptsRecyclerView = new PromptsRecyclerView(this);
@@ -203,8 +203,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		BottomSheetBehavior.from(mBottomsheetPromptDetails).setState(BottomSheetBehavior.STATE_HIDDEN);
 		BottomSheetBehavior.from(mBottomsheetPointDetails).setState(BottomSheetBehavior.STATE_HIDDEN);
 
-		mMapContainer.addView(mMapTripView);
-		if (mMapTripView.getMapview() != null) mMapTripView.getMapview().onCreate(savedInstanceState);
+		if (mMapTripView.getMapview() != null)
+			mMapTripView.getMapview().onCreate(savedInstanceState);
 
 		mButtonPrompts.setOnClickListener(new OnClickListener() {
 			@Override
@@ -212,7 +212,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 				Intent intent = new Intent(MapActivity.this, PromptListActivity.class);
 				List<Pair<View, String>> pairs = new ArrayList<>();
 
-				pairs.add(Pair.create((View) mToolbar, "toolbar"));
+				pairs.add(Pair.create((View) mToolbar, ViewCompat.getTransitionName(mToolbar)));
+				pairs.add(Pair.create((View) mAppBarLayout, ViewCompat.getTransitionName(mAppBarLayout)));
 
 				View statusBar = findViewById(android.R.id.statusBarBackground);
 				View navigationBar = findViewById(android.R.id.navigationBarBackground);
@@ -486,7 +487,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 							mMap.addPolyline(new PolylineOptions().addAll(latLngs).color(mBaseColour).width(10));
 
-							moveCamera(boundsBuilder.build(), mMap, mMapContainer.getWidth(), mMapContainer.getHeight());
+							moveCamera(boundsBuilder.build(), mMap, mMapTripView.getMapview().getWidth(), mMapTripView.getMapview().getHeight());
 						}
 
 						mMapTripView.mProgressBar.setVisibility(View.GONE);
@@ -943,7 +944,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 				Intent intent = new Intent(MapActivity.this, SettingsActivity.class);
 				List<Pair<View, String>> pairs = new ArrayList<>();
 
-				pairs.add(Pair.create((View) mToolbar, "toolbar"));
+				pairs.add(Pair.create((View) mToolbar, ViewCompat.getTransitionName(mToolbar)));
+				pairs.add(Pair.create((View) mAppBarLayout, ViewCompat.getTransitionName(mAppBarLayout)));
+				// add more pairs if required
 
 				View statusBar = findViewById(android.R.id.statusBarBackground);
 				View navigationBar = findViewById(android.R.id.navigationBarBackground);
@@ -989,7 +992,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(R.id.debug_view).setVisible((BuildConfig.DEBUG || BuildConfig.BUILD_TYPE.equals("alpha")));
-
 		return true;
 	}
 
@@ -1029,8 +1031,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		view.setPrompts(answers);
 		view.setDateTimePickerListener(this);
-		mMapContainer.removeAllViews();
-		mMapContainer.addView(view);
 	}
 
 	@Override
@@ -1052,7 +1052,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	@Override
 	public void onTimeClicked(TimePickerDialog.OnTimeSetListener listener, int hourOfDay, int minute, boolean isToday) {
 
-		TimePickerDialog dialog = TimePickerDialog.newInstance(listener, hourOfDay, minute, android.text.format.DateFormat.is24HourFormat(this));
+		TimePickerDialog dialog = TimePickerDialog.newInstance(listener, hourOfDay, minute, DateFormat.is24HourFormat(this));
 
 		if (isToday) dialog.setMaxTime(hourOfDay, minute, 59);
 		dialog.setAccentColor(getResources().getColor(R.color.base_colour));
@@ -1094,7 +1094,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 				.radius(Float.parseFloat(snippets[0]))
 				.strokeWidth(0)
 				.fillColor(Color.argb(75, 255, 0, 0)));
-		
+
 		mTextviewPointDate.setText(String.format(getString(R.string.recorded_date_time), dateTime.toString(DateTimeFormat.fullDate()), dateTime.toString(DateTimeFormat.shortTime())));
 		mTextviewPointAccuracy.setText(String.format(getString(R.string.accuracy_estimate), accuracy));
 		mTextviewPointMode.setText(String.format(getString(R.string.mode_estimate), ActivityRecognitionUtils.parseActivityLocalized(mode, this)));
@@ -1108,12 +1108,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 			BottomSheetBehavior.from(mBottomsheetPointDetails).setState(BottomSheetBehavior.STATE_HIDDEN);
 
-//			mPromptDetailsView.scrollTo(0, 0);
-
 			final int position = (int) circle.getTag();
 			PromptAnswerGroup promptAnswer = PromptAnswerGroup.sortPrompts(LocationDatabase.getInstance(this).promptDao().getAllRegisteredPromptAnswers(), mNumberOfPrompts).get(position);
-
-//			mPromptDetailsView.setPrompts(promptAnswer);
 
 			mButtonMoreInfoPromptDetails.setOnClickListener(new OnClickListener() {
 				@Override
@@ -1123,9 +1119,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 					List<Pair<View, String>> pairs = new ArrayList<>();
 
-//					pairs.add(Pair.create(view.findViewById(R.id.textview_time), "time"));
-//				pairs.add(Pair.create(view.findViewById(R.id.textview_date), "date"));
-					pairs.add(Pair.create((View) mToolbar, "toolbar"));
+					pairs.add(Pair.create((View) mToolbar, ViewCompat.getTransitionName(mToolbar)));
+					pairs.add(Pair.create((View) mAppBarLayout, ViewCompat.getTransitionName(mAppBarLayout)));
 
 					// These are fixes for flickering nav and status bars
 					View statusBar = findViewById(android.R.id.statusBarBackground);
@@ -1150,7 +1145,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 			BottomSheetBehavior b = BottomSheetBehavior.from(mBottomsheetPromptDetails);
 			b.setState(BottomSheetBehavior.STATE_EXPANDED);
 			b.setHideable(true);
-//			b.setPeekHeight(mPromptDetailsView.getPeekHeight());
 			mMap.animateCamera(CameraUpdateFactory.newLatLng(promptAnswer.getLatLng()), 200, null);
 		}
 	}

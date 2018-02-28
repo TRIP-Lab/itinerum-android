@@ -315,6 +315,10 @@
     <string name="pref_summary_rate">Appréciez-vous Itinerum ? Évaluez-la sur le Play Store !</string>
     <string name="pref_title_about">À propos d’Itinerum</string>
     <string name="pref_title_open_source">Licenses Open Source</string>
+    <string name="pref_title_danger">Danger</string>
+
+    <string name="prompt_edit_map_text">Appuyez ici pour choisir votre emplacement</string>
+    <string name="toast_no_location_set">Veuillez choisir un emplacement</string>
 
 
 </resources>

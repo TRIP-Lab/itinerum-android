@@ -360,6 +360,10 @@
     <string name="pref_summary_rate">Enjoying Itinerum? Give us a rating on the Play Store!</string>
     <string name="pref_title_about">About Itinerum™</string>
     <string name="pref_title_open_source">Open Source Licenses</string>
+    <string name="pref_title_danger">Danger</string>
+
+    <string name="prompt_edit_map_text">Tap here to choose your trip destination</string>
+    <string name="toast_no_location_set">Please choose a trip destination</string>
 
     <!--APACHE-->
     <string translatable="false" name="dagger_title">Dagger 2</string>

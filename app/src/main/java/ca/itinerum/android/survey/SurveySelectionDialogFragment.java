@@ -87,6 +87,7 @@ public class SurveySelectionDialogFragment extends NamedDialogFragment {
 		mContinueButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				mContinueButton.setEnabled(false);
 				onButtonPressed();
 			}
 		});

@@ -37,9 +37,6 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 	@BindView(R.id.container) CoordinatorLayout mContainer;
 
 	private boolean mNewPrompt;
-	private boolean mLocationSet = true;
-
-	private boolean mEdited = true;
 	private boolean mIsEditing = false;
 	private boolean mHasIncremented = false;
 
@@ -55,9 +52,7 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 		mNewPrompt = getIntent().getBooleanExtra("new_prompt", false);
 
 		if (mNewPrompt) {
-			mLocationSet = false;
 			mIsEditing = true;
-			mEdited =  true;
 			getSupportActionBar().setTitle(R.string.title_create_trip);
 			//TODO ... need a nicer way of creating a new PromptAnswerGroup
 			int promptLength = SharedPreferenceManager.getInstance(this).getPrompts().size();
@@ -112,39 +107,43 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 				return true;
 			case R.id.edit_item:
 				if (mIsEditing) {
-					if (mEdited) {
-						// save
-
-						if (mPromptDetailsView.promptsAreValid()) {
-							List<PromptAnswer> answers = mPromptDetailsView.getAnswers();
-							int numberOfPrompts = SharedPreferenceManager.getInstance(this).getNumberOfRecordedPrompts();
-							if (mNewPrompt && !mHasIncremented) {
-								if (!mHasIncremented) {
-									numberOfPrompts++;
-									SharedPreferenceManager.getInstance(this).setNumberOfRecordedPrompts(numberOfPrompts);
-									mHasIncremented = true;
-								}
-
-								for (PromptAnswer answer: answers) {
-									answer.setPromptNumber(numberOfPrompts);
-								}
+					// save
+					if (mPromptDetailsView.promptsAreValid()) {
+						List<PromptAnswer> answers = mPromptDetailsView.getAnswers();
+						int numberOfPrompts = SharedPreferenceManager.getInstance(this).getNumberOfRecordedPrompts();
+						if (mNewPrompt && !mHasIncremented) {
+							for (PromptAnswer answer: answers) {
+								answer.setPromptNumber(numberOfPrompts);
 							}
 
-							PromptAnswer[] spread = new PromptAnswer[answers.size()];
-							spread = answers.toArray(spread);
-							LocationDatabase.getInstance(this).promptDao().insert(spread);
+							numberOfPrompts++;
+							SharedPreferenceManager.getInstance(this).setNumberOfRecordedPrompts(numberOfPrompts);
+							mHasIncremented = true;
 
-							Snackbar.make(mContainer, R.string.snackbar_saved_trip, Snackbar.LENGTH_SHORT).show();
-							item.setIcon(R.drawable.ic_edit_white_24dp);
+							insertNewEntry(answers);
 
+							//return to previous menu
+							mIsEditing = false;
+							onBackPressed();
+							return true;
+
+						} else {
+							editEntry(answers);
 						}
-						else return true;
+
+						Snackbar.make(mContainer, R.string.snackbar_saved_trip, Snackbar.LENGTH_SHORT).show();
+						item.setIcon(R.drawable.ic_edit_white_24dp);
+					}
+					else {
+						// invalid responses are highlighted in the view.
+						return true;
 					}
 
 				} else {
 					item.setIcon(R.drawable.ic_save_white_24dp);
 				}
 
+				// toggle layout editing state
 				mIsEditing = !mIsEditing;
 				mPromptDetailsView.setEditable(mIsEditing);
 				if (mNewPrompt) getSupportActionBar().setTitle(getString(R.string.title_create_trip));
@@ -153,6 +152,18 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void insertNewEntry(List<PromptAnswer> answers) {
+		PromptAnswer[] spread = new PromptAnswer[answers.size()];
+		spread = answers.toArray(spread);
+		LocationDatabase.getInstance(this).promptDao().insert(spread);
+	}
+
+	private void editEntry(List<PromptAnswer> answers) {
+		PromptAnswer[] spread = new PromptAnswer[answers.size()];
+		spread = answers.toArray(spread);
+		LocationDatabase.getInstance(this).promptDao().update(spread);
 	}
 
 	@Override

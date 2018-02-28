@@ -50,12 +50,12 @@ public class SettingsActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_preferences);
 		ButterKnife.bind(this);
 
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 		Fragment preferenceFragment = new GeneralPreferenceFragment();
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -83,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 	/**
 	 * This method stops fragment injection in malicious applications.
-	 * Make sure to deny any unknown fragments here.
+	 * TODO: Make sure to deny any unknown fragments here.
 	 */
 	protected boolean isValidFragment(String fragmentName) {
 		return PreferenceFragment.class.getName().equals(fragmentName) || GeneralPreferenceFragment.class.getName().equals(fragmentName);
@@ -221,16 +221,6 @@ public class SettingsActivity extends AppCompatActivity {
 		@Override
 		public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 			addPreferencesFromResource(R.xml.pref_app);
-		}
-
-		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
-			int id = item.getItemId();
-			if (id == android.R.id.home) {
-				startActivity(new Intent(getActivity(), SettingsActivity.class));
-				return true;
-			}
-			return super.onOptionsItemSelected(item);
 		}
 	}
 }

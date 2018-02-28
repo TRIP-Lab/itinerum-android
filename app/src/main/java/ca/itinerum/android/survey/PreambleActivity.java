@@ -211,7 +211,23 @@ public class PreambleActivity extends FragmentActivity implements OnFragmentInte
 					Intent intent = new Intent(PreambleActivity.this, TermsOfServiceActivity.class);
 					startActivity(intent);
 					PreambleActivity.this.finish();
+				} else {
+					SharedPreferenceManager.getInstance(PreambleActivity.this).setTermsOfServiceRequired(false);
+					Intent intent = new Intent(PreambleActivity.this, SurveyActivity.class);
+					startActivity(intent);
+					PreambleActivity.this.finish();
 				}
+
+				final SurveySelectionDialogFragment fragment = (SurveySelectionDialogFragment) PreambleActivity.this.getSupportFragmentManager().findFragmentByTag(FragmentType.SURVEY.name());
+				if (fragment != null) {
+					PreambleActivity.this.runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							fragment.mContinueButton.setEnabled(true);
+						}
+					});
+				}
+
 			}
 
 			@Override
@@ -223,6 +239,16 @@ public class PreambleActivity extends FragmentActivity implements OnFragmentInte
 						Toast.makeText(PreambleActivity.this, getString(R.string.unable_to_join_message), Toast.LENGTH_LONG).show();
 					}
 				});
+
+				final SurveySelectionDialogFragment fragment = (SurveySelectionDialogFragment) PreambleActivity.this.getSupportFragmentManager().findFragmentByTag(FragmentType.SURVEY.name());
+				if (fragment != null) {
+					PreambleActivity.this.runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							fragment.mContinueButton.setEnabled(true);
+						}
+					});
+				}
 			}
 		});
 
