@@ -8,12 +8,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/textview_no_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/no_prompts_warning"/>
+
+    <View
+        android:id="@+id/list_mask"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/list_scroll_mask_light"
+        android:layout_gravity="bottom"/>
 
 </merge>

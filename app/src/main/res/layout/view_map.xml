@@ -12,16 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/pause_masking_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/transparent_grey"
         android:text="@string/paused_message"
-        android:textColor="@android:color/white"
         android:textAlignment="center"
         android:gravity="center"
-        android:textSize="36sp"/>
+        style="@style/Title.DarkTheme"/>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -39,88 +38,93 @@
 
     </FrameLayout>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/powered_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:text="@string/powered_by"
         android:padding="8dp"
-        android:layout_gravity="left|top"/>
+        android:layout_gravity="bottom|center_horizontal"/>
 
     <LinearLayout
         android:id="@+id/debug_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="top"
         android:background="#40000000"
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/status_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/current_mode_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/points_details_text"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/debug_geofence_active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/debug_geofence_loitering"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/debug_geofence_dwell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/debug_geofence_purpose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/debug_last_sync"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/debug_next_sync"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/uuid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/toggle_gps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Toggle GPS"
             tools:ignore="HardcodedText"/>
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/mode_prompt_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -136,7 +140,8 @@
         android:src="@android:drawable/ic_media_pause"
         android:layout_margin="8dp"
         android:layout_gravity="top|right"
-        app:backgroundTint="@color/base_colour"
+        app:backgroundTint="@color/base"
+        android:visibility="gone"
         app:fabSize="mini"/>
 
 </merge>

@@ -1,5 +1,6 @@
 package ca.itinerum.android.utilities;
 
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedWriter;
@@ -29,7 +30,7 @@ public class Logger {
     boolean autoTag;
 
     private Logger() {
-        logLevel = WARN;
+        logLevel = BuildConfig.DEBUG ? VERBOSE : WARN;
 
         autoTag = true;
     }
@@ -213,7 +214,7 @@ public class Logger {
     }
 
     public int x(String msg) {
-	    if (BuildConfig.LOGFILE) appendLog(generateTag() + " *** " + msg);
+//	    if (BuildConfig.LOGFILE) appendLog(generateTag() + " *** " + msg);
 	    if (!BuildConfig.DEBUG) return -1;
         return Log.w("xx-datamb-xx", msg);
     }
@@ -229,7 +230,9 @@ public class Logger {
     }
 
     public void appendLog(String text) {
-        File logFile = new File("sdcard/log.file");
+		File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "itinerum");
+        dir.mkdirs();
+		File logFile = new File(dir, "logfile.txt");
         if (!logFile.exists()) {
             try {
                 logFile.createNewFile();

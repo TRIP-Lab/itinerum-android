@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/continue_button">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/back_button"
+            style="@style/BackButton"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="40dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_logo_vector"
+            app:tint="@color/list_item_indicator_enabled_dark"
+            android:background="@drawable/circle_outline"
+            android:padding="8dp"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/content_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/about_itinerum_graphic"
+            android:visibility="gone"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:text="@string/welcome_title"
+            android:paddingTop="@dimen/padding_large"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="@style/Title.DarkTheme"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/paragraph"
+            android:paddingLeft="40dp"
+            android:paddingRight="@dimen/padding_huge"
+            android:text="@string/welcome_paragraph"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="@style/Paragraph.Emphasis.DarkTheme"/>
+
+        <ca.itinerum.android.common.RoundedCheckboxView
+            android:id="@+id/age_constraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/welcome_age_constraint"
+            android:layout_margin="@dimen/padding_large"
+            style="@style/Checkbox"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/continue_button"
+        style="@style/StockButton.Survey"
+        android:text="@string/lets_get_started"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -16,7 +16,7 @@ public class Session {
 
     private boolean sTowerEnabled;
     private boolean sGpsEnabled;
-    private boolean sStarted;
+    private boolean sStarted = false;
     private boolean sIsUsingGps;
     private Location sLastValidLocation; //TODO: put this is SP
 	private Location sLastRecodedLocation; //TODO: put this is SP
@@ -36,7 +36,7 @@ public class Session {
     private long sGeofenceTimestamp = 0;
 
     public enum GeofenceState {
-        NONE, ACTIVE, LOITER, DWELL, DWELL_NO_PROMPT
+        NONE, ACTIVE, LOITER, DWELL, ANSWERED
 	}
 
 	private static final Session SESSION = new Session();
@@ -73,21 +73,21 @@ public class Session {
 				setGeofenceLoitering(false);
 				setGeofenceDwell(false);
 				setShowDwellDialog(false);
-				setGeofencePurposeRecorded(true);
+				setGeofencePurposeRecorded(false);
 				break;
 			case ACTIVE:
 				setIsGeofenceActive(true);
 				setGeofenceLoitering(false);
 				setGeofenceDwell(false);
 				setShowDwellDialog(false);
-				setGeofencePurposeRecorded(true);
+				setGeofencePurposeRecorded(false);
 				break;
 			case LOITER:
 				setIsGeofenceActive(true);
 				setGeofenceLoitering(true);
 				setGeofenceDwell(false);
 				setShowDwellDialog(false);
-				setGeofencePurposeRecorded(true);
+				setGeofencePurposeRecorded(false);
 				break;
 			case DWELL:
 				setIsGeofenceActive(true);
@@ -96,7 +96,7 @@ public class Session {
 				setShowDwellDialog(true);
 				setGeofencePurposeRecorded(false);
 				break;
-			case DWELL_NO_PROMPT:
+			case ANSWERED:
 				setIsGeofenceActive(true);
 				setGeofenceLoitering(true);
 				setGeofenceDwell(true);
@@ -144,44 +144,6 @@ public class Session {
 
     public synchronized LatLng getGeofenceLatLng() {
         return sGeofenceLatLng;
-    }
-
-    public boolean isSinglePointMode() {
-        return sIsSinglePointMode;
-    }
-
-    public synchronized void setSinglePointMode(boolean singlePointMode) {
-        sIsSinglePointMode = singlePointMode;
-    }
-
-    // ---------------------------------------------------
-
-    /**
-     * @return whether GPS (tower) is enabled
-     */
-    public synchronized boolean isTowerEnabled() {
-        return sTowerEnabled;
-    }
-
-    /**
-     * @param towerEnabled set whether GPS (tower) is enabled
-     */
-    public synchronized void setTowerEnabled(boolean towerEnabled) {
-        Session.getInstance().sTowerEnabled = towerEnabled;
-    }
-
-    /**
-     * @return whether GPS (satellite) is enabled
-     */
-    public synchronized boolean isGpsEnabled() {
-        return sGpsEnabled;
-    }
-
-    /**
-     * @param gpsEnabled set whether GPS (satellite) is enabled
-     */
-    public synchronized void setGpsEnabled(boolean gpsEnabled) {
-        Session.getInstance().sGpsEnabled = gpsEnabled;
     }
 
     /**

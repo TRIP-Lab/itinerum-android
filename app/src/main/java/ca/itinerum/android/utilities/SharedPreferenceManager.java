@@ -22,10 +22,12 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import ca.itinerum.android.TimeDatePreferenceActivity;
+import ca.itinerum.android.ContentOverlayView;
 import ca.itinerum.android.sync.retrofit.Prompt;
 import ca.itinerum.android.sync.retrofit.Results;
 import ca.itinerum.android.sync.retrofit.Survey;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 @SuppressWarnings("HardCodedStringLiteral")
 @SuppressLint("ApplySharedPref")
@@ -35,6 +37,7 @@ public class SharedPreferenceManager
 	private static final String KEY_DATE_STATE = "DATE_STATE";
 	private static final String SURVEY_COMPLETED_DATE = "SURVEY_COMPLETED_DATE";
 	private static final String PAUSE_RECORDING = "PAUSE_RECORDING";
+	private static final String HAS_SEEN_TUTORIAL = "HAS_SEEN_TUTORIAL";
 	private static final String SURVEY_NAME = "SURVEY_NAME";
 	private static final String UNIQUE_ID = "UNIQUE_ID";
 	private static final String SURVEY_RESPONSES = "SURVEY_RESPONSES";
@@ -50,13 +53,15 @@ public class SharedPreferenceManager
 	private static final String KEY_TO_TIME = "to_time";
 	private static final String ONGOING_PROMPTS = "ONGOING_PROMPTS";
 	private static final String HAS_DWELLED_ONCE = "HAS_DWELLED_ONCE";
-	private static final String NUM_RECORDED_PROMPTS = "NUM_RECORDED_PROMPTS";
 	private static final String KEY_LAST_SYNC_DATE = "KEY_LAST_SYNC_DATE";
+	private static final String RESEARCH_ETHICS = "RESEARCH_ETHICS";
+	private static final String SEEN_CONTINUE = "SEEN_CONTINUE";
 
 	private Context mContext;
     private final DateFormat mDateFormat;
 
     private static SharedPreferenceManager instance = null;
+	private Subject<DateTime> mLastSyncDateObservable;
 
 	private SharedPreferenceManager() {
         mDateFormat = new SimpleDateFormat("HH:mm", Locale.US);
@@ -94,7 +99,7 @@ public class SharedPreferenceManager
         editor.putString(KEY_TO_DATE, DatePreference.formatter().format(endOfDay.getTime()));
         editor.putString(KEY_FROM_TIME, mDateFormat.format(startOfDay.getTime()));
         editor.putString(KEY_TO_TIME, mDateFormat.format(endOfDay.getTime()));
-	    setDateState(TimeDatePreferenceActivity.DateState.TODAY);
+	    setDateState(ContentOverlayView.DateState.TODAY);
         editor.commit();
     }
 
@@ -105,12 +110,12 @@ public class SharedPreferenceManager
 	public void setCurrentVersion(final int version) {
 		getSharedPrefs().edit().putInt(CURRENT_VERSION, version).commit();
 	}
-    
+
     public Date getFromDate()
     {
         return this.getDateFromKeys(KEY_FROM_DATE, KEY_FROM_TIME);
     }
-    
+
     public Date getToDate() {
         return this.getDateFromKeys(KEY_TO_DATE, KEY_TO_TIME);
     }
@@ -131,20 +136,20 @@ public class SharedPreferenceManager
 		editor.commit();
 	}
 
-	public void setDateState(final TimeDatePreferenceActivity.DateState state) {
+	public void setDateState(final ContentOverlayView.DateState state) {
 		Editor editor = getSharedPrefs().edit();
 		editor.putString(KEY_DATE_STATE, state.name());
 		editor.commit();
 	}
 
-	public TimeDatePreferenceActivity.DateState getDateState() {
+	public ContentOverlayView.DateState getDateState() {
 		String savedDateStateName = getSharedPrefs().getString(KEY_DATE_STATE, null);
 		if (savedDateStateName == null) {
-			setDateState(TimeDatePreferenceActivity.DateState.TODAY);
+			setDateState(ContentOverlayView.DateState.TODAY);
 			savedDateStateName = getSharedPrefs().getString(KEY_DATE_STATE, "TODAY");
 		}
 
-		return TimeDatePreferenceActivity.DateState.valueOf(savedDateStateName);
+		return ContentOverlayView.DateState.valueOf(savedDateStateName);
 
 	}
     
@@ -192,7 +197,7 @@ public class SharedPreferenceManager
 	/* This is the date the initial survey was complete and the app started recording
 	 */
 	public long getQuestionnaireCompleteDate() {
-		return PreferenceManager.getDefaultSharedPreferences(mContext).getLong(SURVEY_COMPLETED_DATE, 0);
+		return getSharedPrefs().getLong(SURVEY_COMPLETED_DATE, 0);
 	}
 
 	public boolean hasCompletedQuestionnaire() {
@@ -209,20 +214,34 @@ public class SharedPreferenceManager
 		return new DateTime(getSharedPrefs().getString(KEY_LAST_SYNC_DATE, "0"));
 	}
 
-	public void setLastSyncDate(@NonNull final String date) {
+	public Subject<DateTime> getLastSyncDateObservable() {
+		if (mLastSyncDateObservable == null) mLastSyncDateObservable = BehaviorSubject.create();
+		mLastSyncDateObservable.onNext(getLastSyncDate());
+		return mLastSyncDateObservable;
 
+	}
+
+	public void setLastSyncDate(@NonNull final String date) {
+		getLastSyncDateObservable();
 		getSharedPrefs().edit().putString(KEY_LAST_SYNC_DATE, date).commit();
+		mLastSyncDateObservable.onNext(getLastSyncDate());
 	}
 
 
 	public boolean isRecordingPaused() {
-		
 		return getSharedPrefs().getBoolean(PAUSE_RECORDING, false);
 	}
 
-	public void togglePauseRecording() {
+	public void setRecordingPaused(boolean paused) {
+		getSharedPrefs().edit().putBoolean(PAUSE_RECORDING, paused).commit();
+	}
 
-		getSharedPrefs().edit().putBoolean(PAUSE_RECORDING, !isRecordingPaused()).commit();
+	public boolean hasSeenTutorial() {
+		return getSharedPrefs().getBoolean(HAS_SEEN_TUTORIAL, false);
+	}
+
+	public void setSeenTutorial(final boolean seenTutorial) {
+		getSharedPrefs().edit().putBoolean(HAS_SEEN_TUTORIAL, seenTutorial).commit();
 	}
 
 	public Results getSurveyResponseObject() {
@@ -295,14 +314,6 @@ public class SharedPreferenceManager
 		getSharedPrefs().edit().putInt(NUM_PROMPTS, numberOfPrompts).commit();
 	}
 
-	public int getNumberOfRecordedPrompts() {
-		return getSharedPrefs().getInt(NUM_RECORDED_PROMPTS, 0);
-	}
-
-	public void setNumberOfRecordedPrompts(final int numberOfPrompts) {
-		getSharedPrefs().edit().putInt(NUM_RECORDED_PROMPTS, numberOfPrompts).commit();
-	}
-
 	public int getMaximumNumberOfPrompts() {
 		return getSharedPrefs().getInt(MAX_PROMPTS, -1);
 	}
@@ -343,10 +354,26 @@ public class SharedPreferenceManager
 		getSharedPrefs().edit().putBoolean(HAS_DWELLED_ONCE, hasDwelledOnce).commit();
 	}
 
+	public boolean getHasRespondedToContinueMessage() {
+		return getSharedPrefs().getBoolean(SEEN_CONTINUE, false);
+	}
+
+	public void setHasRespondedToContinueMessage(boolean seenContinueMessage) {
+		getSharedPrefs().edit().putBoolean(SEEN_CONTINUE, seenContinueMessage).commit();
+	}
+
 	/**
 	 * This is danger and should not be used without understanding the consequences!
 	 */
 	public void deleteAllSettings() {
 		getSharedPrefs().edit().clear().commit();
+	}
+
+	public boolean getResearchEthicsAgreement() {
+		return getSharedPrefs().getBoolean(RESEARCH_ETHICS, false);
+	}
+
+	public void setResearchEthicsAgreement(boolean researchEthicsAgreement) {
+		getSharedPrefs().edit().putBoolean(RESEARCH_ETHICS, researchEthicsAgreement).commit();
 	}
 }

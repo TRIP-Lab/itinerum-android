@@ -3,6 +3,15 @@
     <string name="app_name" translatable="false">Itinerum</string>
     <string name="app_name_tm" translatable="false">Itinerum&#8482;</string>
 
+    <string-array name="preamble_activities" translatable="false">
+        <item>WelcomeActivity</item>
+        <item>AboutActivity</item>
+        <item>SystemAccessActivity</item>
+        <item>TermsOfServiceActivity</item>
+        <item>LetsGoActivity</item>
+        <item>SurveyActivity</item>
+    </string-array>
+
     <string name="feedback">Send Feedback</string>
 
     <string name="info_url" translatable="false"> </string>
@@ -30,6 +39,8 @@
     <string name="start_button">Start</string>
     <string name="send_button">Send</string>
     <string name="submit_button">Submit</string>
+    <string name="agree">I agree</string>
+    <string name="decline">I decline</string>
 
     <!-- Notification Message -->
     <string name="notification_title" translatable="false">Itinerum</string>
@@ -41,6 +52,7 @@
         location</string>
     <string name="notification_text_recording" translatable="false">Recording</string>
     <string name="constant_notification_message">Recording in the background. Tap for more info</string>
+    <string name="paused_notification_message">Recording is paused. Tap for more info</string>
     <string name="notification_stopped_title">Stop detected</string>
     <string name="notification_stopped_message">You seem to have stopped. Have you reached a destination?</string>
 
@@ -64,7 +76,7 @@
     <string name="permissions_warning">You will not be able to record points and participate in the survey without enabling this permission.</string>
     <string name="location_button">Enable Location</string>
 
-    <string name="location_hint">Search here</string>
+    <string name="location_hint">Enter an address or touch the map</string>
     <string name="location_not_found">Location not found. Try zooming out.</string>
     <string name="location_search_error">Location not found. Please check your connection</string>
 
@@ -133,8 +145,47 @@
     </string>
     <string name="ethics_postamble">By pressing the button below, I confirm that I have attentively read and understood the above consent and the information presented, and I attest to the fact that my consent is informed, that all of my questions have been answered to my satisfaction and that I have had sufficient time to decide whether I want to participate in this study. I freely and voluntarily consent to participate in this study.</string>
 
-    <string name="welcome_title">Thank you for downloading Itinerum&#8482;. Your participation is appreciated.</string>
-    <string name="welcome_subtitle">To help our research, please answer the following survey.</string>
+    <string name="welcome_title">Welcome to Itinerum</string>
+    <string name="welcome_paragraph">Thank you for downloading Itinerum. Your participation is appreciated.</string>
+
+    <string name="welcome_age_constraint">I confirm that I am 18 or older.</string>
+
+    <string name="welcome_onboard_title">Welcome\non board</string>
+    <string name="welcome_onboard_paragraph">Almost done! Let’s just quickly go over the basics on how to use Itinerum.</string>
+
+    <string name="about_title">What is Itinerum?</string>
+    <string name="about_paragraph">Itinerum is a spatialized data collection app which is used to create studies that help to better understand how people get around in an urban environment.</string>
+
+    <string name="access_title">System access</string>
+
+    <string name="letsgo_title">Thanks!\nSo let’s go!</string>
+    <string name="letsgo_paragraph">We’re going to ask a few initial questions so we can find out a little more about you.\n\nDon’t worry, collected information will remain confidential.</string>
+
+    <string name="onboarding_button">Start onboarding</string>
+    <string name="title_data_range">Show data from</string>
+    <string name="help_1_title"></string>
+    <string name="help_1_paragraph">The app should will open in the background in order to automatically record your trips.</string>
+    <string name="help_2_title"></string>
+    <string name="help_2_paragraph">Having an active SIM card improves location recording results even if you don\'t have a data plan.</string>
+    <string name="help_3_title"></string>
+    <string name="help_3_paragraph">You have 30 days to validate 25 destinations, then you will be entered into a raffle for prizes.</string>
+    <string name="help_4_title"></string>
+    <string name="help_4_paragraph"></string>
+
+    <string name="using_itinerum_title">Using\nItinerum</string>
+    <string name="using_itinerum_1_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_2_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_3_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_4_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_1_paragraph">Please try and keep your phone outside of your pocket or on your dashboard to ensure the best connection whenever possible.</string>
+    <string name="using_itinerum_2_paragraph">This button lets you add destinations or edit destination information.</string>
+    <string name="using_itinerum_3_paragraph">This one let’s you access the settings for your Itinerum app.</string>
+    <string name="using_itinerum_4_paragraph">And this one allows you to review the study information at any time.</string>
+    <string name="thanks_title">Thanks\n\nLet’s get started!</string>
+    <string name="next">Next</string>
+    <string name="lets_start">Let’s start</string>
+
+    <string name="research_subtitle">To help our research, please answer the following survey.</string>
 
     <string name="location_paragraph">Please indicate the location of your %s.</string>
     <string name="location_title">%s Location</string>
@@ -143,9 +194,10 @@
     <string name="location_work_component">Work</string>
     <string name="location_school_component">School</string>
     <string name="travel_work_component">work</string>
-    <string name="travel_school_component">school</string>
+    <string name="travel_school_component">study</string>
 
     <string name="occupation_title">Occupation</string>
+    <string name="occupation_prompt">You are...</string>
     <string-array name="question_occupation">
         <item>A full-time worker</item>
         <item>A part-time worker</item>
@@ -153,9 +205,13 @@
         <item>A student and worker</item>
         <item>Retired</item>
         <item>At home</item>
+        <item>Other</item>
     </string-array>
 
-    <string name="primary_mode_question">How do you typically commute to your %s?</string>
+    <string name="travel_work_title">Travel to Work</string>
+    <string name="travel_school_title">Travel to Study</string>
+
+    <string name="primary_mode_question">What mode or (combination of modes) do you typically use to commute to your %s location?</string>
     <string-array name="primary_mode_question">
         <item>On foot</item>
         <item>Bicycle</item>
@@ -166,7 +222,7 @@
         <item>Other combinations</item>
     </string-array>
 
-    <string name="secondary_mode_question">Do you use any alternative mode of travel to your %s?</string>
+    <string name="secondary_mode_question">Do you use any alternative mode (or combination of modes) of travel to your %s location?</string>
     <string-array name="secondary_mode_question">
         <item>N/A</item>
         <item>On foot</item>
@@ -178,16 +234,17 @@
         <item>Other combinations</item>
     </string-array>
 
-    <string name="question_sex_title">What is your gender?</string>
+    <string name="question_gender_title">Gender</string>
     <string-array name="question_gender">
         <item>Male</item>
         <item>Female</item>
-        <item>Other/Neither</item>
+        <item>Other</item>
+        <item>Prefer not to answer</item>
     </string-array>
 
-    <string name="question_age_title">What is your age-bracket?</string>
+    <string name="question_age_title">Age</string>
     <string-array name="question_age">
-        <item>16 to 24</item>
+        <item>18 to 24</item>
         <item>25 to 34</item>
         <item>35 to 44</item>
         <item>45 to 54</item>
@@ -215,10 +272,10 @@
     <string name="question_number_people_title">How many people live in your home?</string>
     <string name="question_age_people_title">How many are under 16?</string>
     <string name="question_number_cars_title">How many cars are at your home?</string>
-    <string name="question_email_title">Email address</string>
-    <string name="question_email_subtitle"></string>
+    <string name="question_email_title">Email</string>
+    <string name="question_email_subtitle">Please provide your email</string>
 
-    <string name="title_points_recorded">Trips Validated</string>
+    <string name="title_points_recorded">My Destinations</string>
     <string name="title_days_remaining">Days Remaining</string>
     <string name="title_days_incrementing">Days Recording</string>
     <string name="delimiter" formatted="false">%d / %d</string>
@@ -263,15 +320,14 @@
     <string name="datetime_enum_all">All Days</string>
     <string name="datetime_enum_custom">Custom</string>
 
-    <string name="start_date_title">Start date:</string>
-    <string name="end_date_title">End date:</string>
+    <string name="start_date_title">Start Date</string>
+    <string name="end_date_title">End Date</string>
+    <string name="start_time_title">Start Time</string>
+    <string name="end_time_title">End Time</string>
 
-    <string name="survey_complete_message">Survey complete. Thank you for using Itinerum&#8482;! You may now uninstall the app</string>
     <string name="home_location">Home</string>
     <string name="school_location">School</string>
     <string name="work_location">Work</string>
-    <string name="agree_box">I agree</string>
-    <string name="decline">I decline</string>
     <string name="terms_of_service_title">Terms of Service</string>
     <string name="notification_true">Yes</string>
     <string name="notification_false">No</string>
@@ -280,8 +336,8 @@
     <string name="snackbar_sync_successful">Synchronized</string>
     <string name="snackbar_sync_failed">Connection Error. Please check your phone settings.</string>
     <string name="snackbar_no_points">No Points!</string>
-    <string name="about">About</string>
     <string name="alert_location_settings">Location mode must be set to High Accuracy for recording to work properly. Please enable and leave on High Accuracy for the duration of this survey.</string>
+    <string name="about">About</string>
     <string name="about_details">Itinerum&#8482; is an ongoing study. The app will collect your location data for up to
         the amount of time parametrized by your survey administrator (click on the survey administrator icon on the map
         screen for more information) if you keep the app running.
@@ -304,6 +360,10 @@
     <string name="survey_selection_hint">Code</string>
     <string name="survey_response_hint">respond here</string>
     <string name="unable_to_join_message">Unable to join survey for unknown reason. Please try again.</string>
+    <string name="survey_not_found">Survey not found. Please verify the code.</string>
+
+    <string name="survey_complete_title">Survey complete.</string>
+    <string name="survey_complete_message">Thank you for using Itinerum!</string>
 
     <string name="thanks">Thanks!</string>
     <string name="no">No</string>
@@ -311,14 +371,12 @@
     <string name="no_ongoing_message"/>
     <string name="tester_site"/>
 
-    <string name="time_date_delimiter">at</string>
     <string name="save_button">Save</string>
 
     <string name="toast_provide_answer">Please provide a response</string>
     <string name="saved_location_point">Saved Location Point</string>
     <string name="validated_trip">Validated Trip</string>
     <string name="more_info">More Info</string>
-    <string name="date_and_time">Date and Time</string>
     <string name="no_prompts_warning">No Recorded Trips! :(</string>
     <string name="ar_tilting">Tilting</string>
     <string name="ar_still">Still</string>
@@ -349,7 +407,7 @@
     <string name="pref_category_location">Location</string>
     <string name="pref_category_app">App</string>
     <string name="pref_title_sync">Sync</string>
-    <string name="pref_summary_sync">Manually sync data to backend. Last sync:</string>
+    <string name="pref_summary_sync">Manually sync data to backend.\nLast sync:</string>
     <string name="pref_title_leave">Leave Survey</string>
     <string name="pref_summary_leave">Leave the current survey and wipe data from device</string>
     <string name="pref_title_pause">Pause Recording</string>
@@ -361,76 +419,92 @@
     <string name="pref_title_about">About Itinerum™</string>
     <string name="pref_title_open_source">Open Source Licenses</string>
     <string name="pref_title_danger">Danger</string>
+    <string name="pref_title_tutorial">Show Tutorial</string>
 
     <string name="prompt_edit_map_text">Tap here to choose your trip destination</string>
     <string name="toast_no_location_set">Please choose a trip destination</string>
 
-    <!--APACHE-->
-    <string translatable="false" name="dagger_title">Dagger 2</string>
-    <string translatable="false" name="dagger_url">https://github.com/google/dagger</string>
-    <string translatable="false" name="dagger_license">Copyright 2012 The Dagger Authors</string>
+    <string name="get_going_ethics_paragraph">Itinerum follows these research ethics. Please review and agree to them to use the application</string>
+    <string name="get_going_survey_paragraph">An access code for the survey you wish to participate in is required. Please tap here to enter a code.</string>
+    <string name="content_totals">of %d</string>
+    <string name="content_totals_fixed">until %s</string>
+    <string name="correct">Correct</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="start">Start</string>
+    <string name="lets_get_started">Let\'s get started</string>
+    <string name="edit_time">Edit Arrival Time</string>
+    <string name="edit_date">Edit Arrival Date</string>
+    <string name="dialog_add_destination_warning_message">Adding a destination will not increment the number of validated trips.</string>
+
+
+    <!--OPEN SOURCE LICENSES-->
 
     <!--APACHE-->
-    <string translatable="false" name="apachecommons_title">Apache Commons&#8482;</string>
-    <string translatable="false" name="apachecommons_url">http://commons.apache.org/</string>
+    <string name="dagger_title" translatable="false">Dagger 2</string>
+    <string name="dagger_url" translatable="false">https://github.com/google/dagger</string>
+    <string name="dagger_license" translatable="false">Copyright 2012 The Dagger Authors</string>
+
+    <!--APACHE-->
+    <string name="apachecommons_title" translatable="false">Apache Commons&#8482;</string>
+    <string name="apachecommons_url" translatable="false">http://commons.apache.org/</string>
 
     <!--MIT-->
-    <string translatable="false" name="fresco_title">Fresco</string>
-    <string translatable="false" name="fresco_url">https://github.com/facebook/fresco</string>
-    <string translatable="false" name="fresco_license">Copyright (c) 2015-present, Facebook, Inc.</string>
+    <string name="fresco_title" translatable="false">Fresco</string>
+    <string name="fresco_url" translatable="false">https://github.com/facebook/fresco</string>
+    <string name="fresco_license" translatable="false">Copyright (c) 2015-present, Facebook, Inc.</string>
 
     <!--APACHE-->
-    <string translatable="false" name="rxjava_title">RXJava</string>
-    <string translatable="false" name="rxjava_url">https://github.com/ReactiveX/RxJava</string>
-    <string translatable="false" name="rxjava_license">Copyright (c) 2016-present, RxJava Contributors.</string>
+    <string name="rxjava_title" translatable="false">RXJava</string>
+    <string name="rxjava_url" translatable="false">https://github.com/ReactiveX/RxJava</string>
+    <string name="rxjava_license" translatable="false">Copyright (c) 2016-present, RxJava Contributors.</string>
 
     <!--APACHE-->
-    <string translatable="false" name="materialdatetimepicker_title">Material DateTime Picker</string>
-    <string translatable="false" name="materialdatetimepicker_url">https://github.com/wdullaer/MaterialDateTimePicker</string>
-    <string translatable="false" name="materialdatetimepicker_license">Copyright (c) 2015 Wouter Dullaert</string>
+    <string name="materialdatetimepicker_title" translatable="false">Material DateTime Picker</string>
+    <string name="materialdatetimepicker_url" translatable="false">https://github.com/wdullaer/MaterialDateTimePicker</string>
+    <string name="materialdatetimepicker_license" translatable="false">Copyright (c) 2015 Wouter Dullaert</string>
 
     <!--MIT-->
-    <string translatable="false" name="fancybuttons_title">Fancybuttons</string>
-    <string translatable="false" name="fancybuttons_url">https://github.com/medyo/Fancybuttons</string>
+    <string name="fancybuttons_title" translatable="false">Fancybuttons</string>
+    <string name="fancybuttons_url" translatable="false">https://github.com/medyo/Fancybuttons</string>
 
     <!--APACHE-->
-    <string translatable="false" name="butterknife_title">Butterknife</string>
-    <string translatable="false" name="butterknife_url">https://github.com/JakeWharton/butterknife</string>
-    <string translatable="false" name="butterknife_license">Copyright 2013 Jake Wharton</string>
+    <string name="butterknife_title" translatable="false">Butterknife</string>
+    <string name="butterknife_url" translatable="false">https://github.com/JakeWharton/butterknife</string>
+    <string name="butterknife_license" translatable="false">Copyright 2013 Jake Wharton</string>
 
     <!--APACHE-->
-    <string translatable="false" name="retrofit_title">Retrofit</string>
-    <string translatable="false" name="retrofit_url">https://github.com/square/retrofit</string>
-    <string translatable="false" name="retrofit_license">Copyright 2013 Square, Inc.</string>
+    <string name="retrofit_title" translatable="false">Retrofit</string>
+    <string name="retrofit_url" translatable="false">https://github.com/square/retrofit</string>
+    <string name="retrofit_license" translatable="false">Copyright 2013 Square, Inc.</string>
 
     <!--APACHE-->
-    <string translatable="false" name="androidmaputils_title">Google Maps Android API utility library</string>
-    <string translatable="false" name="androidmaputils_url">https://github.com/googlemaps/android-maps-utils</string>
+    <string name="androidmaputils_title" translatable="false">Google Maps Android API utility library</string>
+    <string name="androidmaputils_url" translatable="false">https://github.com/googlemaps/android-maps-utils</string>
 
     <!--APACHE-->
-    <string translatable="false" name="eventbus_title">Eventbus</string>
-    <string translatable="false" name="eventbus_url">https://github.com/greenrobot/EventBus</string>
-    <string translatable="false" name="eventbus_license">Copyright (C) 2012-2017 Markus Junginger, greenrobot (http://greenrobot.org)</string>
+    <string name="eventbus_title" translatable="false">Eventbus</string>
+    <string name="eventbus_url" translatable="false">https://github.com/greenrobot/EventBus</string>
+    <string name="eventbus_license" translatable="false">Copyright (C) 2012-2017 Markus Junginger, greenrobot (http://greenrobot.org)</string>
 
     <!--APACHE-->
-    <string translatable="false" name="okhttp_title">OkHttp</string>
-    <string translatable="false" name="okhttp_url">https://github.com/square/okhttp</string>
+    <string name="okhttp_title" translatable="false">OkHttp</string>
+    <string name="okhttp_url" translatable="false">https://github.com/square/okhttp</string>
 
     <!--APACHE-->
-    <string translatable="false" name="androidjob_title">Android Job</string>
-    <string translatable="false" name="androidjob_url">https://github.com/evernote/android-job</string>
-    <string translatable="false" name="androidjob_license">Copyright (c) 2007-2017 by Evernote Corporation, All rights reserved.</string>
+    <string name="androidjob_title" translatable="false">Android Job</string>
+    <string name="androidjob_url" translatable="false">https://github.com/evernote/android-job</string>
+    <string name="androidjob_license" translatable="false">Copyright (c) 2007-2017 by Evernote Corporation, All rights reserved.</string>
 
     <!--APACHE-->
-    <string translatable="false" name="joda_title">Joda-Time</string>
-    <string translatable="false" name="joda_url">https://github.com/JodaOrg/joda-time</string>
+    <string name="joda_title" translatable="false">Joda-Time</string>
+    <string name="joda_url" translatable="false">https://github.com/JodaOrg/joda-time</string>
 
     <!--MIT-->
-    <string translatable="false" name="sectionedrecycler_title">SectionedRecyclerViewAdapter</string>
-    <string translatable="false" name="sectionedrecycler_url">https://github.com/luizgrp/SectionedRecyclerViewAdapter</string>
-    <string translatable="false" name="sectionedrecycler_license">Copyright (c) 2016 Gustavo Pagani</string>
+    <string name="sectionedrecycler_title" translatable="false">SectionedRecyclerViewAdapter</string>
+    <string name="sectionedrecycler_url" translatable="false">https://github.com/luizgrp/SectionedRecyclerViewAdapter</string>
+    <string name="sectionedrecycler_license" translatable="false">Copyright (c) 2016 Gustavo Pagani</string>
 
-    <string translatable="false" name="mit_license">
+    <string name="mit_license" translatable="false">
         MIT License
 
          \n\nPermission is hereby granted, free of charge, to any person obtaining a copy
@@ -452,7 +526,7 @@
         SOFTWARE.
     </string>
 
-    <string translatable="false" name="apache_license">
+    <string name="apache_license" translatable="false">
         Licensed under the Apache License, Version 2.0 (the "License");
         you may not use this file except in compliance with the License.
         You may obtain a copy of the License at
@@ -465,4 +539,14 @@
         See the License for the specific language governing permissions and
         limitations under the License.
     </string>
+    <string name="my_trips">My Destinations</string>
+    <string name="add_a_trip">Add a destination</string>
+    <string name="settings">Settings</string>
+    <string name="consent_title">Consent agreement</string>
+    <string name="survey_consent_title">Survey consent agreement</string>
+    <string name="about_survey_title">About survey</string>
+    <string name="about_app_title">About Itinerum</string>
+    <string name="thanks_paragraph"/>
+
+
 </resources>

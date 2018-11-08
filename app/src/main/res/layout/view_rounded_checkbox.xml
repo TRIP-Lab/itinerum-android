@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:animateLayoutChanges="true"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+
+    <ca.itinerum.android.common.CheckableTextView
+        android:id="@+id/textview"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="false"
+        android:layout_marginLeft="@dimen/padding_large"
+        android:layout_marginBottom="@dimen/padding_large"
+        android:layout_marginTop="@dimen/padding_large"
+        android:textColor="@drawable/button_text_colour_rounded_checkbox"
+        style="@style/Paragraph"/>
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/padding_large"
+        android:layout_marginRight="@dimen/padding_large"
+        android:clickable="false"
+        android:theme="@style/Checkbox.Inverted"/>
+
+</merge>

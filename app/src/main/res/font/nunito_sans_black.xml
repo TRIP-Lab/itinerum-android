@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- black -->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="900"
+        android:font="@font/ns_black"
+        app:fontStyle="normal"
+        app:fontWeight="900"
+        app:font="@font/ns_black"/>
+
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="900"
+        android:font="@font/ns_blackitalic"
+        app:fontStyle="italic"
+        app:fontWeight="900"
+        app:font="@font/ns_blackitalic"/>
+
+</font-family>

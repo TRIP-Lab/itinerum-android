@@ -2,7 +2,6 @@ package ca.itinerum.android;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,30 +15,34 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.support.design.widget.AppBarLayout;
+import android.support.animation.DynamicAnimation;
+import android.support.animation.SpringAnimation;
+import android.support.animation.SpringForce;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v14.preference.SwitchPreference;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.Pair;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.format.DateFormat;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -56,12 +59,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.math3.ml.clustering.CentroidCluster;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -71,7 +74,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.ISODateTimeFormat;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -82,17 +84,19 @@ import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.BuildConfig;
+import ca.itinerum.android.R;
 import ca.itinerum.android.activityrecognition.ActivityRecognitionUtils;
 import ca.itinerum.android.recording.GeofenceManager;
 import ca.itinerum.android.recording.LocationLoggingService;
 import ca.itinerum.android.recording.RecordingUtils;
 import ca.itinerum.android.recording.Session;
-import ca.itinerum.android.settings.SettingsActivity;
+import ca.itinerum.android.settings.SettingsFragment;
 import ca.itinerum.android.sync.PromptAnswerGroup;
 import ca.itinerum.android.sync.retrofit.Prompt;
 import ca.itinerum.android.sync.retrofit.PromptAnswer;
-import ca.itinerum.android.sync.retrofit.Triplab;
 import ca.itinerum.android.utilities.DateUtils;
+import ca.itinerum.android.utilities.DouglasPeucker;
 import ca.itinerum.android.utilities.HaversineDistance;
 import ca.itinerum.android.utilities.LocationLoggingEvent;
 import ca.itinerum.android.utilities.Logger;
@@ -100,7 +104,7 @@ import ca.itinerum.android.utilities.MBSASCluster;
 import ca.itinerum.android.utilities.ServiceEvents;
 import ca.itinerum.android.utilities.SharedPreferenceManager;
 import ca.itinerum.android.utilities.SystemUtils;
-import ca.itinerum.android.utilities.db.LocationDatabase;
+import ca.itinerum.android.utilities.db.ItinerumDatabase;
 import ca.itinerum.android.utilities.db.LocationPoint;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -109,48 +113,45 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import mehdi.sakout.fancybuttons.FancyButton;
 
-public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, GoogleMap.OnCircleClickListener, GoogleMap.OnMapClickListener, OnMapReadyCallback, PromptDialog.PromptDialogListener, PromptsRecyclerView.OnPromptItemClickedListener, PromptDetailsView.DetailsViewUpdateListener {
-
-	@BindView(R.id.select_time_button) FancyButton mSelectTimeButton;
-	@BindView(R.id.title_days_remaining) TextView mTitleDaysRemaining;
-	@BindView(R.id.container_days_remaining) ViewGroup mContainerDaysRemaining;
-	@BindView(R.id.content_days_remaining) TextView mContentDaysRemaining;
-	@BindView(R.id.container_points) ViewGroup mContainerPoints;
-	@BindView(R.id.button_prompts) Button mButtonPrompts;
-	@BindView(R.id.title_points) TextView mTitlePoints;
-	@BindView(R.id.content_points) TextView mContentPoints;
-	@BindView(R.id.title_time) TextView mTitleTime;
-	@BindView(R.id.info_button) SimpleDraweeView mInfoButton;
-	@BindView(R.id.map_trip_view) MapTripView mMapTripView;
-	@BindView(R.id.coordinator) CoordinatorLayout mCoordinator;
-
-	@BindView(R.id.textview_date) TextView mTextViewPromptDetailsDate;
-	@BindView(R.id.bottomsheet_prompt_details) ViewGroup mBottomsheetPromptDetails;
-
-	@BindView(R.id.textview_point_title) TextView mTextviewPointTitle;
-	@BindView(R.id.textview_point_date) TextView mTextviewPointDate;
-	@BindView(R.id.textview_point_accuracy) TextView mTextviewPointAccuracy;
-	@BindView(R.id.textview_point_mode) TextView mTextviewPointMode;
-	@BindView(R.id.bottomsheet_point_details) LinearLayout mBottomsheetPointDetails;
-	@BindView(R.id.toolbar) Toolbar mToolbar;
-	@BindView(R.id.container) LinearLayout mContainer;
-	@BindView(R.id.button_more_info_prompt_details) Button mButtonMoreInfoPromptDetails;
-	@BindView(R.id.app_bar_layout) AppBarLayout mAppBarLayout;
-
-
-	private PromptsRecyclerView mPromptsRecyclerView;
-
-	@BindDimen(R.dimen.padding_large) int LARGE_PADDING;
-
-	@BindColor(R.color.base_colour) int mBaseColour;
-
-	private GoogleMap mMap;
-
-	private Handler mDebugHandler;
+public class MapActivity extends AppCompatActivity implements GoogleMap.OnCameraMoveListener, GoogleMap.OnMarkerClickListener, GoogleMap.OnCircleClickListener, GoogleMap.OnMapClickListener, OnMapReadyCallback, PromptsRecyclerView.OnPromptItemClickedListener, PromptDetailsView.DetailsViewUpdateListener, ContentOverlayView.OnDateButtonListener, PromptDialogListener {
 
 	private final int LOCATION_PERMISSION_CODE = 10823;
+
+	@BindDimen(R.dimen.padding_large) int PADDING_LARGE;
+	@BindColor(R.color.base) int BASE_COLOUR;
+
+	@BindView(R.id.map_trip_view) MapTripView mMapTripView;
+	@BindView(R.id.coordinator) CoordinatorLayout mCoordinator;
+	@BindView(R.id.textview_date) AppCompatTextView mTextViewPromptDetailsDate;
+	@BindView(R.id.bottomsheet_prompt_details) ViewGroup mBottomsheetPromptDetails;
+	@BindView(R.id.textview_point_title) AppCompatTextView mTextviewPointTitle;
+	@BindView(R.id.textview_point_date) AppCompatTextView mTextviewPointDate;
+	@BindView(R.id.textview_point_accuracy) AppCompatTextView mTextviewPointAccuracy;
+	@BindView(R.id.textview_point_mode) AppCompatTextView mTextviewPointMode;
+	@BindView(R.id.bottomsheet_point_details) LinearLayout mBottomsheetPointDetails;
+	@BindView(R.id.container) LinearLayout mContainer;
+	@BindView(R.id.button_more_info_prompt_details) AppCompatButton mButtonMoreInfoPromptDetails;
+	@BindView(R.id.content_card) ContentOverlayView mContentCard;
+	@BindView(R.id.trip_list_button) FloatingActionButton mTripListButton;
+	@BindView(R.id.app_settings_button) FloatingActionButton mAppSettingsButton;
+	@BindView(R.id.app_info_button) FloatingActionButton mAppInfoButton;
+	@BindView(R.id.map_masking_view) View mMapMaskingView;
+	@BindView(R.id.map_touch_view) View mMapTouchView;
+	@BindView(R.id.info_view) AboutView mAboutView;
+	@BindView(R.id.refresh_button) AppCompatImageButton mRefreshButton;
+	@BindView(R.id.debug_button) AppCompatImageButton mDebugButton;
+	@BindView(R.id.view_container) FrameLayout mViewContainer;
+	@BindView(R.id.settings_fragment_container) FrameLayout mSettingsFragmentContainer; // this is where the fragment goes
+	@BindView(R.id.settings_container) LinearLayout mSettingsContainer; // this is the titled box to show and hide
+	@BindView(R.id.buttons_container) FrameLayout mButtonsContainer;
+	@BindView(R.id.finished) FrameLayout mFinished;
+
+	private SpringAnimation mContentCardSpringAnimation;
+
+	private PromptsRecyclerView mPromptsRecyclerView;
+	private GoogleMap mMap;
+	private Handler mDebugHandler;
 
 	private Runnable mDebugStatusChecker = new Runnable() {
 		@Override
@@ -173,24 +174,30 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	private AlertDialog mDialog = null;
 
 	private boolean mDatesSet;
-	private int mCurrentPrompt;
 	private List<Prompt> mPrompts;
-	private PromptAnswer[] mPromptResponses;
+	private PromptAnswerGroup mPromptResponses;
 	private int mMaximumNumberOfPrompts;
 	private int mNumberOfPrompts;
-	private int mNumberOfRecordedPrompts;
 	private int mNumberOfDays;
 
 	private FusedLocationProviderClient mFusedLocationClient;
 	private LatLng mLastLocation;
 	private SharedPreferenceManager mPreferenceManager;
-	private DateTime mFromDate;
-	private DateTime mToDate;
-	private Disposable mMapUpdate;
+	private Disposable mMapUpdateDisposible;
+	private int mContentCardHeight;
+	private PromptListView mPromptListView;
+	private SettingsFragment mPreferenceFragment;
+	private Disposable mPromptAnswersDisposable;
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// this prevents pretty transitions but is necessary for these versions
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+			getWindow().setSharedElementsUseOverlay(false);
+		}
 
 		setContentView(R.layout.activity_map);
 		ButterKnife.bind(this);
@@ -206,47 +213,69 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		if (mMapTripView.getMapview() != null)
 			mMapTripView.getMapview().onCreate(savedInstanceState);
 
-		mButtonPrompts.setOnClickListener(new OnClickListener() {
+		mContentCard.setDateSetListener(this);
+		mContentCard.setDetailsViewUpdatePickerListener(this);
+
+		mTripListButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View view) {
-				Intent intent = new Intent(MapActivity.this, PromptListActivity.class);
-				List<Pair<View, String>> pairs = new ArrayList<>();
+			public void onClick(View v) {
+				toggleInfoView(true);
+				toggleAppContentView(true);
+				toggleSettingsFragment(true);
+				toggleTripListView(false);
+			}
+		});
 
-				pairs.add(Pair.create((View) mToolbar, ViewCompat.getTransitionName(mToolbar)));
-				pairs.add(Pair.create((View) mAppBarLayout, ViewCompat.getTransitionName(mAppBarLayout)));
+		mAppSettingsButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toggleInfoView(true);
+				toggleAppContentView(true);
+				toggleTripListView(true);
+				toggleSettingsFragment(false);
+			}
+		});
 
-				View statusBar = findViewById(android.R.id.statusBarBackground);
-				View navigationBar = findViewById(android.R.id.navigationBarBackground);
+		mAppInfoButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toggleAppContentView(true);
+				toggleTripListView(true);
+				toggleSettingsFragment(true);
+				toggleInfoView(false);
+			}
+		});
 
-				if (statusBar != null) {
-					pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-				}
-				if (navigationBar != null) {
-					pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
-				}
-
-				ActivityOptionsCompat options = ActivityOptionsCompat.
-						makeSceneTransitionAnimation(MapActivity.this, pairs.toArray(new Pair[pairs.size()]));
-				startActivity(intent, options.toBundle());
+		mMapMaskingView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//do nothing
 			}
 		});
 
 		mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-		setSupportActionBar(mToolbar);
-
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
-		getSupportActionBar().setDisplayShowCustomEnabled(true);
-		getSupportActionBar().setCustomView(R.layout.view_actionbar_banner);
-
 		mPreferenceManager = SharedPreferenceManager.getInstance(this);
 
-		mInfoButton.setImageURI(Triplab.sDashboardBaseURL + mPreferenceManager.getAvatar());
+		if (BuildConfig.DEBUG) mPreferenceManager.setHasDwelledOnce(true);
 
 		mMaximumNumberOfPrompts = mPreferenceManager.getMaximumNumberOfPrompts();
 		mNumberOfPrompts = mPreferenceManager.getNumberOfPrompts();
-		mNumberOfDays = mPreferenceManager.getNumberOfRecordingDays();
-		mNumberOfRecordedPrompts = mPreferenceManager.getNumberOfRecordedPrompts();
+		mNumberOfDays = RecordingUtils.getRecordingDays(this);
+
+		mPromptAnswersDisposable = ItinerumDatabase.getInstance(this).promptDao().getAllAutomaticPromptAnswersFlowable()
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(
+						new Consumer<List<PromptAnswer>>() {
+							@Override
+							public void accept(List<PromptAnswer> promptAnswers) throws Exception {
+								if (mContentCard == null || mNumberOfPrompts <= 0) return;
+								mContentCard.setValidatedTrips(promptAnswers.size() / mNumberOfPrompts);
+								mContentCard.setTotalValidatedTrips(mMaximumNumberOfPrompts);
+							}
+						});
+
 
 		mDatesSet = false;
 		mMapTripView.mProgressBar.setVisibility(View.INVISIBLE);
@@ -255,41 +284,110 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 		mMapTripView.mUuid.setText(mPreferenceManager.getUUID() + " current v: " + mPreferenceManager.getCurrentVersion());
 
-		mSelectTimeButton.setOnClickListener(new OnClickListener() {
+		RegisterEventBus();
+
+		mRefreshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivityForResult(new Intent(MapActivity.this, TimeDatePreferenceActivity.class), 30483);
+				drawMap();
 			}
 		});
 
+		mDebugButton.setVisibility(BuildConfig.DEBUG ? View.VISIBLE : View.GONE);
 
-		RegisterEventBus();
-
-		configurePausePlayFab();
-
-		mInfoButton.setVisibility(View.VISIBLE);
-		mInfoButton.setOnClickListener(new OnClickListener() {
+		mDebugButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View view) {
-
-				AboutDialog dialog = new AboutDialog();
-				Bundle bundle = new Bundle();
-				bundle.putString("message", SharedPreferenceManager.getInstance(MapActivity.this).getAboutText());
-				bundle.putString("remote_image", Triplab.sDashboardBaseURL + SharedPreferenceManager.getInstance(MapActivity.this).getAvatar());
-				bundle.putBoolean("show_brand", false);
-				dialog.setArguments(bundle);
-				dialog.show(getSupportFragmentManager(), "about");
-
+			public void onClick(View v) {
+				if (mMapTripView.mDebugView.getVisibility() != View.VISIBLE) {
+					mMapTripView.mDebugView.setVisibility(View.VISIBLE);
+					startDebugRefresh();
+					mRecordingChecker.run();
+				} else {
+					mMapTripView.mDebugView.setVisibility(View.GONE);
+					stopDebugRefresh();
+				}
 			}
 		});
 
 		mPrompts = mPreferenceManager.getPrompts();
 
-		if (mPrompts != null && mPrompts.size() > 0) {
-			mPromptResponses = new PromptAnswer[mPrompts.size()];
-			Arrays.fill(mPromptResponses, null);
-		}
+		mContentCard.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+				if (bottom - top > 0) {
+					mContentCardHeight = bottom - top;
+					mContentCard.removeOnLayoutChangeListener(this);
+				}
+
+			}
+		});
+
+		// Tapping the drawer icon should trigger a toggle outside of fling and drag logic
+		mContentCard.getDrawerImage().setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toggleAppContentView(false);
+			}
+		});
+
+		/**
+		 * This handles drag, fling, and tap logic for the content card
+		 */
+		mContentCard.setOnTouchListener(new View.OnTouchListener() {
+			private float mInitialdY;
+			private float mInitialRawY;
+			final VelocityTracker mVelocityTracker = VelocityTracker.obtain();
+
+			@Override
+			public boolean onTouch(View v, final MotionEvent event) {
+				int pointerId = event.getPointerId(event.getActionIndex());
+
+				// The view is translating, so velocity tracking gets a little messed up
+				event.setLocation(event.getRawX(), event.getRawY());
+
+				switch (event.getAction()) {
+					case MotionEvent.ACTION_DOWN: {
+						mVelocityTracker.clear();
+						mVelocityTracker.addMovement(event);
+						if (mContentCardSpringAnimation != null && mContentCardSpringAnimation.isRunning())
+							mContentCardSpringAnimation.cancel();
+						mInitialRawY = event.getRawY();
+						mInitialdY = mContentCard.getTranslationY();
+						return true;
+					}
+					case MotionEvent.ACTION_MOVE: {
+						mVelocityTracker.addMovement(event);
+						float dY = Math.min(0, Math.max(-mContentCardHeight + 100, event.getRawY() - mInitialRawY + mInitialdY));
+						mContentCard.setTranslationY(dY);
+						float progress = Math.abs(dY / (-mContentCardHeight + 100));
+						mContentCard.setDrawerImageProgress(progress);
+						return true;
+					}
+					case MotionEvent.ACTION_CANCEL:
+					case MotionEvent.ACTION_UP: {
+						if (mContentCardSpringAnimation != null)
+							mContentCardSpringAnimation.cancel();
+
+						float displacementY = Math.abs(mInitialRawY - event.getRawY());
+						mVelocityTracker.computeCurrentVelocity(1000);
+						if (displacementY < 100f) {
+							// small taps will expand
+							mContentCardSpringAnimation = getContentCardSpringAnimationFactory(mVelocityTracker.getYVelocity(pointerId), 0);
+						} else {
+							// otherwise perform a fling
+							final float restPositon = mVelocityTracker.getYVelocity(pointerId) >= 0 ? 0 : -mContentCardHeight + 100;
+							mContentCardSpringAnimation = getContentCardSpringAnimationFactory(mVelocityTracker.getYVelocity(pointerId), restPositon);
+						}
+						mContentCardSpringAnimation.start();
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+
 	}
+
 
 	@Override
 	protected void onResume() {
@@ -301,15 +399,17 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		mMapTripView.setPausedState(mPreferenceManager.isRecordingPaused());
 		if (mMapTripView.getMapview() != null) mMapTripView.getMapview().onResume();
 
-		updatePointsRecordedUI();
 		updateDaysRemainingUI();
+
+		if (mPromptListView != null) mPromptListView.refreshList();
 
 		RecordingUtils.cancelGeofenceNotification(this);
 
 		if (getIntent().getBooleanExtra(LocationLoggingService.GEOFENCE_INTENT_EXTRA, false)) {
+			mPromptResponses = new PromptAnswerGroup(this);
 			showPrompt();
 			getIntent().removeExtra(LocationLoggingService.GEOFENCE_INTENT_EXTRA);
-		} else if (Session.getInstance().shouldShowDwellDialog()) {
+		} else if (Session.getInstance().shouldShowDwellDialog() && mDialogFragment == null) { // don't show stopped question if dialogfragment is currently showing
 			showStoppedQuestion();
 		} else {
 			if (mDialog != null) mDialog.dismiss();
@@ -319,11 +419,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		checkTimeCutoffAndAlertUser();
 
 		// hard refresh when date is set to today
-		if (mPreferenceManager.getDateState() == TimeDatePreferenceActivity.DateState.TODAY) {
+		if (mPreferenceManager.getDateState() == ContentOverlayView.DateState.TODAY) {
 			mPreferenceManager.resetDatesToDefault();
 		}
-
-		mSelectTimeButton.setText(mPreferenceManager.getDateState().getLabel(this));
 
 		setupMap();
 
@@ -368,11 +466,9 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		if (result != ConnectionResult.SUCCESS) {
 			mMapTripView.mStatusText.setVisibility(View.GONE);
 			mMapTripView.mPointsDetailsText.setVisibility(View.GONE);
-			mSelectTimeButton.setVisibility(View.GONE);
 		} else {
 			mMapTripView.mStatusText.setVisibility(View.VISIBLE);
 			mMapTripView.mPointsDetailsText.setVisibility(View.VISIBLE);
-			mSelectTimeButton.setVisibility(View.VISIBLE);
 		}
 
 		mMapTripView.mToggleGps.setOnClickListener(new OnClickListener() {
@@ -391,16 +487,16 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		});
 	}
 
-	private void updatePoints() {
+	private void updatePoints(final DateTime fromDate, final DateTime toDate) {
 
-		Bitmap img = SystemUtils.ColourBitmap(MapActivity.this, R.drawable.marker, R.color.base_colour);
+		Bitmap img = SystemUtils.ColourBitmap(MapActivity.this, R.drawable.marker, R.color.base);
 		final BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(img);
 
 		mMapTripView.mProgressBar.setVisibility(View.VISIBLE);
 
 		// get all prompts from db and group them
-		Flowable<List<PromptAnswerGroup>> groupedPrompts = LocationDatabase.getInstance(this).promptDao()
-				.getAllRegisteredPromptAnswersFlowable(DateUtils.formatDateForBackend(mFromDate), DateUtils.formatDateForBackend(mToDate)).map(new Function<List<PromptAnswer>, List<PromptAnswerGroup>>() {
+		Flowable<List<PromptAnswerGroup>> groupedPrompts = ItinerumDatabase.getInstance(this).promptDao()
+				.getAllRegisteredPromptAnswersFlowable(DateUtils.formatDateForBackend(fromDate), DateUtils.formatDateForBackend(toDate)).map(new Function<List<PromptAnswer>, List<PromptAnswerGroup>>() {
 					@Override
 					public List<PromptAnswerGroup> apply(List<PromptAnswer> promptAnswers) throws Exception {
 						return PromptAnswerGroup.sortPrompts(promptAnswers, mNumberOfPrompts);
@@ -409,13 +505,19 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 				});
 
 
+		Flowable<List<LocationPoint>> points = ItinerumDatabase.getInstance(this).locationDao().getAllPointsBetweenDatesFlowable(50, fromDate.toString(DateUtils.PATTERN), toDate.toString(DateUtils.PATTERN)).map(new Function<List<LocationPoint>, List<LocationPoint>>() {
+			@Override
+			public List<LocationPoint> apply(List<LocationPoint> locationPoints) throws Exception {
+				return DouglasPeucker.filter(locationPoints, 0.0002);
+			}
+		});
+
 		// get the points from db, apply Douglas Peucker filter to reduce number of points, cluster them
-		Flowable<List<CentroidCluster<LocationPoint>>> pointClusters = LocationDatabase.getInstance(this)
-				.locationDao().getAllPointsBetweenDatesFlowable(50, mFromDate.toString(DateUtils.PATTERN), mToDate.toString(DateUtils.PATTERN))
+		Flowable<List<CentroidCluster<LocationPoint>>> pointClusters = points
 				.map(new Function<List<LocationPoint>, List<CentroidCluster<LocationPoint>>>() {
 					@Override
 					public List<CentroidCluster<LocationPoint>> apply(List<LocationPoint> locationPoints) throws Exception {
-						MBSASCluster clusterer = new MBSASCluster(100, new HaversineDistance());
+						MBSASCluster clusterer = new MBSASCluster(50, new HaversineDistance());
 						return clusterer.cluster(locationPoints);
 					}
 				});
@@ -428,16 +530,17 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 			}
 		});
 
-		if (mMapUpdate != null && !mMapUpdate.isDisposed()) mMapUpdate.dispose();
+		if (mMapUpdateDisposible != null && !mMapUpdateDisposible.isDisposed()) mMapUpdateDisposible.dispose();
 
-		mMapUpdate = combineLatest
+		mMapUpdateDisposible = combineLatest
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Consumer<Pair<List<CentroidCluster<LocationPoint>>, List<PromptAnswerGroup>>>() {
 					@Override
 					public void accept(Pair<List<CentroidCluster<LocationPoint>>, List<PromptAnswerGroup>> listListPair) throws Exception {
 
-						if (listListPair.first.isEmpty() && listListPair.second.isEmpty()) throw new Exception("empty dataset");
+						if (listListPair.first.isEmpty() && listListPair.second.isEmpty())
+							throw new Exception("empty dataset");
 
 						mMap.clear();
 
@@ -456,6 +559,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 							LatLng latLng = new LatLng(point.getCenter().getPoint()[0], point.getCenter().getPoint()[1]);
 
+							//TODO: eventually only new points should be added to the map to prevent overlap when mMap.clear() is removed
 							mMap.addMarker(new MarkerOptions()
 									.position(latLng)
 									.icon(bitmapDescriptor)
@@ -484,8 +588,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 						}
 
 						if (boundsBuilderNotEmpty) {
-
-							mMap.addPolyline(new PolylineOptions().addAll(latLngs).color(mBaseColour).width(10));
+                            //TODO: polyline is returned here, and mPolyline.updatePoints() can be used to be more memory efficient (instead of clearing map)
+							mMap.addPolyline(new PolylineOptions().addAll(latLngs).color(BASE_COLOUR).width(10));
 
 							moveCamera(boundsBuilder.build(), mMap, mMapTripView.getMapview().getWidth(), mMapTripView.getMapview().getHeight());
 						}
@@ -498,6 +602,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 						Logger.l.e(throwable.toString());
 
 						mMapTripView.mProgressBar.setVisibility(View.GONE);
+
+						mMap.clear();
 
 						if (throwable.getMessage().equals("empty dataset")) {
 
@@ -520,7 +626,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 							});
 						}
 
-						if (mPreferenceManager.getHasDwelledOnce()) Toast.makeText(MapActivity.this, R.string.snackbar_no_points, Toast.LENGTH_LONG).show();
+						if (mPreferenceManager.getHasDwelledOnce())
+							Toast.makeText(MapActivity.this, R.string.snackbar_no_points, Toast.LENGTH_LONG).show();
 					}
 				});
 	}
@@ -532,11 +639,14 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		if (mDialog != null) mDialog.dismiss();
 		mDialog = null;
 		stopDebugRefresh();
-		if (mMapUpdate != null) mMapUpdate.dispose();
+		if (mMapUpdateDisposible != null) mMapUpdateDisposible.dispose();
 	}
 
 	@Override
 	protected void onDestroy() {
+
+		if (mPromptAnswersDisposable != null) mPromptAnswersDisposable.dispose();
+
 		UnregisterEventBus();
 		try {
 			if (mMapTripView.getMapview() != null) mMapTripView.getMapview().onDestroy();
@@ -555,7 +665,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		if (mMapTripView.getMapview() != null) mMapTripView.getMapview().onSaveInstanceState(outState);
+		if (mMapTripView.getMapview() != null)
+			mMapTripView.getMapview().onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -567,8 +678,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 			case BottomSheetBehavior.STATE_EXPANDED:
 			case BottomSheetBehavior.STATE_SETTLING:
 			case BottomSheetBehavior.PEEK_HEIGHT_AUTO:
-				promptBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
-				return;
 			case BottomSheetBehavior.STATE_COLLAPSED:
 				promptBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
 				return;
@@ -576,8 +685,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 		BottomSheetBehavior pointBehaviour = BottomSheetBehavior.from(mBottomsheetPointDetails);
 
-		switch
-				(pointBehaviour.getState()) {
+		switch (pointBehaviour.getState()) {
 			case BottomSheetBehavior.STATE_EXPANDED:
 			case BottomSheetBehavior.PEEK_HEIGHT_AUTO:
 			case BottomSheetBehavior.STATE_COLLAPSED:
@@ -586,63 +694,194 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 				return;
 		}
 
+		if (mViewContainer.getVisibility() == View.VISIBLE) {
+			toggleTripListView(true);
+			return;
+		}
+
+		if (mContentCard.getTranslationY() == 0) {
+			toggleAppContentView(true);
+			return;
+		}
+
+		if (mAboutView.getVisibility() == View.VISIBLE) {
+			toggleInfoView(true);
+			return;
+		}
+
+		if (mSettingsContainer.getVisibility() == View.VISIBLE) {
+			toggleSettingsFragment(true);
+			return;
+		}
+
 		super.onBackPressed();
 	}
 
-	private void toggle() {
-		EventBus.getDefault().post(new LocationLoggingEvent.PauseResume(mPreferenceManager.isRecordingPaused()));
-		if (mPreferenceManager.isRecordingPaused())
-			mMapTripView.mPauseMaskingView.setVisibility(View.GONE);
-		else mMapTripView.mPauseMaskingView.setVisibility(View.VISIBLE);
-		mMapTripView.mFab.toggle();
-		mPreferenceManager.togglePauseRecording();
+	private SpringAnimation getContentCardSpringAnimationFactory(float velocity, float restPosition) {
+		return new SpringAnimation(mContentCard, DynamicAnimation.TRANSLATION_Y).setStartVelocity(velocity)
+				.setSpring(new SpringForce(restPosition).setStiffness(SpringForce.STIFFNESS_LOW).setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY))
+				.addUpdateListener(new DynamicAnimation.OnAnimationUpdateListener() {
+					@Override
+					public void onAnimationUpdate(DynamicAnimation animation, float value, float velocity) {
+						float progress = value / (-mContentCardHeight + 100);
+						mContentCard.setDrawerImageProgress(progress);
+						mMapMaskingView.setVisibility(progress < 0.5f ? View.VISIBLE : View.INVISIBLE);
+					}
+				});
 	}
 
-	private void configurePausePlayFab() {
-		mMapTripView.mFab.setVisibility(View.VISIBLE);
+	private void toggleInfoView(boolean forced) {
+		if (mAboutView.getVisibility() == View.VISIBLE || forced) {
+			mAboutView.animate().alpha(0f).withEndAction(new Runnable() {
+				@Override
+				public void run() {
+					mAboutView.setVisibility(View.GONE);
+					mMapMaskingView.setVisibility(View.GONE);
+				}
+			}).start();
 
-		mMapTripView.mFab.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				showTogglePrompt();
-			}
-		});
+			mAppInfoButton.setImageResource(R.drawable.ic_info_vector);
+			return;
+		}
+
+		mAboutView.setBottomPadding(mButtonsContainer.getHeight() + PADDING_LARGE);
+
+		mAppInfoButton.setImageResource(R.drawable.ic_close_vector);
+		mAboutView.setVisibility(View.VISIBLE);
+		mMapMaskingView.setVisibility(View.VISIBLE);
+		mAboutView.animate().alpha(1f).start();
+
 	}
 
-	private void showTogglePrompt() {
-		int title = SharedPreferenceManager.getInstance(MapActivity.this).isRecordingPaused() ?
-				R.string.should_resume_title : R.string.should_pause_title;
+	private void toggleAppContentView(boolean forced) {
+		if (mContentCardSpringAnimation != null) mContentCardSpringAnimation.cancel();
+		final float restPositon = !forced && mContentCard.getTranslationY() < 0 ? 0 : -mContentCardHeight + 100;
+		mContentCardSpringAnimation = getContentCardSpringAnimationFactory(0, restPositon);
+		mContentCardSpringAnimation.start();
 
-		int message = SharedPreferenceManager.getInstance(MapActivity.this).isRecordingPaused() ?
-				R.string.should_resume_message : R.string.should_pause_message;
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
-		builder.setTitle(title);
-		builder.setMessage(message);
-		builder.setNegativeButton(android.R.string.cancel, null);
-		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialogInterface, int i) {
-				toggle();
-			}
-		});
-		builder.show();
 	}
+
+	private void toggleTripListView(boolean forced) {
+		mViewContainer.setVisibility(View.VISIBLE);
+		if (mPromptListView == null && !forced) {
+			mPromptListView = new PromptListView(MapActivity.this);
+			mPromptListView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+			mPromptListView.setOnPromptItemClickListener(new PromptsRecyclerView.OnPromptItemClickedListener() {
+				@Override
+				public void onPromptItemClick(View view, int position) {
+					Intent intent = new Intent(MapActivity.this, PromptDetailsActivity.class);
+					intent.putExtra("position", position);
+
+					MapActivity.this.startActivity(intent);
+				}
+			});
+
+			mPromptListView.setAddTripClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+					mDialogFragment = TwoButtonDialog.newInstance("new_prompt", getString(R.string.dialog_add_destination_warning_message), getString(android.R.string.ok), getString(android.R.string.cancel));
+					mDialogFragment.show(getSupportFragmentManager(), "new_prompt");
+				}
+			});
+
+			mTripListButton.setImageResource(R.drawable.ic_close_vector);
+//					mPromptListView.refreshList();
+
+			mPromptListView.setBottomPadding(mButtonsContainer.getHeight() + PADDING_LARGE);
+
+			//TODO: add OnPromptItemClickListener
+			mViewContainer.removeAllViews();
+			mViewContainer.addView(mPromptListView);
+			mViewContainer.animate().alpha(1).withEndAction(new Runnable() {
+				@Override
+				public void run() {
+					mMapMaskingView.setVisibility(View.VISIBLE);
+				}
+			}).start();
+		} else {
+			mViewContainer.animate().alpha(0).withEndAction(new Runnable() {
+				@Override
+				public void run() {
+					mViewContainer.setVisibility(View.GONE);
+					mViewContainer.removeAllViews();
+					mPromptListView = null;
+					mMapMaskingView.setVisibility(View.GONE);
+				}
+			}).start();
+
+			mTripListButton.setImageResource(R.drawable.ic_logo_vector);
+		}
+	}
+
+	private void toggleSettingsFragment(boolean forced) {
+
+		mSettingsContainer.setVisibility(View.VISIBLE);
+
+		mMapTripView.setPausedState(mPreferenceManager.isRecordingPaused());
+
+		// this is happening on demand instead of onCreate because it requires layout element heights
+		if (mPreferenceFragment == null && !forced) {
+			// add the settings fragment
+			mPreferenceFragment = SettingsFragment.newInstance(mButtonsContainer.getHeight() + PADDING_LARGE);
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			ft.add(R.id.settings_fragment_container, mPreferenceFragment, "settings");
+			ft.commit();
+			mAppSettingsButton.setImageResource(R.drawable.ic_close_vector);
+			mMapMaskingView.setVisibility(View.VISIBLE);
+			mSettingsContainer.animate().alpha(1).start();
+		} else {
+			if (mPreferenceFragment == null) return;
+
+			mSettingsContainer.animate().alpha(0).withEndAction(new Runnable() {
+				@Override
+				public void run() {
+					FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+					ft.remove(mPreferenceFragment);
+					ft.commit();
+					mSettingsContainer.setVisibility(View.GONE);
+					mPreferenceFragment = null;
+					mMapMaskingView.setVisibility(View.GONE);
+				}
+			}).start();
+
+			mAppSettingsButton.setImageResource(R.drawable.ic_settings_vector);
+		}
+	}
+
+//	private void toggle() {
+//		EventBus.getDefault().post(new LocationLoggingEvent.PauseResume(mPreferenceManager.isRecordingPaused()));
+//		if (mPreferenceManager.isRecordingPaused())
+//			mMapTripView.mPauseMaskingView.setVisibility(View.GONE);
+//		else mMapTripView.mPauseMaskingView.setVisibility(View.VISIBLE);
+//		mPreferenceManager.togglePauseRecording();
+//	}
+//
+//	private void showTogglePrompt() {
+//		int title = SharedPreferenceManager.getInstance(MapActivity.this).isRecordingPaused() ?
+//				R.string.should_resume_title : R.string.should_pause_title;
+//
+//		int message = SharedPreferenceManager.getInstance(MapActivity.this).isRecordingPaused() ?
+//				R.string.should_resume_message : R.string.should_pause_message;
+//
+//		AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+//		builder.setTitle(title);
+//		builder.setMessage(message);
+//		builder.setNegativeButton(android.R.string.cancel, null);
+//		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//			@Override
+//			public void onClick(DialogInterface dialogInterface, int i) {
+//				toggle();
+//			}
+//		});
+//		builder.show();
+//	}
 
 	private void checkTimeCutoffAndAlertUser() {
 		if (RecordingUtils.isOngoing(this)) return;
 
 		if (RecordingUtils.isComplete(this)) {
-			new AlertDialog.Builder(this)
-					.setMessage(getString(R.string.survey_complete_message))
-					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-
-						}
-					})
-					.show();
-
+			mFinished.setVisibility(View.VISIBLE);
 			((DMApplication) getApplicationContext()).stopLoggingService();
 		}
 	}
@@ -662,12 +901,15 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		}
 	}
 
+	@SuppressLint("SetTextI18n")
 	private void updateDebugView() {
 		mMapTripView.mDebugGeofenceActive.setText("geofence exists: " + Session.getInstance().isGeofenceActive());
 
 		mMapTripView.mDebugGeofenceDwell.setText("geofence dwell: " + Session.getInstance().isGeofenceDwell());
 
 		mMapTripView.mDebugGeofenceLoitering.setText("geofence loitering: " + Session.getInstance().isGeofenceLoitering());
+
+		mMapTripView.mDebugGeofencePurpose.setText("geofence purpose recorded: " + Session.getInstance().isGeofencePurposeRecorded());
 
 		mMapTripView.mDebugLastSync.setText("last sync: " + new DateTime(mPreferenceManager.getLastSyncTime()).toString());
 
@@ -698,35 +940,26 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 				mGeofenceDebugRadius = null;
 			}
 		}
-
 	}
 
 	// ** Debug View stuff ends **
 
 	private void showPromptDialog(final Prompt prompt) {
 
-		final ArrayList<String> promptPositions = (mPromptResponses[mCurrentPrompt] != null && mPromptResponses[mCurrentPrompt].getAnswer() != null) ?
-				mPromptResponses[mCurrentPrompt].getAnswer() :
+		if (mDialogFragment != null) mDialogFragment.dismiss();
+
+		final ArrayList<String> promptPositions = (mPromptResponses.getCurrentPromptAnswer() != null) ?
+				mPromptResponses.getCurrentPromptAnswer().getAnswer() :
 				new ArrayList<String>();
 
-		// single choice prompt
-		if (prompt.getId() != 1 && prompt.getId() != 2) {
-			if (BuildConfig.DEBUG)
-				throw new NotImplementedException("No prompt id type " + prompt.getId());
-			return;
-		}
-
-		mDialogFragment = PromptDialog.newInstance(prompt, mCurrentPrompt, promptPositions);
+		mDialogFragment = PromptDialog.newInstance(prompt, mPromptResponses.getPosition(), promptPositions);
 		mDialogFragment.show(getSupportFragmentManager(), "" + prompt.getId());
 
 	}
 
 	private boolean shouldShowPrompt() {
-		if (!mPreferenceManager.getOngoingPrompts() && (mNumberOfPrompts < 1 || mPreferenceManager.getNumberOfRecordedPrompts() >= mMaximumNumberOfPrompts))
-			return false;
-
-		//TODO: this might be the reason we're losing prompts
-		if (mDialog != null || Session.getInstance().isGeofencePurposeRecorded()) return false;
+		if (RecordingUtils.isComplete(this)) return false;
+        if (mNumberOfPrompts < 1) return false;
 
 		return !(mPrompts == null || mPrompts.size() < 1);
 	}
@@ -735,8 +968,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 		if (!shouldShowPrompt()) return;
 
-		if (mCurrentPrompt < mPrompts.size()) {
-			showPromptDialog(mPrompts.get(mCurrentPrompt));
+		if (mPromptResponses.hasNext()) {
+			showPromptDialog(mPrompts.get(mPromptResponses.getPosition()));
 		} else {
 			submitGeofenceSurvey();
 			checkGeofenceSurvey();
@@ -747,104 +980,82 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	private void showStoppedQuestion() {
 
 		if (!shouldShowPrompt()) return;
+		mDialogFragment = TwoButtonDialog.newInstance("stopped_prompt", getString(R.string.notification_stopped_message), getString(R.string.correct), getString(R.string.dismiss));
 
-		mDialog = new AlertDialog.Builder(this)
-				.setTitle(R.string.notification_title)
-				.setMessage(R.string.notification_stopped_message)
-				.setPositiveButton(R.string.notification_true, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						mDialog = null;
-						mCurrentPrompt = 0;
-						showPrompt();
-					}
-				})
-				.setNegativeButton(R.string.notification_false, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						cancelGeofenceSurvey();
-					}
-				}).create();
+		mDialogFragment.show(getSupportFragmentManager(), "prompt");
 
-		mDialog.setCanceledOnTouchOutside(false);
-		mDialog.setCancelable(false);
-		mDialog.show();
-
-	}
-
-	private void updatePointsRecordedUI() {
-
-		mNumberOfRecordedPrompts = mPreferenceManager.getNumberOfRecordedPrompts();
-
-		if (mNumberOfPrompts < 1) {
-			mContainerPoints.setVisibility(View.GONE);
-			return;
-		}
-
-		mContainerPoints.setVisibility(View.VISIBLE);
-		mContentPoints.setText(String.format(getString(R.string.delimiter), mNumberOfRecordedPrompts, mMaximumNumberOfPrompts));
 	}
 
 	private void updateDaysRemainingUI() {
-		if (mNumberOfDays <= 0) {
-			mTitleDaysRemaining.setText(R.string.title_days_incrementing);
-			long days = TimeUnit.MILLISECONDS.toDays(Math.abs(System.currentTimeMillis() - mPreferenceManager.getQuestionnaireCompleteDate()));
-			mContentDaysRemaining.setText(String.format(Locale.US, "%d", days));
-		} else {
-			long daysRemaining = RecordingUtils.getCutoffDays(this);
-			if (daysRemaining == -1) mContentDaysRemaining.setText(R.string.days_remaining_done);
-			else
-				mContentDaysRemaining.setText(String.format(getString(R.string.delimiter), daysRemaining, mNumberOfDays));
+		long daysRemaining = RecordingUtils.getCutoffDays(this);
+		if (daysRemaining == -1) mContentCard.setDone();
+		else {
+			mContentCard.setCurrentDay((int) daysRemaining);
+			if (mNumberOfDays == -1) {
+				mContentCard.setTotalDays(DateTime.parse(BuildConfig.ABSOLUTE_CUTOFF).toString(DateTimeFormat.shortDate()));
+			} else {
+				mContentCard.setTotalDays(mNumberOfDays);
+			}
 		}
 	}
 
 	@SuppressLint("StringFormatMatches")
 	private void checkGeofenceSurvey() {
-		if (mMaximumNumberOfPrompts < 1 || mNumberOfRecordedPrompts < mMaximumNumberOfPrompts)
-			return;
+		if (RecordingUtils.isComplete(this)) return;
+		if (!RecordingUtils.hasFinishedAutomaticPrompts(this)) return;
 
-		if (mPreferenceManager.getOngoingPrompts()) return; //the user will continue to get prompts
+		if (mPreferenceManager.getHasRespondedToContinueMessage()) return;
 
 		final long daysRemaining = TimeUnit.DAYS.convert(RecordingUtils.getCutoffTime(this) - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+		if (BuildConfig.FLAVOR.equals("montreal")) {
+			String message = String.format(getString(R.string.max_trips_completed_message), mMaximumNumberOfPrompts);
+			mDialogFragment = TwoButtonDialog.newInstance("complete", message, getString(R.string.yes), getString(R.string.no));
+			mDialogFragment.show(getSupportFragmentManager(), "prompt");
+		} else {
+			String message = String.format(getString(R.string.max_trips_completed_message), mMaximumNumberOfPrompts, daysRemaining);
+			mDialog = new AlertDialog.Builder(this)
+					.setTitle(R.string.notification_title)
+					.setMessage(message)
+					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							mDialog.dismiss();
+							mDialog = null;
+						}
+					})
+					.show();
+			mDialog.setCanceledOnTouchOutside(false);
+		}
 
-		String message = String.format(getString(R.string.max_trips_completed_message), mMaximumNumberOfPrompts, daysRemaining);
-		mDialog = new AlertDialog.Builder(this)
-				.setTitle(R.string.notification_title)
-				.setMessage(message)
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						mDialog.dismiss();
-						mDialog = null;
-					}
-				})
-				.show();
-
-		mDialog.setCanceledOnTouchOutside(false);
 
 	}
 
 	private void cancelGeofenceSurvey() {
+		if (mDialogFragment == null) return;
+		mDialogFragment.dismiss();
+		mDialogFragment = null;
 		mDialog = null;
-		Arrays.fill(mPromptResponses, null);
+		mPromptResponses = null;
 		RecordingUtils.cancelGeofenceNotification(getApplicationContext());
 		Session.getInstance().setGeofencePurposeRecorded(true);
 		Session.getInstance().setShowDwellDialog(false);
 
 		// Now insert a cancelled prompt answer
-		// cancelled prompts should exist above the maximum number of prompts to avoid collision.
-		int count = LocationDatabase.getInstance(this).promptDao().getCount() + SharedPreferenceManager.getInstance(this).getMaximumNumberOfPrompts() + 1;
-
 		PromptAnswer promptAnswer = new PromptAnswer()
 				.withPrompt("")
 				.withAnswer("")
 				.withLatitude(Session.getInstance().getLastRecordedLatitude())
 				.withLongitude(Session.getInstance().getLastRecordedLongitude())
-				.withDisplayedAt(DateTime.now().toString(ISODateTimeFormat.dateTime()))
+				.withDisplayedAt(DateUtils.formatDateForBackend(Session.getInstance().getGeofenceTimestamp()))
 				.withRecordedAt(DateTime.now().toString(ISODateTimeFormat.dateTime()))
 				.withUuid(UUID.randomUUID().toString())
 				.withUploaded(false)
 				.withCancelled(true)
-				.withPromptNumber(count);
+				.withCancelledAt(DateTime.now().toString(ISODateTimeFormat.dateTime()))
+				.withPromptNumber(-1);
 
-		LocationDatabase.getInstance(this).promptDao().insert(promptAnswer);
+		ItinerumDatabase.getInstance(this).promptDao().insert(promptAnswer);
+
+		Session.getInstance().setGeofenceState(Session.GeofenceState.ANSWERED);
 
 	}
 
@@ -853,17 +1064,12 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		mDialog = null;
 
 		// TODO: clone because this should be done async
-		PromptAnswer[] p = mPromptResponses.clone();
-		LocationDatabase.getInstance(this).promptDao().insert(p);
+		ItinerumDatabase.getInstance(this).promptDao().insert(mPromptResponses.getPromptAnswers().toArray(new PromptAnswer[mPromptResponses.getPromptAnswers().size()]));
 		//increment the number of recoded prompts
-		mPreferenceManager.setNumberOfRecordedPrompts(mNumberOfRecordedPrompts + 1);
 
-		Arrays.fill(mPromptResponses, null);
+		mPromptResponses = null;
 
-		Session.getInstance().setGeofencePurposeRecorded(true);
-		Session.getInstance().setShowDwellDialog(false);
-
-		updatePointsRecordedUI();
+		Session.getInstance().setGeofenceState(Session.GeofenceState.ANSWERED);
 
 		drawMap();
 
@@ -907,92 +1113,57 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 	private void drawMap() {
 		if (mMap != null) {
-
-			SharedPreferenceManager prefManager = SharedPreferenceManager
-					.getInstance(this);
-
-			mFromDate = new DateTime(prefManager.getFromDate());
-			mToDate = new DateTime(prefManager.getToDate());
-			updatePoints();
-
-		}
-	}
-
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-
-			case R.id.refresh_menu_item:
-				SharedPreferenceManager.getInstance(MapActivity.this).resetDatesToDefault();
-				mSelectTimeButton.setText(SharedPreferenceManager.getInstance(MapActivity.this).getDateState().getLabel(MapActivity.this));
-				drawMap();
-				if (BuildConfig.DEBUG) updateDebugView();
-				break;
-
-			case R.id.debug_view:
-				if (mMapTripView.mDebugView.getVisibility() != View.VISIBLE) {
-					mMapTripView.mDebugView.setVisibility(View.VISIBLE);
-					startDebugRefresh();
-					mRecordingChecker.run();
-				} else {
-					mMapTripView.mDebugView.setVisibility(View.GONE);
-					stopDebugRefresh();
-				}
-				break;
-
-			case R.id.settings_menu_item:
-
-				Intent intent = new Intent(MapActivity.this, SettingsActivity.class);
-				List<Pair<View, String>> pairs = new ArrayList<>();
-
-				pairs.add(Pair.create((View) mToolbar, ViewCompat.getTransitionName(mToolbar)));
-				pairs.add(Pair.create((View) mAppBarLayout, ViewCompat.getTransitionName(mAppBarLayout)));
-				// add more pairs if required
-
-				View statusBar = findViewById(android.R.id.statusBarBackground);
-				View navigationBar = findViewById(android.R.id.navigationBarBackground);
-
-				if (statusBar != null) {
-					pairs.add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME));
-				}
-				if (navigationBar != null) {
-					pairs.add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME));
-				}
-
-				ActivityOptionsCompat options = ActivityOptionsCompat.
-						makeSceneTransitionAnimation(MapActivity.this, pairs.toArray(new Pair[pairs.size()]));
-				startActivity(intent, options.toBundle());
-
-				break;
-
-
-		}
-		return true;
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-
-		if (requestCode == 30483) {
-			if (resultCode == Activity.RESULT_OK) {
-				mDatesSet = true;
-				drawMap();
-			}
+			updatePoints(new DateTime(mPreferenceManager.getFromDate()), new DateTime(mPreferenceManager.getToDate()));
 		}
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.activity_main, menu);
-		return true;
-	}
+	public void onDateButtonClicked(ContentOverlayView.DateState dateState) {
+		mPreferenceManager.setDateState(dateState);
 
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
-		menu.findItem(R.id.debug_view).setVisible((BuildConfig.DEBUG || BuildConfig.BUILD_TYPE.equals("alpha")));
-		return true;
+		Calendar c = Calendar.getInstance();
+
+		switch (dateState) {
+			case TODAY:
+				mPreferenceManager.resetDatesToDefault();
+				break;
+			case YESTERDAY:
+				mPreferenceManager.resetDatesToDefault();
+				c.set(Calendar.HOUR_OF_DAY, 0);
+				c.set(Calendar.MINUTE, 0);
+				c.set(Calendar.SECOND, 0);
+				c.set(Calendar.MILLISECOND, 0);
+				c.add(Calendar.MILLISECOND, -1);
+				mPreferenceManager.setToDate(c.getTime());
+
+				c.add(Calendar.MILLISECOND, 1);
+				c.add(Calendar.DATE, -1);
+				mPreferenceManager.setFromDate(c.getTime());
+				break;
+			case LAST_SEVEN:
+				mPreferenceManager.resetDatesToDefault();
+				c.add(Calendar.DATE, -6);
+				c.set(Calendar.MINUTE, 0);
+				c.set(Calendar.SECOND, 0);
+				c.set(Calendar.MILLISECOND, 0);
+
+				mPreferenceManager.setFromDate(c.getTime());
+
+				break;
+			case ALL_TIME:
+				mPreferenceManager.resetDatesToDefault();
+				c.setTimeInMillis(0);
+				mPreferenceManager.setFromDate(c.getTime());
+				break;
+			case CUSTOM:
+				break;
+		}
+
+		mContentCard.setSelectedDateState(dateState);
+
+		mDatesSet = true;
+		toggleAppContentView(false);
+		drawMap();
 	}
 
 	private static void moveCamera(LatLngBounds bounds, GoogleMap map, int width, int height) {
@@ -1026,7 +1197,7 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	@Override
 	public void onPromptItemClick(View v, int position) {
 
-		PromptAnswerGroup answers = PromptAnswerGroup.sortPrompts(LocationDatabase.getInstance(this).promptDao().getAllRegisteredPromptAnswers(), mNumberOfPrompts).get(position);
+		PromptAnswerGroup answers = PromptAnswerGroup.sortPrompts(ItinerumDatabase.getInstance(this).promptDao().getAllRegisteredPromptAnswers(), mNumberOfPrompts).get(position);
 		PromptDetailsView view = new PromptDetailsView(this);
 		view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		view.setPrompts(answers);
@@ -1034,28 +1205,37 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	}
 
 	@Override
-	public void onDateClicked(DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth) {
+	public void onDateClicked(DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth, DateTime minDateTime, String title) {
 
-		Calendar minDate = new DateTime(mPreferenceManager.getQuestionnaireCompleteDate()).toCalendar(Locale.US);
+		Calendar minDate;
+
+		if (minDateTime == null) minDate = new DateTime(mPreferenceManager.getQuestionnaireCompleteDate()).toCalendar(Locale.US);
+		else minDate = minDateTime.toCalendar(Locale.US);
+
+
 		Calendar maxDate = DateTime.now().toCalendar(Locale.US);
 
 		DatePickerDialog dialog = DatePickerDialog
 				.newInstance(listener, year, monthOfYear, dayOfMonth);
 
+		dialog.setTitle(title);
+
 		dialog.setMinDate(minDate);
 		dialog.setMaxDate(maxDate);
 
-		dialog.setAccentColor(getResources().getColor(R.color.base_colour));
+		dialog.setAccentColor(getResources().getColor(R.color.base));
 		dialog.show(getFragmentManager(), "datepicker_dialog");
 	}
 
 	@Override
-	public void onTimeClicked(TimePickerDialog.OnTimeSetListener listener, int hourOfDay, int minute, boolean isToday) {
+	public void onTimeClicked(TimePickerDialog.OnTimeSetListener listener, int hourOfDay, int minute, boolean isToday, String title) {
 
 		TimePickerDialog dialog = TimePickerDialog.newInstance(listener, hourOfDay, minute, DateFormat.is24HourFormat(this));
 
 		if (isToday) dialog.setMaxTime(hourOfDay, minute, 59);
-		dialog.setAccentColor(getResources().getColor(R.color.base_colour));
+
+		dialog.setTitle(title);
+		dialog.setAccentColor(getResources().getColor(R.color.base));
 		dialog.show(getFragmentManager(), "timepicker_dialog");
 	}
 
@@ -1076,6 +1256,8 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 		BottomSheetBehavior.from(mBottomsheetPromptDetails).setState(BottomSheetBehavior.STATE_HIDDEN);
 		BottomSheetBehavior.from(mBottomsheetPointDetails).setState(BottomSheetBehavior.STATE_EXPANDED);
+
+		if (mMapUpdateDisposible != null) mMapUpdateDisposible.dispose();
 
 		String[] snippets = marker.getSnippet().split("%");
 
@@ -1108,8 +1290,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 
 			BottomSheetBehavior.from(mBottomsheetPointDetails).setState(BottomSheetBehavior.STATE_HIDDEN);
 
+			if (mMapUpdateDisposible != null) mMapUpdateDisposible.dispose();
+
 			final int position = (int) circle.getTag();
-			PromptAnswerGroup promptAnswer = PromptAnswerGroup.sortPrompts(LocationDatabase.getInstance(this).promptDao().getAllRegisteredPromptAnswers(), mNumberOfPrompts).get(position);
+			PromptAnswerGroup promptAnswer = PromptAnswerGroup.sortPrompts(ItinerumDatabase.getInstance(this).promptDao().getAllRegisteredPromptAnswers(), mNumberOfPrompts).get(position);
 
 			mButtonMoreInfoPromptDetails.setOnClickListener(new OnClickListener() {
 				@Override
@@ -1118,9 +1302,6 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 					intent.putExtra("position", position);
 
 					List<Pair<View, String>> pairs = new ArrayList<>();
-
-					pairs.add(Pair.create((View) mToolbar, ViewCompat.getTransitionName(mToolbar)));
-					pairs.add(Pair.create((View) mAppBarLayout, ViewCompat.getTransitionName(mAppBarLayout)));
 
 					// These are fixes for flickering nav and status bars
 					View statusBar = findViewById(android.R.id.statusBarBackground);
@@ -1150,10 +1331,20 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	}
 
 	@Override
+	public void onCameraMove() {
+		if (mMapUpdateDisposible != null) mMapUpdateDisposible.dispose();
+	}
+
+	@Override
 	public void onMapClick(LatLng latLng) {
 		if (mClickedMarkerRadius != null) {
 			mClickedMarkerRadius.remove();
 		}
+
+		if (mMapUpdateDisposible != null) mMapUpdateDisposible.dispose();
+
+		BottomSheetBehavior.from(mBottomsheetPointDetails).setState(BottomSheetBehavior.STATE_HIDDEN);
+		BottomSheetBehavior.from(mBottomsheetPromptDetails).setState(BottomSheetBehavior.STATE_HIDDEN);
 	}
 
 	private void RegisterEventBus() {
@@ -1207,8 +1398,10 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 			mMap.setMyLocationEnabled(true);
 		}
+		mMap.setOnMapClickListener(this);
 		mMap.setOnMarkerClickListener(this);
 		mMap.setOnCircleClickListener(this);
+		mMap.setOnCameraMoveListener(this);
 
 		moveCamera(mLastLocation, mMap, 15);
 
@@ -1217,16 +1410,58 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	}
 
 	@Override
-	public void onPositiveButtonClicked() {
-		PromptAnswer answer = ((PromptDialog) mDialogFragment).getPromptAnswer();
-		mPromptResponses[mCurrentPrompt] = answer;
+	public void onPositiveButtonClicked(DialogFragment fragment) {
 
-		if (mPromptResponses[mCurrentPrompt] != null) {
-			mPromptResponses[mCurrentPrompt].setPromptNumber(mNumberOfRecordedPrompts);
-			mPromptResponses[mCurrentPrompt].setCancelled(false);
+		if (fragment instanceof TwoButtonDialog) {
+
+			switch (((TwoButtonDialog) fragment).getType()) {
+				case "pause_recording":
+					((SwitchPreference) mPreferenceFragment.findPreference("PAUSE_RECORDING")).setChecked(true);
+					mPreferenceManager.setRecordingPaused(true);
+					EventBus.getDefault().post(new LocationLoggingEvent.PauseResume(true));
+					break;
+				case "stopped_prompt":
+					mPromptResponses = new PromptAnswerGroup(MapActivity.this);
+					showPrompt();
+					break;
+				case "complete":
+					mPreferenceManager.setOngoingPrompts(true);
+					mPreferenceManager.setHasRespondedToContinueMessage(true);
+					fragment.dismiss();
+					//Todo: make this a snackbar or toast
+					mDialog = new AlertDialog.Builder(MapActivity.this)
+							.setTitle(R.string.notification_title)
+							.setMessage(R.string.thanks)
+							.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									mDialog.dismiss();
+									mDialog = null;
+								}
+							})
+							.show();
+					break;
+				case "new_prompt":
+					Intent intent = new Intent(MapActivity.this, PromptDetailsActivity.class);
+					intent.putExtra("new_prompt", true);
+					MapActivity.this.startActivity(intent);
+					break;
+				default:
+					if (BuildConfig.DEBUG) throw new Error(((TwoButtonDialog) fragment).getType() + " is not implemented");
+			}
+
+			fragment.dismiss();
+			return;
+		}
+
+		PromptAnswer answer = ((PromptDialog) mDialogFragment).getPromptAnswer();
+
+		if (answer != null) {
+			mPromptResponses.setCurrentPromptAndIncrement(answer);
+
 			mDialogFragment.dismiss();
 			mDialogFragment = null;
-			mCurrentPrompt++;
+
 			showPrompt();
 
 		} else {
@@ -1235,15 +1470,43 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnMarker
 	}
 
 	@Override
-	public void onNeutralButtonClicked() {
-		mDialogFragment = null;
-		mCurrentPrompt--;
+	public void onNeutralButtonClicked(DialogFragment fragment) {
+		if (fragment instanceof TwoButtonDialog) return;
+
+		//TODO: save response here before going back?
+		mPromptResponses.setPosition(mPromptResponses.getPosition() - 1);
 		showPrompt();
 	}
 
 	@Override
-	public void onNegativeButtonClicked() {
+	public void onNegativeButtonClicked(DialogFragment fragment) {
+		if (fragment instanceof TwoButtonDialog) {
+			if (((TwoButtonDialog) fragment).getType().equals("complete")) {
+				mPreferenceManager.setHasRespondedToContinueMessage(true);
+				mPreferenceManager.setOngoingPrompts(false);
+				((DMApplication) getApplication()).stopLoggingService();
+				final long daysRemaining = TimeUnit.DAYS.convert(RecordingUtils.getCutoffTime(this) - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+				fragment.dismiss();
+				mDialog = new AlertDialog.Builder(MapActivity.this)
+						.setTitle(R.string.notification_title)
+						.setMessage(String.format(getString(R.string.no_ongoing_message), daysRemaining))
+						.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								mDialog.dismiss();
+								mDialog = null;
+								checkTimeCutoffAndAlertUser();
+							}
+						})
+						.show();
+				return;
+			} else if (((TwoButtonDialog) fragment).getType().equals("pause_recording")) {
+				fragment.dismiss();
+				return; //calling cancelGeofenceSurvey() causes a crash
+			} else {
+				fragment.dismiss();
+			}
+		}
 		cancelGeofenceSurvey();
-		mDialogFragment = null;
 	}
 }

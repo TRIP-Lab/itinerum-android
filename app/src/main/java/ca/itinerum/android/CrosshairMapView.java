@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.R;
 
 /**
  * Created by stewjacks on 2018-01-26.
@@ -93,6 +94,9 @@ public class CrosshairMapView extends FrameLayout implements OnMapReadyCallback 
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
 		mMap.getUiSettings().setAllGesturesEnabled(mMapGesturesEnabled);
+		mMap.getUiSettings().setMyLocationButtonEnabled(false);
+		mMap.getUiSettings().setMapToolbarEnabled(false);
+		mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 		if (mMapReadyCallback != null) mMapReadyCallback.onMapReady(googleMap);
 	}
 }

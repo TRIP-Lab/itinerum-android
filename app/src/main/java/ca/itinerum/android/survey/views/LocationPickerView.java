@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -18,7 +20,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,8 +43,8 @@ import java.util.List;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ca.itinerum.android.CrosshairMapView;
 import ca.itinerum.android.R;
+import ca.itinerum.android.CrosshairMapView;
 import ca.itinerum.android.sync.retrofit.LocationUserSurveyAnswer;
 import ca.itinerum.android.sync.retrofit.Survey;
 import ca.itinerum.android.utilities.Logger;
@@ -66,10 +67,11 @@ public class LocationPickerView extends BaseSurveyView implements OnMapReadyCall
 	private Geocoder mGeocoder;
 	private AsyncTask<String, Void, List<Address>> mTask;
 
-	@BindView(R.id.location_title) TextView mLocationTitle;
-	@BindView(R.id.location_paragraph) TextView mLocationParagraph;
+	@BindView(R.id.location_title) AppCompatTextView mLocationTitle;
+	@BindView(R.id.location_paragraph) AppCompatTextView mLocationParagraph;
 	@BindView(R.id.location_field) EditText mLocationField;
-	@BindView(R.id.location_search_button) Button mLocationSearchButton;
+	@BindView(R.id.location_search_button) AppCompatImageButton mLocationSearchButton;
+	@BindView(R.id.location_clear_button) AppCompatImageButton mLocationClearButton;
 	//TODO: this view is tightly coupled to the child crosshairmapview. This logic should be decoupled when someone has the time
 	@BindView(R.id.crosshair_mapview) CrosshairMapView mCrosshairMapview;
 	@BindView(R.id.mapview) MapView mMapview;
@@ -134,6 +136,13 @@ public class LocationPickerView extends BaseSurveyView implements OnMapReadyCall
 					SystemUtils.hideKeyboardFrom(mContext, LocationPickerView.this);
 				}
 				return false;
+			}
+		});
+
+		mLocationClearButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mLocationField.setText("");
 			}
 		});
 
@@ -267,6 +276,11 @@ public class LocationPickerView extends BaseSurveyView implements OnMapReadyCall
 		}
 		mLocationTitle.setText(mLocationTitleString);
 		mLocationParagraph.setText(mLocationParagraphString);
+	}
+
+	@Override
+	public boolean isFullframe() {
+		return true;
 	}
 
 	private void setCurrentLatLng(LatLng latLng) {

@@ -15,173 +15,234 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:orientation="vertical">
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar_layout"
+        
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:transitionName="appbarlayout"
-            style="@style/AppBar">
+            android:layout_height="90dp"
+            android:background="@color/map_toolbar">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:transitionName="toolbar"
-                android:background="@color/toolbar_default"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/logo_text"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical|right">
 
-                <RelativeLayout
-                    android:id="@+id/container_points"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/title_points"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:text="@string/title_points_recorded"
-                        android:padding="8dp"/>
-
-                    <TextView
-                        android:id="@+id/content_points"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="bottom"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="@android:color/white"
-                        android:text="0"
-                        android:textSize="20sp"/>
-
-                    <Button
-                        android:id="@+id/button_prompts"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?android:selectableItemBackground"/>
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
-
-                <RelativeLayout
-                    android:id="@+id/container_days_remaining"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                >
-                    <TextView
-                        android:id="@+id/title_days_remaining"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:text="@string/title_days_remaining"
-                        android:padding="8dp"
-                    />
-
-                    <TextView
-                        android:id="@+id/content_days_remaining"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="bottom"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="@android:color/white"
-                        android:text="0"
-                        android:textSize="20sp"/>
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:textColor="@android:color/white"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/refresh_button"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="8dp">
-                    <TextView
-                        android:id="@+id/title_time"
-                        android:text="@string/title_displaying"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_gravity="center_horizontal"
-                        android:textColor="@android:color/white"
-                        android:padding="8dp"/>
+                    app:srcCompat="@drawable/ic_autorenew_white_24dp"
+                    android:layout_marginRight="@dimen/padding_large"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/select_time_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/datetime_enum_today"
-                        android:textSize="16sp"
-                        app:fb_radius="2dp"
-                        app:fb_borderWidth="2dp"
-                        app:fb_borderColor="@android:color/white"
-                        app:fb_defaultColor="@android:color/transparent"
-                        app:fb_focusColor="@android:color/white"
-                    />
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/debug_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_bug_report_white_24dp"
+                    android:layout_marginRight="@dimen/padding_large"
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
 
-                </LinearLayout>
             </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
 
-        <ca.itinerum.android.MapTripView
-            android:id="@+id/map_trip_view"
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:animateLayoutChanges="true"/>
+            android:layout_weight="1">
+
+            <ca.itinerum.android.MapTripView
+                android:id="@+id/map_trip_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"/>
+
+            <View
+                android:id="@+id/map_masking_view"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:visibility="gone"/>
+
+            <View
+                android:id="@+id/map_touch_view"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                />
+
+            <ca.itinerum.android.ContentOverlayView
+                android:id="@+id/content_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ca.itinerum.android.AboutView
+                android:id="@+id/info_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/map_card_background"
+                android:visibility="gone"
+                android:alpha="0"/>
+
+            <FrameLayout
+                android:id="@+id/view_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/map_card_background"
+                android:visibility="gone"
+                android:alpha="0"/>
+
+            <LinearLayout
+                android:id="@+id/settings_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/map_card_background"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:alpha="0">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large"
+                    android:text="@string/settings"
+                    android:background="@color/base"
+                    style="@style/Title.Card"/>
+
+                <FrameLayout
+                    android:id="@+id/settings_fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <!--Bottom buttons-->
+            <FrameLayout
+                android:id="@+id/buttons_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                >
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/trip_list_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_logo_vector"
+                    app:tint="@color/fab_tint"
+                    app:backgroundTint="@color/fab_background_tint"
+                    app:fabSize="normal"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginBottom="28dp"
+                    android:layout_marginLeft="28dp"
+                    />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/app_settings_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_settings_vector"
+                    app:tint="@color/fab_tint"
+                    app:backgroundTint="@color/fab_background_tint"
+                    app:borderWidth="1dp"
+                    app:fabSize="normal"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="28dp"
+                    />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/app_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_info_vector"
+                    app:tint="@color/fab_tint"
+                    app:backgroundTint="@color/fab_background_tint"
+                    app:fabSize="normal"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="28dp"
+                    android:layout_marginRight="28dp"
+                    />
+
+            </FrameLayout>
+
+            <View
+                android:id="@+id/drop_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@drawable/bottom_shadow"
+                android:layout_gravity="top"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/info_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerInside"
-        android:layout_margin="8dp"
-        app:layout_anchor="@id/container"
-        app:layout_anchorGravity="bottom|right|end"
-        app:roundedCornerRadius="5dp"
-        app:roundingBorderWidth="1dp"
-        app:roundingBorderColor="@android:color/darker_gray"
-        />
-
     <include layout="@layout/bottomsheet_prompt_details"/>
     <include layout="@layout/bottomsheet_point_details"/>
+
+    <FrameLayout
+        android:id="@+id/finished"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/background_dark">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/logo_text"
+                app:tint="@color/complete_asset_tint"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/padding_xl"
+                android:text="🎉"
+                android:textSize="60sp"/>
+            
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/survey_complete_title"
+                android:textColor="@color/base"
+                android:layout_marginBottom="@dimen/padding_xl"
+                android:textAlignment="center"
+                android:paddingTop="@dimen/padding_xl"
+                android:paddingBottom="0dp"
+                android:gravity="center"
+                style="@style/Title"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/survey_complete_message"
+                android:textAlignment="center"
+                android:paddingTop="@dimen/padding_xl"
+                android:paddingBottom="0dp"
+                android:gravity="center"
+                style="@style/Title.DarkTheme"/>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

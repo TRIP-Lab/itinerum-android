@@ -1,9 +1,9 @@
 package ca.itinerum.android.survey.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.InputType;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,16 +20,11 @@ import ca.itinerum.android.utilities.SystemUtils;
 
 public class NumberTextEntryView extends TextEntryView {
 
-	@BindView(R.id.question) TextView mQuestion;
+	@BindView(R.id.question) AppCompatTextView mQuestion;
 	@BindView(R.id.response) EditText mResponse;
 
 	public NumberTextEntryView(Context context, Survey survey) {
 		super(context, survey);
-		init();
-	}
-
-	private void init() {
-		if (BuildConfig.DEBUG) mResponse.setText("5");
 	}
 
 	@Override
@@ -38,6 +33,8 @@ public class NumberTextEntryView extends TextEntryView {
 		ButterKnife.bind(this);
 
 		mResponse.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+		if (BuildConfig.DEBUG) mResponse.setText("5");
 	}
 
 	@Override

@@ -51,6 +51,12 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             />
 
         <android.support.v7.preference.Preference
+            android:title="@string/pref_title_tutorial"
+            android:key="tutorial"
+            android:icon="@drawable/ic_book_vector"
+            />
+
+        <android.support.v7.preference.Preference
             android:title="@string/pref_title_open_source"
             android:key="open_source"
             android:icon="@drawable/ic_creative_commons_black_24dp"
@@ -65,6 +71,11 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:summary="Crashlytics crash"
             android:key="crash"
             android:icon="@drawable/ic_warning_black_36dp"
+            />
+        <android.support.v7.preference.Preference
+            android:title="Email Logs"
+            android:summary="send log file to dev@iogistics.com"
+            android:key="log"
             />
     </android.support.v7.preference.PreferenceCategory>
 

@@ -3,6 +3,8 @@
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">8dp</dimen>
     <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_xl">24dp</dimen>
+    <dimen name="padding_huge">40dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -13,9 +15,17 @@
 
     <dimen name="dialog_title_size">10sp</dimen>
 
-    <dimen name="default_prompt_details_map_height">150dp</dimen>
+    <dimen name="default_prompt_details_map_height">275dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="shadow_size">4dp</dimen>
+    <dimen name="list_bottom_padding">40dp</dimen>
+    <dimen name="survey_bottom_space">100dp</dimen>
+
+    <dimen name="one_dp">1dp</dimen>
+
+    <dimen name="list_height">76dp</dimen>
+
+    <dimen name="elevation_content_card">6dp</dimen>
 </resources>

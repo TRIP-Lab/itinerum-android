@@ -2,9 +2,11 @@ package ca.itinerum.android.survey.views;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
+import java.util.Arrays;
+
+import ca.itinerum.android.BuildConfig;
+import ca.itinerum.android.survey.SurveyHelper;
 import ca.itinerum.android.sync.retrofit.Survey;
 
 /**
@@ -20,14 +22,21 @@ public class LocalSingleSelectView extends SingleSelectView {
 	}
 
 	public void setArrayResource(String[] options) {
-		ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_single_choice, options);
-		mListView.setAdapter(adapter);
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mListView.setData(Arrays.asList(options), false);
+		mListView.setOnItemClickListener(new OnClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onClick(View v) {
 				mListener.onCanAdvance(true);
 			}
 		});
+
+
+	}
+
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		setTitleText(SurveyHelper.getUserVisibleSurveyTitle(getContext(), mSurvey));
 	}
 
 	@Override
@@ -38,7 +47,13 @@ public class LocalSingleSelectView extends SingleSelectView {
 	@Override
 	public void setResult(Object result) {
 		if (result != null && result instanceof Integer) {
-			mListView.setItemChecked((int)result, true);
+			mListView.setCheckedItemPosition((int)result, true);
+		} else if (BuildConfig.DEBUG) {
+			mListView.setCheckedItemPosition(0, true);
 		}
+	}
+
+	public void hideQuestion() {
+		mQuestion.setVisibility(GONE);
 	}
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center">
+
+    <!--<FrameLayout-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:padding="@dimen/padding_small">-->
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textview_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:gravity="start"
+        android:layout_marginTop="@dimen/padding_small"
+        android:layout_marginBottom="@dimen/padding_small"
+        style="@style/Paragraph.DarkTheme"/>
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/padding_small"
+        android:layout_gravity="center"
+        >
+
+        <ca.itinerum.android.utilities.RepeatButton
+            android:id="@+id/button_decrement"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_remove_vector"
+            app:tint="@color/list_item_indicator_enabled_dark"
+            android:padding="@dimen/padding_medium"
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:layout_marginRight="@dimen/padding_medium"
+            android:background="@drawable/background_circle_button"
+            />
+
+        <ca.itinerum.android.utilities.RepeatButton
+            android:id="@+id/button_increment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_add_vector"
+            app:tint="@color/list_item_indicator_enabled_dark"
+            android:padding="@dimen/padding_medium"
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:layout_marginRight="@dimen/padding_medium"
+            android:background="@drawable/background_circle_button"/>
+
+    </LinearLayout>
+
+</merge>

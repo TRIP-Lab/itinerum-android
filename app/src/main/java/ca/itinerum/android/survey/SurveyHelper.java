@@ -1,17 +1,18 @@
 package ca.itinerum.android.survey;
 
 import android.content.Context;
-import android.support.compat.BuildConfig;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import ca.itinerum.android.BuildConfig;
 import ca.itinerum.android.R;
 import ca.itinerum.android.survey.views.BaseSurveyView;
 import ca.itinerum.android.survey.views.EmailView;
 import ca.itinerum.android.survey.views.EthicsView;
+import ca.itinerum.android.survey.views.LocalMultiSelectView;
 import ca.itinerum.android.survey.views.LocalSingleSelectView;
 import ca.itinerum.android.survey.views.LocationPickerView;
-import ca.itinerum.android.survey.views.NumberTextEntryView;
+import ca.itinerum.android.survey.views.NumberPickerEntryView;
 import ca.itinerum.android.survey.views.OccupationView;
 import ca.itinerum.android.survey.views.RemoteMultiSelectView;
 import ca.itinerum.android.survey.views.RemoteSingleSelectView;
@@ -46,7 +47,9 @@ public class SurveyHelper {
 
 	public static BaseSurveyView getSurveyView(Context context, Survey survey) {
 
-		BaseSurveyView view = null;
+		BaseSurveyView view = getSurveyViewForSpecialConditions(context, survey);
+		if (view != null) return view;
+
 		// most of these need to be constructed
 		switch (survey.getId()) {
 			case SELECT_ONE:
@@ -56,7 +59,7 @@ public class SurveyHelper {
 				view = new RemoteMultiSelectView(context, survey);
 				break;
 			case NUMBER_INPUT:
-				view = new NumberTextEntryView(context, survey);
+				view = new NumberPickerEntryView(context, survey);
 				break;
 			case TEXTBOX:
 				view = new TextEntryView(context, survey);
@@ -69,14 +72,14 @@ public class SurveyHelper {
 				if (BuildConfig.DEBUG) throw new NotImplementedException("Survey type " + survey.getId() + " is not defined.");
 				break;
 			case GENDER:
-				survey.setPrompt(context.getString(R.string.question_sex_title));
 				view = new LocalSingleSelectView(context, survey);
 				((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.question_gender));
+				((LocalSingleSelectView) view).hideQuestion();
 				break;
 			case AGE:
-				survey.setPrompt(context.getString(R.string.question_age_title));
 				view = new LocalSingleSelectView(context, survey);
 				((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.question_age));
+				((LocalSingleSelectView) view).hideQuestion();
 				break;
 			case PRIMARY_MODE:
 				view = new LocalSingleSelectView(context, survey);
@@ -96,23 +99,47 @@ public class SurveyHelper {
 				break;
 			case TRAVEL_MODE_STUDY:
 				survey.setPrompt(String.format(context.getString(R.string.primary_mode_question), context.getString(R.string.travel_school_component)));
-				view = new LocalSingleSelectView(context, survey);
-				((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.primary_mode_question));
+				if (BuildConfig.FLAVOR.equals("montreal")) {
+					view = new LocalMultiSelectView(context, survey);
+					((LocalMultiSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.primary_mode_question));
+					((LocalMultiSelectView) view).setMinResponses(1);
+				} else {
+					view = new LocalSingleSelectView(context, survey);
+					((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.primary_mode_question));
+				}
 				break;
 			case TRAVEL_MODE_WORK:
 				survey.setPrompt(String.format(context.getString(R.string.primary_mode_question), context.getString(R.string.travel_work_component)));
-				view = new LocalSingleSelectView(context, survey);
-				((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.primary_mode_question));
+				if (BuildConfig.FLAVOR.equals("montreal")) {
+					view = new LocalMultiSelectView(context, survey);
+					((LocalMultiSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.primary_mode_question));
+					((LocalMultiSelectView) view).setMinResponses(1);
+				} else {
+					view = new LocalSingleSelectView(context, survey);
+					((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.primary_mode_question));
+				}
 				break;
 			case TRAVEL_MODE_ALT_STUDY:
 				survey.setPrompt(String.format(context.getString(R.string.secondary_mode_question), context.getString(R.string.travel_school_component)));
-				view = new LocalSingleSelectView(context, survey);
-				((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.secondary_mode_question));
+				if (BuildConfig.FLAVOR.equals("montreal")) {
+					view = new LocalMultiSelectView(context, survey);
+					((LocalMultiSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.secondary_mode_question));
+					((LocalMultiSelectView) view).setMinResponses(1);
+				} else {
+					view = new LocalSingleSelectView(context, survey);
+					((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.secondary_mode_question));
+				}
 				break;
 			case TRAVEL_MODE_ALT_WORK:
 				survey.setPrompt(String.format(context.getString(R.string.secondary_mode_question), context.getString(R.string.travel_work_component)));
-				view = new LocalSingleSelectView(context, survey);
-				((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.secondary_mode_question));
+				if (BuildConfig.FLAVOR.equals("montreal")) {
+					view = new LocalMultiSelectView(context, survey);
+					((LocalMultiSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.secondary_mode_question));
+					((LocalMultiSelectView) view).setMinResponses(1);
+				} else {
+					view = new LocalSingleSelectView(context, survey);
+					((LocalSingleSelectView) view).setArrayResource(context.getResources().getStringArray(R.array.secondary_mode_question));
+				}
 				break;
 			default:
 				// Null check this later and immediately advance if null
@@ -122,6 +149,56 @@ public class SurveyHelper {
 
 		return view;
 
+	}
+
+	private static BaseSurveyView getSurveyViewForSpecialConditions(Context context, Survey survey) {
+		return null;
+	}
+
+	public static String getUserVisibleSurveyTitle(Context context, Survey survey) {
+
+		String title = survey.getColName();
+
+		switch (survey.getId()) {
+			case LOCATION_HOME:
+				title = String.format(context.getString(R.string.location_title), context.getString(R.string.location_home_component));
+				break;
+			case LOCATION_STUDY:
+				title = String.format(context.getString(R.string.location_title), context.getString(R.string.location_school_component));
+				break;
+			case LOCATION_WORK:
+				title = String.format(context.getString(R.string.location_title), context.getString(R.string.location_work_component));
+				break;
+			case TRAVEL_MODE_WORK:
+			case TRAVEL_MODE_ALT_WORK:
+				title = context.getString(R.string.travel_work_title);
+				break;
+			case TRAVEL_MODE_STUDY:
+			case TRAVEL_MODE_ALT_STUDY:
+				title = context.getString(R.string.travel_school_title);
+				break;
+			case OCCUPATION:
+				title = context.getString(R.string.occupation_title);
+				break;
+			case AGE:
+				title = context.getString(R.string.question_age_title);
+				break;
+			case GENDER:
+				title = context.getString(R.string.question_gender_title);
+				break;
+			default:
+				break;
+
+		}
+
+		return title;
+	}
+
+	public static boolean isMapView(Survey survey) {
+		return (survey.getId() == LOCATION_GENERIC ||
+				survey.getId() == LOCATION_HOME ||
+				survey.getId() == LOCATION_WORK ||
+				survey.getId() == LOCATION_STUDY);
 	}
 
 	public static boolean shouldShowQuestion(Survey survey, boolean isEmployed, boolean isStudent) {

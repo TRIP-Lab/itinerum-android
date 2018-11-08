@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<!-- extra light -->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="100"
+        android:font="@font/ns_extralight"
+        app:fontStyle="normal"
+        app:fontWeight="100"
+        app:font="@font/ns_extralight"/>
+
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="100"
+        android:font="@font/ns_extralightitalic"
+        app:fontStyle="italic"
+        app:fontWeight="100"
+        app:font="@font/ns_extralightitalic"/>
+
+</font-family>

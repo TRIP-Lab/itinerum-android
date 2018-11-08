@@ -3,23 +3,23 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"
-        style="@style/LargeTitle"
+        style="@style/Title"
         android:layout_marginLeft="@dimen/padding_medium"
         android:layout_marginRight="@dimen/padding_medium"
         android:text="@string/permissions_title"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/question"
-        style="@style/BodyParagraph"
+        style="@style/Paragraph"
         android:layout_marginLeft="@dimen/padding_medium"
         android:layout_marginRight="@dimen/padding_medium"
         android:gravity="center"
         android:textAllCaps="true"
         android:text="@string/permissions_body"/>
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/location_button"
         android:text="@string/location_button"
         android:layout_height="wrap_content"
@@ -32,14 +32,14 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/permission_warning"
         android:visibility="invisible"
         android:padding="8dp"
-        style="@style/EmphasisParagraph"
+        style="@style/Paragraph.Emphasis"
         android:gravity="center"
         android:textAllCaps="true"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@color/negative_button_text_colour"
         android:text="@string/permissions_warning"/>
 
 </merge>

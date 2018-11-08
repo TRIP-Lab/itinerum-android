@@ -2,6 +2,7 @@ package ca.itinerum.android.survey.views;
 
 import android.content.Context;
 
+import ca.itinerum.android.BuildConfig;
 import ca.itinerum.android.sync.retrofit.Survey;
 
 /**
@@ -25,8 +26,10 @@ public class RemoteSingleSelectView extends SingleSelectView {
 	public void setResult(Object result) {
 		if (result != null && result instanceof String) {
 			if (mSurvey.getFields().getChoices().contains(result)) {
-				mListView.setItemChecked(mSurvey.getFields().getChoices().indexOf(result), true);
+				mListView.setCheckedItemPosition(mSurvey.getFields().getChoices().indexOf(result), true);
 			}
+		} else if (BuildConfig.DEBUG) {
+			mListView.setCheckedItemPosition(0, true);
 		}
 	}
 }

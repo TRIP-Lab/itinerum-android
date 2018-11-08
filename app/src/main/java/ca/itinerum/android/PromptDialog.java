@@ -1,116 +1,180 @@
 package ca.itinerum.android;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
-
-import org.apache.commons.lang3.NotImplementedException;
+import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 
+import butterknife.BindDimen;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import ca.itinerum.android.R;
 import ca.itinerum.android.sync.retrofit.Prompt;
 import ca.itinerum.android.sync.retrofit.PromptAnswer;
 
 public class PromptDialog extends DialogFragment {
 
-	private PromptDialogListView mPromptDialogListView;
+	@BindView(R.id.title) AppCompatTextView mTitle;
+	@BindView(R.id.recyclerview) PromptDialogSelectableRecyclerView mRecyclerview;
+	@BindView(R.id.continue_button) AppCompatButton mFragmentContinueButton;
+	@BindView(R.id.back_button) AppCompatImageButton mBackButton;
+	@BindView(R.id.dismiss_button) AppCompatImageButton mDismissButton;
+	@BindView(R.id.list_mask) FrameLayout mListMask;
+
+	@BindDimen(R.dimen.list_bottom_padding) int PADDING;
+	private ViewPropertyAnimator mAnimation;
+
+	private int mLastPositionVisible = -1;
+
+	final int VISIBLE = 1;
+	final int INVISIBLE = 0;
 
 	public static PromptDialog newInstance(Prompt prompt, int currentPrompt, ArrayList<String> selected) {
-		PromptDialog frag = new PromptDialog();
+		PromptDialog fragment = new PromptDialog();
 		Bundle args = new Bundle();
 		args.putInt("currentPrompt", currentPrompt);
 		args.putStringArrayList("selected", selected);
 		args.putParcelable("prompt", prompt);
-		frag.setArguments(args);
-		return frag;
+		args.putString("type", "PromptDialog");
+		fragment.setArguments(args);
+		return fragment;
 	}
 
 	public PromptAnswer getPromptAnswer() {
-		return mPromptDialogListView.getPromptAnswer();
+		return mRecyclerview.getPromptAnswer();
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
-        // this overrides the default onclick dismiss action
-		((AlertDialog) getDialog()).getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				((PromptDialogListener) getActivity()).onPositiveButtonClicked();
-			}
-		});
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
 	}
 
-	@SuppressLint("InflateParams")
+	@Nullable
 	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_prompt_dialog, container, false);
+		ButterKnife.bind(this, v);
+
+		mRecyclerview.setIncomplete(false);
+
+		getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 		int currentPrompt = getArguments().getInt("currentPrompt");
+
+		if (currentPrompt == 0) mBackButton.setVisibility(View.INVISIBLE);
+
 		ArrayList<String> promptPositions = getArguments().getStringArrayList("selected");
 		Prompt prompt = getArguments().getParcelable("prompt");
 
-		TextView titleView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.textview_prompt_title, null);
-		titleView.setText(prompt.getPrompt());
+		mTitle.setText(prompt.getPrompt());
 
-		AlertDialog.Builder dialogBuilder;
-		mPromptDialogListView = (PromptDialogListView) LayoutInflater.from(getContext()).inflate(R.layout.listview_dialog_prompt, null);
-
-		boolean[] selected = new boolean[prompt.getChoices().size()];
-
+		SparseBooleanArray selected = new SparseBooleanArray();
 		for (int i = 0; i < prompt.getChoices().size(); i++) {
-			selected[i] = promptPositions.contains(prompt.getChoices().get(i));
+			selected.put(i, promptPositions.contains(prompt.getChoices().get(i)));
 		}
 
-		mPromptDialogListView.setPromptContent(prompt, selected);
+		mRecyclerview.setPromptContent(prompt, selected);
+		mRecyclerview.setBottomSpace(PADDING);
 
-		// single choice prompt
-		if (prompt.getId() != 1 && prompt.getId() != 2) {
-			if (BuildConfig.DEBUG) throw new NotImplementedException("No prompt id type " + prompt.getId());
-			return null;
-		}
+		mListMask.setVisibility(mRecyclerview.isLastVisible() ? View.GONE : View.VISIBLE);
 
-		dialogBuilder = new AlertDialog.Builder(getContext())
-				.setCustomTitle(titleView)
-				.setView(mPromptDialogListView)
-				.setPositiveButton(R.string.continue_button, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
+		mFragmentContinueButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((PromptDialogListener) getActivity()).onPositiveButtonClicked(PromptDialog.this);
+			}
+		});
 
+		mBackButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((PromptDialogListener) getActivity()).onNeutralButtonClicked(PromptDialog.this);
+			}
+		});
+
+		mDismissButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((PromptDialogListener) getActivity()).onNegativeButtonClicked(PromptDialog.this);
+			}
+		});
+
+		// Add a layout change listener to detect when the view has properly rendered
+		mRecyclerview.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+			@Override
+			public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+				LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerview.getLayoutManager();
+				if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() != RecyclerView.NO_POSITION) {
+					updateRecyclerviewMask();
+					// check if the first and last views are completely visible to remove scrolling effects
+					if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mRecyclerview.getAdapter().getItemCount() - 1) {
+						mRecyclerview.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
 					}
-				});
+					// remove the listener for efficiency
+					mRecyclerview.removeOnLayoutChangeListener(this);
+				}
+			}
+		});
 
-		if (currentPrompt != 0) {
-			dialogBuilder.setNeutralButton(R.string.back_button, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialogBuilder, int which) {
-					((PromptDialogListener) getActivity()).onNeutralButtonClicked();
-				}
-			});
-		} else {
-			dialogBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialogBuilder, int which) {
-					((PromptDialogListener) getActivity()).onNegativeButtonClicked();
-				}
-			});
+		mRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+				super.onScrollStateChanged(recyclerView, newState);
+				updateRecyclerviewMask();
+			}
+
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				super.onScrolled(recyclerView, dx, dy);
+				updateRecyclerviewMask();
+			}
+		});
+
+		getDialog().setCanceledOnTouchOutside(false);
+		getDialog().setCancelable(false);
+
+		return v;
+	}
+
+//	@Override
+//	public void onStart() {
+//		super.onStart();
+//		Dialog dialog = getDialog();
+//		if (dialog != null) {
+//			DisplayMetrics displaymetrics = new DisplayMetrics();
+//			getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//			int width = (int) (displaymetrics.widthPixels * 0.9);
+//
+//			dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+//			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//		}
+//
+//	}
+
+	private void updateRecyclerviewMask() {
+		int lastPositionVisible = mRecyclerview.isLastVisible() ? VISIBLE : INVISIBLE;
+		if (lastPositionVisible != mLastPositionVisible) {
+			mListMask.animate().alpha(mRecyclerview.isLastVisible() ? 0f : 1f).start();
 		}
-
-		AlertDialog dialog = dialogBuilder.create();
-
-		dialog.setCanceledOnTouchOutside(false);
-		dialog.setCancelable(false);
-
-		return dialog;
+		mLastPositionVisible = lastPositionVisible;
 	}
-
-	public interface PromptDialogListener {
-		void onPositiveButtonClicked();
-		void onNeutralButtonClicked();
-		void onNegativeButtonClicked();
-	}
-
 }

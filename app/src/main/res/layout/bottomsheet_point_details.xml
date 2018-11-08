@@ -28,15 +28,15 @@
             android:padding="@dimen/padding_small"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_point_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
-                android:textColor="@color/base_colour"
+                android:textColor="@color/base"
                 android:text="@string/saved_location_point"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_point_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:paddingBottom="1dp"
                 />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_point_accuracy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:paddingBottom="1dp"
                 />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_point_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

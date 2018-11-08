@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        style="@style/Title.DarkTheme"
+        android:paddingTop="0dp"
+        android:layout_marginTop="0dp"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/question"
+        style="@style/Paragraph.Emphasis.DarkTheme"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="16dp"/>
+
+    <ca.itinerum.android.utilities.NumberPickerViewGroup
+        android:id="@+id/number_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"/>
+
+</merge>

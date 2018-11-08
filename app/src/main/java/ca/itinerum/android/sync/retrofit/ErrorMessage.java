@@ -7,28 +7,40 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class ErrorMessage {
 
-	@SerializedName("message")
+	@SerializedName("status")
 	@Expose
-	private String message;
+	private String mStatus;
 
-	@SerializedName("error")
+	@SerializedName("errors")
 	@Expose
-	private String error;
+	private String[] mErrors;
 
-	public String getError() {
-		return error;
+	@SerializedName("type")
+	@Expose
+	private String mType;
+
+	public String getStatus() {
+		return mStatus;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setStatus(String status) {
+		mStatus = status;
 	}
 
-	public String getMessage() {
-		return message;
+	public String[] getErrors() {
+		return mErrors;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setErrors(String[] errors) {
+		mErrors = errors;
+	}
+
+	public String getType() {
+		return mType;
+	}
+
+	public void setType(String type) {
+		mType = type;
 	}
 
 	@Override

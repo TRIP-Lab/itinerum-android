@@ -1,7 +1,9 @@
 package ca.itinerum.android.utilities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,7 +21,7 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 
 import ca.itinerum.android.BuildConfig;
-import ca.itinerum.android.utilities.db.LocationDatabase;
+import ca.itinerum.android.utilities.db.ItinerumDatabase;
 
 /**
  * Created by stewjacks on 2017-07-26.
@@ -95,8 +98,8 @@ public class SystemUtils {
 		sp.deleteAllSettings();
 
 		try {
-			LocationDatabase.getInstance(context).locationDao().nukeTable();
-			LocationDatabase.getInstance(context).promptDao().nukeTable();
+			ItinerumDatabase.getInstance(context).locationDao().nukeTable();
+			ItinerumDatabase.getInstance(context).promptDao().nukeTable();
 		} catch (Exception e) {
 			Logger.l.e("error clearing points db", e.toString());
 		}
@@ -112,6 +115,11 @@ public class SystemUtils {
 		if (imm != null) {
 			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 		}
+	}
+
+	public static boolean locationEnabled(Context context) {
+		return !(ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+				ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED);
 	}
 
 }

@@ -1,0 +1,57 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/back_button"
+        style="@style/BackButton"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/content_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/about_itinerum_graphic"/>
+
+        </FrameLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/title"
+            style="@style/Title.DarkTheme"
+            android:text="@string/welcome_title"
+            android:paddingTop="@dimen/padding_large"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/paragraph"
+            style="@style/Paragraph.Emphasis.DarkTheme"
+            android:paddingLeft="40dp"
+            android:paddingRight="@dimen/padding_large"
+            android:text="@string/welcome_paragraph"
+            android:layout_marginBottom="116dp"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/continue_button"
+        style="@style/StockButton.Survey"
+        android:text="@string/lets_get_started"/>
+
+</FrameLayout>

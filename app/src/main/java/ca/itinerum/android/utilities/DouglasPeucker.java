@@ -28,7 +28,7 @@ public class DouglasPeucker {
 			}
 		}
 
-		List<LocationPoint> resultList = null;
+		List<LocationPoint> resultList;
 
 		if(points.size() < 2)
 		{

@@ -14,7 +14,6 @@ import ca.itinerum.android.R;
 import ca.itinerum.android.recording.RecordingUtils;
 import ca.itinerum.android.utilities.Logger;
 import ca.itinerum.android.utilities.ServiceEvents;
-import ca.itinerum.android.utilities.SharedPreferenceManager;
 
 /**
  * This is class is in charge of scheduling the next attempts to sync the data

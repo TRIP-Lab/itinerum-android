@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#ffffff">
+
+    <item>
+        <selector>
+            <!-- Checked -->
+            <item android:state_checked="true"
+                  android:drawable="@drawable/background_slightly_rounded_button_selected" />
+
+            <!-- Activated -->
+            <item android:state_activated="true"
+                  android:drawable="@drawable/background_slightly_rounded_button_selected" />
+
+            <item android:drawable="@drawable/background_slightly_rounded_button_base" />
+        </selector>
+    </item>
+
+</ripple>

@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 
+import org.joda.time.DateTime;
+
 import ca.itinerum.android.DMApplication;
 
 
@@ -27,4 +29,9 @@ public class CutoffJob extends Job {
 				.build()
 				.schedule();
 	}
+
+	public static int scheduleJob(final DateTime delay) {
+		return scheduleJob(delay.getMillis());
+	}
+
 }

@@ -1,54 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:clickable="true"
-              android:orientation="vertical" >
+              android:layout_height="match_parent">
 
-    <TextView
+
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/location_title"
-        style="@style/LargeTitle"
-        android:text="@string/location_title"/>
+        android:padding="@dimen/padding_small"
+        android:paddingTop="0dp"
+        android:gravity="center_horizontal"
+        android:text="@string/location_title"
+        android:layout_alignParentTop="true"
+        style="@style/Title.Small.DarkTheme"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/location_paragraph"
-        style="@style/EmphasisParagraph"
-        android:layout_marginLeft="8dp"
-
-        android:text="@string/location_paragraph"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_medium"
-        android:layout_marginRight="@dimen/padding_medium"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/location_field"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/location_hint"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:lines="1"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/location_search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@android:string/search_go"
-            android:enabled="false"/>
-
-    </LinearLayout>
+        style="@style/Paragraph.Emphasis.DarkTheme"
+        android:gravity="center_horizontal"
+        android:text="@string/location_paragraph"
+        android:layout_below="@id/location_title"
+        android:paddingBottom="41dp"
+        android:paddingLeft="@dimen/padding_large"
+        android:paddingRight="@dimen/padding_large"/>
+    <!--41dp is 16dp + 25dp: typical padding + 1/2 of edittext height-->
 
     <ca.itinerum.android.CrosshairMapView
         android:id="@+id/crosshair_mapview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/location_paragraph"
+        />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/padding_medium"
+        android:layout_marginRight="@dimen/padding_medium"
+        android:layout_marginTop="-25dp"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_light"
+        android:layout_alignTop="@id/crosshair_mapview">
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/location_search_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="@dimen/padding_small"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_search_vector"
+            app:tint="@android:color/darker_gray"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/location_field"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/location_hint"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:gravity="center_horizontal"
+            android:lines="1"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:theme="@style/Edittext"
+            android:textColorHint="#999999"
+            app:backgroundTint="@color/list_item_indicator_enabled_dark"
+            />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/location_clear_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="@dimen/padding_small"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_close_vector"
+            app:tint="@android:color/darker_gray"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

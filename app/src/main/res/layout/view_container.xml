@@ -1,58 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragment_background"
-    android:animateLayoutChanges="true"
-    android:clickable="true">
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Base.Widget.AppCompat.ProgressBar"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:indeterminate="true"/>
+    style="@style/SurveyCard">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/back_button"
+            style="@style/BackButton.Survey"/>
+        
         <FrameLayout
-            android:id="@+id/fragment_container"
+            android:id="@+id/container_fullframe"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/padding_medium"
-            android:animateLayoutChanges="true"/>
-
-        <LinearLayout
-            android:id="@+id/bottom_buttons_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:id="@+id/fragment_back_button"
-                style="@style/BackButton"
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"/>
-
-            <Button
-                android:id="@+id/fragment_continue_button"
-                style="@style/StockButton"
-                android:text="@string/continue_button"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="4"/>
-
-        </LinearLayout>
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
-</RelativeLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <FrameLayout
+            android:id="@+id/list_mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/list_scroll_mask_dark"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/continue_button"
+            style="@style/StockButton.Survey"
+            android:layout_marginTop="0dp"
+            android:text="@string/continue_button"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/survey_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@android:color/transparent"
+        android:progressTint="@color/survey_progress_color"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_marginBottom="-8dp"/>
+
+    <FrameLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:indeterminateTint="@color/survey_progress_color"
+            android:layout_gravity="center"
+            android:indeterminate="true"/>
+
+    </FrameLayout>
+
+</FrameLayout>

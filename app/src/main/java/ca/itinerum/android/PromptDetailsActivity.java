@@ -1,6 +1,7 @@
 package ca.itinerum.android;
 
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -24,11 +25,13 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.BuildConfig;
+import ca.itinerum.android.R;
 import ca.itinerum.android.recording.Session;
 import ca.itinerum.android.sync.PromptAnswerGroup;
 import ca.itinerum.android.sync.retrofit.PromptAnswer;
 import ca.itinerum.android.utilities.SharedPreferenceManager;
-import ca.itinerum.android.utilities.db.LocationDatabase;
+import ca.itinerum.android.utilities.db.ItinerumDatabase;
 
 public class PromptDetailsActivity extends AppCompatActivity implements PromptDetailsView.DetailsViewUpdateListener {
 
@@ -49,6 +52,8 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		mToolbar.getNavigationIcon().setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+
 		mNewPrompt = getIntent().getBooleanExtra("new_prompt", false);
 
 		if (mNewPrompt) {
@@ -68,7 +73,7 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 
 			PromptAnswerGroup data = PromptAnswerGroup
 					.sortPrompts(
-							LocationDatabase.getInstance(this).promptDao().getAllRegisteredPromptAnswers(),
+							ItinerumDatabase.getInstance(this).promptDao().getAllRegisteredPromptAnswers(),
 							SharedPreferenceManager.getInstance(this).getNumberOfPrompts())
 					.get(position);
 
@@ -110,14 +115,8 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 					// save
 					if (mPromptDetailsView.promptsAreValid()) {
 						List<PromptAnswer> answers = mPromptDetailsView.getAnswers();
-						int numberOfPrompts = SharedPreferenceManager.getInstance(this).getNumberOfRecordedPrompts();
 						if (mNewPrompt && !mHasIncremented) {
-							for (PromptAnswer answer: answers) {
-								answer.setPromptNumber(numberOfPrompts);
-							}
 
-							numberOfPrompts++;
-							SharedPreferenceManager.getInstance(this).setNumberOfRecordedPrompts(numberOfPrompts);
 							mHasIncremented = true;
 
 							insertNewEntry(answers);
@@ -157,17 +156,23 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 	private void insertNewEntry(List<PromptAnswer> answers) {
 		PromptAnswer[] spread = new PromptAnswer[answers.size()];
 		spread = answers.toArray(spread);
-		LocationDatabase.getInstance(this).promptDao().insert(spread);
+		ItinerumDatabase.getInstance(this).promptDao().insert(spread);
 	}
 
 	private void editEntry(List<PromptAnswer> answers) {
 		PromptAnswer[] spread = new PromptAnswer[answers.size()];
 		spread = answers.toArray(spread);
-		LocationDatabase.getInstance(this).promptDao().update(spread);
+		ItinerumDatabase.getInstance(this).promptDao().update(spread);
 	}
 
 	@Override
 	public void onBackPressed() {
+
+		if (mPromptDetailsView.isInMapMode()) {
+			mPromptDetailsView.minimizeMap();
+			return;
+		}
+
 		if (mIsEditing) showOnBackWarning();
 		else super.onBackPressed();
 	}
@@ -188,26 +193,26 @@ public class PromptDetailsActivity extends AppCompatActivity implements PromptDe
 	}
 
 	@Override
-	public void onDateClicked(DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth) {
-		Calendar minDate = new DateTime(SharedPreferenceManager.getInstance(this).getQuestionnaireCompleteDate()).toCalendar(Locale.US);
+	public void onDateClicked(DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth, DateTime minDateTime, String title) {
+		Calendar minDate = minDateTime == null ? new DateTime(SharedPreferenceManager.getInstance(this).getQuestionnaireCompleteDate()).toCalendar(Locale.US) : minDateTime.toCalendar(Locale.US);
 		Calendar maxDate = DateTime.now().toCalendar(Locale.US);
 
 		DatePickerDialog dialog = DatePickerDialog.newInstance(listener, year, monthOfYear, dayOfMonth);
 
 		dialog.setMinDate(minDate);
 		dialog.setMaxDate(maxDate);
-		dialog.setAccentColor(getResources().getColor(R.color.base_colour));
+		dialog.setAccentColor(getResources().getColor(R.color.base));
 
 		dialog.show(getFragmentManager(), "datepicker_dialog");
 	}
 
 	@Override
-	public void onTimeClicked(TimePickerDialog.OnTimeSetListener listener, int hourOfDay, int minute, boolean isToday) {
+	public void onTimeClicked(TimePickerDialog.OnTimeSetListener listener, int hourOfDay, int minute, boolean isToday, String title) {
 
 		TimePickerDialog dialog = TimePickerDialog.newInstance(listener, hourOfDay, minute, DateFormat.is24HourFormat(this));
 
 		if (isToday) dialog.setMaxTime(hourOfDay, minute, 59);
-		dialog.setAccentColor(getResources().getColor(R.color.base_colour));
+		dialog.setAccentColor(getResources().getColor(R.color.base));
 
 		dialog.show(getFragmentManager(), "timepicker_dialog");
 	}

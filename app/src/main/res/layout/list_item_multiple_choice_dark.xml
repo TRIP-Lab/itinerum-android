@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ca.itinerum.android.common.CheckableLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/padding_large"
+    android:layout_marginLeft="@dimen/padding_large"
+    android:layout_marginRight="@dimen/padding_large"
+    >
+
+    <!--<ca.itinerum.android.common.CheckableButton-->
+        <!--android:id="@+id/background"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
+
+    <ca.itinerum.android.common.CheckableTextView
+        android:id="@+id/textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:maxLines="2"
+        android:padding="@dimen/padding_small"
+        android:layout_marginLeft="@dimen/padding_large"
+        android:clickable="false"
+        style="@style/Paragraph"
+        />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/padding_large"
+        android:clickable="false"
+        android:theme="@style/Checkbox.Multiple"
+        />
+
+</ca.itinerum.android.common.CheckableLinearLayout>
+
+
+<!--<ca.itinerum.android.common.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:id="@+id/container"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@drawable/background_rounded_list_item_base_dark"-->
+    <!--android:padding="@dimen/padding_large"-->
+    <!--android:layout_marginLeft="@dimen/padding_large"-->
+    <!--android:layout_marginRight="@dimen/padding_large"-->
+    <!--&gt;-->
+
+    <!--<android.support.v7.widget.AppCompatTextView-->
+        <!--android:id="@+id/textview"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:textColor="@color/list_item_text_color_unselected"-->
+        <!--android:padding="@dimen/padding_small"-->
+        <!--android:layout_marginLeft="@dimen/padding_large"-->
+        <!--style="@style/Paragraph"-->
+        <!--/>-->
+
+    <!--<android.support.v7.widget.AppCompatCheckBox-->
+        <!--android:id="@+id/checkbox"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginRight="@dimen/padding_large"-->
+        <!--android:clickable="false"-->
+        <!--android:theme="@style/Checkbox.Multiple"-->
+        <!--/>-->
+
+<!--</ca.itinerum.android.common.CheckableLinearLayout>-->

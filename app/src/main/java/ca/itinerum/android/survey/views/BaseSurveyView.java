@@ -55,4 +55,8 @@ public abstract class BaseSurveyView extends LinearLayout implements SurveyQuest
 		super.onDetachedFromWindow();
 		mListener = null;
 	}
+
+	public boolean isFullframe() {
+		return false;
+	}
 }

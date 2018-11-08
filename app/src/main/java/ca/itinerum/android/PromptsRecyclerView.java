@@ -1,38 +1,39 @@
 package ca.itinerum.android;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.R;
+import ca.itinerum.android.common.BottomSpaceItemDecoration;
 import ca.itinerum.android.sync.PromptAnswerGroup;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
-import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 public class PromptsRecyclerView extends FrameLayout {
 	@BindView(R.id.recyclerview) RecyclerView mRecyclerview;
-	@BindView(R.id.textview_no_data) TextView mTextviewNoData;
+	@BindView(R.id.textview_no_data) AppCompatTextView mTextviewNoData;
+	@BindView(R.id.list_mask) View mListMask;
 
 	private OnPromptItemClickedListener mOnPromptItemClickListener;
+	private int mLastPositionVisible = -1;
 
 	public PromptsRecyclerView(@NonNull Context context) {
 		this(context, null);
@@ -54,146 +55,106 @@ public class PromptsRecyclerView extends FrameLayout {
 		super.onFinishInflate();
 		ButterKnife.bind(this);
 		this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+		mRecyclerview.setHasFixedSize(true);
+
+		mRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+				super.onScrollStateChanged(recyclerView, newState);
+				updateRecyclerviewMask();
+			}
+
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+				super.onScrolled(recyclerView, dx, dy);
+				updateRecyclerviewMask();
+			}
+		});
+	}
+
+	private void updateRecyclerviewMask() {
+		int lastPositionVisible = isLastVisible() ? VISIBLE : INVISIBLE;
+		if (lastPositionVisible != mLastPositionVisible) {
+			mListMask.animate().alpha(isLastVisible() ? 0f : 1f).start();
+		}
+		mLastPositionVisible = lastPositionVisible;
 	}
 
 	public void setPromptData(List<PromptAnswerGroup> promptData) {
 		mTextviewNoData.setVisibility(promptData.size() > 0 ? GONE : VISIBLE);
+		mRecyclerview.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+		mRecyclerview.setAdapter(new Adapter(promptData));
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
-		Collections.sort(promptData, new Comparator<PromptAnswerGroup>() {
-			@Override
-			public int compare(PromptAnswerGroup promptAnswerGroup, PromptAnswerGroup t1) {
-				return promptAnswerGroup.getSubmitDate().compareTo(t1.getSubmitDate());
-			}
-		});
+		mRecyclerview.setLayoutManager(linearLayoutManager);
 
-		List<List<PromptAnswerGroup>> dateGroupedAnswers = new ArrayList<>();
-		List<PromptAnswerGroup> dateGroup = new ArrayList<>();
+		updateRecyclerviewMask();
 
-
-		//TODO: golf this -> can be done with sublist and equalsDay cleanly
-		int i = 0;
-		for (PromptAnswerGroup group: promptData) {
-			group.setPosition(i);
-			i++;
-
-			if (dateGroup.size() == 0) {
-				dateGroup.add(group);
-			} else if (dateGroup.get(0).equalsDay(group)) {
-				dateGroup.add(group);
-			} else {
-				dateGroupedAnswers.add(dateGroup);
-				dateGroup = new ArrayList<>();
-				dateGroup.add(group);
-			}
-		}
-
-		if (dateGroup.size() > 0) dateGroupedAnswers.add(dateGroup);
-
-		final SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();
-
-		for (List<PromptAnswerGroup> group : dateGroupedAnswers) {
-			sectionAdapter.addSection(new Section(group));
-		}
-
-		mRecyclerview.setAdapter(sectionAdapter);
-		GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
-
-		gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-			@Override
-			public int getSpanSize(int position) {
-				switch(sectionAdapter.getSectionItemViewType(position)) {
-					case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
-						return 3;
-					case SectionedRecyclerViewAdapter.VIEW_TYPE_FOOTER:
-						return 3;
-					default:
-						return 1;
-				}
-			}
-		});
-		mRecyclerview.setLayoutManager(gridLayoutManager);
-
-	}
-
-	public static int sidebarColor(String seed) {
-		if (seed == null) return 0;
-		Random random = new Random(seed.hashCode());
-		return Color.HSVToColor(new float[] { random.nextInt(128) + 136, 0.75f, 0.75f });
 	}
 
 	public void setOnPromptItemClickListener(OnPromptItemClickedListener listener) {
 		mOnPromptItemClickListener = listener;
 	}
 
-	class Section extends StatelessSection {
+	class Adapter extends RecyclerView.Adapter<PromptViewHolder> {
 
-		private final List<PromptAnswerGroup> mItemList;
+		private final List<PromptAnswerGroup> mPromptData;
 
-		public Section(List<PromptAnswerGroup> list) {
-			super(new SectionParameters.Builder(R.layout.list_item_prompt)
-					.headerResourceId(R.layout.list_item_header)
-					.footerResourceId(R.layout.view_footer_shadow)
-					.build());
-
-			mItemList = list;
-
-		}
-
-		@Override
-		public int getContentItemsTotal() {
-			return mItemList.size(); // number of items of this section
-		}
-
-		@Override
-		public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
-			return new PromptSectionTitleViewHolder(view);
-		}
-
-		@Override
-		public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
-			PromptSectionTitleViewHolder itemHolder = (PromptSectionTitleViewHolder) holder;
-
-			itemHolder.mTextViewTitle.setText(mItemList.get(0).getSubmitDate().toString(DateTimeFormat.fullDate()));
-		}
-
-		@Override
-		public RecyclerView.ViewHolder getItemViewHolder(View view) {
-			return new PromptViewHolder(view);
-		}
-
-		@Override
-		public void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position) {
-			PromptViewHolder itemHolder = (PromptViewHolder) holder;
-
-			itemHolder.getRootView().setOnClickListener(new OnClickListener() {
+		public Adapter(List<PromptAnswerGroup> promptData) {
+			Collections.sort(promptData, new Comparator<PromptAnswerGroup>() {
 				@Override
-				public void onClick(View view) {
-					if (mOnPromptItemClickListener != null)
-						mOnPromptItemClickListener.onPromptItemClick(view, mItemList.get(position).getPosition());
+				public int compare(PromptAnswerGroup promptAnswerGroup, PromptAnswerGroup t1) {
+					return promptAnswerGroup.getSubmitDate().compareTo(t1.getSubmitDate());
 				}
 			});
 
-			// bind your view here
-			itemHolder.setText(mItemList.get(position).getSubmitDate().toString(DateTimeFormat.shortTime()));
-			itemHolder.setBackground(sidebarColor(mItemList.get(position).getSubmitDate().toString(DateTimeFormat.fullDateTime())));
+			mPromptData = promptData;
+		}
+
+		@NonNull
+		@Override
+		public PromptViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+			View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_prompt, parent, false);
+
+			return new PromptViewHolder(v);
+		}
+
+		@Override
+		public void onBindViewHolder(@NonNull PromptViewHolder holder, final int position) {
+			DateTime dt = mPromptData.get(position).getSubmitDate();
+			holder.setDateTime(dt.toString(DateTimeFormat.forPattern("M - dd - YYYY")), dt.toString(DateTimeFormat.shortTime()));
+			holder.setPosition(position + 1);
+			if (mOnPromptItemClickListener != null)
+				holder.getRootView().setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						if (mOnPromptItemClickListener != null)
+							mOnPromptItemClickListener.onPromptItemClick(v, position);
+					}
+				});
+		}
+
+		@Override
+		public int getItemCount() {
+			return mPromptData.size();
 		}
 	}
 
-	class PromptSectionTitleViewHolder extends RecyclerView.ViewHolder {
+	public void setBottomPadding(int padding) {
+		LayoutParams lp = (LayoutParams) mTextviewNoData.getLayoutParams();
+		lp.setMargins(0, -padding/2, 0, 0);
+		mTextviewNoData.setLayoutParams(lp);
 
-		@BindView(R.id.prompt_title) TextView mTextViewTitle;
-
-		public PromptSectionTitleViewHolder(View itemView) {
-			super(itemView);
-			ButterKnife.bind(this, itemView);
-		}
+		mRecyclerview.addItemDecoration(new BottomSpaceItemDecoration(padding));
 	}
 
 	class PromptViewHolder extends RecyclerView.ViewHolder {
 
 		private final View mRootView;
-		@BindView(R.id.imageview_indicator) ImageView mImageViewIndicator;
-		@BindView(R.id.textview_time) TextView mTextViewTime;
+		@BindView(R.id.textview_position) AppCompatTextView mTextviewPosition;
+		@BindView(R.id.textview_date) AppCompatTextView mTextviewDate;
+		@BindView(R.id.textview_time) AppCompatTextView mTextviewTime;
+		@BindView(R.id.button_edit) ImageView mButtonEdit;
 
 		public PromptViewHolder(View itemView) {
 			super(itemView);
@@ -201,8 +162,13 @@ public class PromptsRecyclerView extends FrameLayout {
 			ButterKnife.bind(this, itemView);
 		}
 
-		public void setText(String text) {
-			mTextViewTime.setText(text);
+		public void setDateTime(String date, String time) {
+			mTextviewDate.setText(date);
+			mTextviewTime.setText(time);
+		}
+
+		public void setPosition(int position) {
+			mTextviewPosition.setText("" + position);
 		}
 
 		public void setBackground(int colour) {
@@ -212,6 +178,12 @@ public class PromptsRecyclerView extends FrameLayout {
 		public View getRootView() {
 			return mRootView;
 		}
+	}
+
+	public boolean isLastVisible() {
+		if (mRecyclerview.getAdapter().getItemCount() < 1) return true;
+
+		return (((LinearLayoutManager) mRecyclerview.getLayoutManager()).findLastCompletelyVisibleItemPosition() + 1 >= mRecyclerview.getAdapter().getItemCount());
 	}
 
 	public interface OnPromptItemClickedListener {

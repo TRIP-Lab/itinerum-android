@@ -1,12 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="base_colour">#386af9</color>
-    <color name="transparent_grey">#CCaaaaaa</color>
+    <!-- Common colours -->
+    <color name="transparent_grey">#ccaaaaaa</color>
+
+    <color name="white">#fefefe</color>
+    <color name="dark">#333333</color>
+    
+    <color name="base">#007af2</color>
+    <color name="accent_colour">@color/base</color>
+    <color name="background_light">@color/white</color>
+    <color name="background_dark">@color/base</color>
+    <color name="text_colour_light">@color/white</color>
+    <color name="text_colour_dark">@color/base</color>
+    <color name="accent_colour_dark">@color/base</color>
+    <color name="accent_colour_light">@color/white</color>
+
+    <color name="map_toolbar">@color/base</color>
+    <color name="map_card_background">@color/background_light</color>
+    
+    <color name="survey_accent_colour">@color/white</color>
+
+    <color name="button_background_light">@color/white</color>
+    <color name="button_background_dark">@color/white</color>
+    <color name="card_small_title_text">@color/dark</color>
+
+    <color name="rounded_light_outline">@color/background_light</color>
+
+    <color name="slightly_rounded_background">@color/base</color>
+    <color name="slightly_rounded_border">@color/white</color>
+    <color name="slightly_rounded_selected_background">@color/white</color>
+    <color name="slightly_rounded_selected_border">@color/white</color>
+    <color name="slightly_rounded_text">@color/text_colour_light</color>
+    <color name="slightly_rounded_selected_text">@color/text_colour_dark</color>
+
+    <color name="fab_tint">@color/base</color>
+    <color name="fab_background_tint">@color/white</color>
+
+    <color name="card_background">@color/background_dark</color>
+    <color name="card_text">@color/text_colour_dark</color>
+    <color name="card_title_text">@color/white</color>
+    <color name="card_title_background">@color/base</color>
+    <color name="contentcard_title_text">@color/text_colour_light</color>
+    <color name="contentcard_large_text">@color/text_colour_light</color>
+    <color name="contentcard_totals_text">@color/text_colour_light</color>
+
     <color name="fragment_background">#fefffe</color>
     <color name="header_background">#eeeeee</color>
+    <color name="logo_banner_background">@color/white</color>
+    <color name="ethics_text_banner_background">#007af2</color>
+    <color name="ethics_text_banner_tint">@color/text_colour_light</color>
 
-    <color name="stop_colour">#BF8C9EFF</color>
+    <color name="back_button">@color/list_item_indicator_enabled_dark</color>
 
-    <color name="highlight_incomplete">#FFEBEE</color>
+    <color name="stop_colour">#bf8c9eff</color>
+
+    <color name="highlight_incomplete">#ffebee</color>
     <color name="toolbar_default">#212121</color>
+    <color name="divider">#d8d8d8</color>
+
+    <color name="list_mask_light">#adadad</color>
+    <color name="list_mask_dark">@color/background_dark</color>
+
+    <!-- Survey specific colours -->
+    <color name="toolbar_survey">#212121</color>
+    <color name="background_survey">#007af2</color>
+    <color name="text_colour_survey">@color/white</color>
+    <color name="background_location_picker_bubble">@color/button_background_dark</color>
+    <color name="back_button_survey">@color/list_item_indicator_enabled_dark</color>
+
+    <color name="button_text_light">@color/base</color>
+    <color name="button_text_light_checked">@color/text_colour_dark</color>
+    <color name="button_text_light_pressed">@color/base</color>
+    <color name="button_text_light_pressed_checked">@color/text_colour_dark</color>
+
+    <color name="button_text_dark">@color/base</color>
+    <color name="button_text_dark_checked">@color/text_colour_light</color>
+    <color name="button_text_dark_pressed">@color/base</color>
+    <color name="button_text_dark_pressed_checked">@color/text_colour_light</color>
+
+    <color name="rounded_checkbox">@color/white</color>
+    <color name="rounded_checkbox_checked">@color/base</color>
+    <color name="rounded_checkbox_pressed">@color/white</color>
+    <color name="rounded_checkbox_pressed_checked">@color/base</color>
+
+    <!-- List item variants -->
+    <color name="list_item_background_light">@color/white</color>
+    <color name="list_item_selected_light">#007af2</color>
+    <color name="list_item_indicator_enabled_light">@color/white</color>
+    <color name="list_item_indicator_light">#007af2</color>
+    <color name="list_item_text_color_selected_light">@color/white</color>
+    <color name="list_item_text_color_light">@color/dark</color>
+    <color name="checkbox_single_select_light">@color/white</color>
+    <color name="checkbox_single_select_checked_light">@color/white</color>
+    <color name="checkbox_multi_select_light">@color/dark</color>
+    <color name="checkbox_multi_select_checked_light">@color/white</color>
+
+    <color name="list_item_text_color_selected">@color/white</color>
+    <color name="list_item_text_color_unselected">@color/white</color>
+    <color name="list_item_background_dark">@color/base</color>
+    <color name="list_item_indicator_enabled_dark">@color/white</color>
+    <color name="list_item_text_color_selected_dark">@color/white</color>
+    <color name="list_item_text_color_dark">@color/white</color>
+    <color name="checkbox_single_select_dark">@color/white</color>
+    <color name="checkbox_single_select_checked_dark">@color/white</color>
+    <color name="checkbox_multi_select_dark">@color/white</color>
+    <color name="checkbox_multi_select_checked_dark">@color/white</color>
+
+    <color name="prompt_detail_title">@color/dark</color>
+
+    <color name="negative_button_text_colour">@android:color/holo_red_dark</color>
+    <color name="prompt_detail_resizing_button">@color/text_colour_light</color>
+    <color name="prompt_nav_button_tint">@color/text_colour_light</color>
+    <color name="prompt_close_button_tint">@color/base</color>
+
+    <color name="prompt_details_background">@color/background_light</color>
+    <color name="card_background_light">@color/background_dark</color>
+    <color name="selection_recyclerview_indicator">#ff0000</color>
+
+    <color name="complete_asset_tint">@color/white</color>
+
+    <color name="survey_progress_color">@color/white</color>
+
 </resources>

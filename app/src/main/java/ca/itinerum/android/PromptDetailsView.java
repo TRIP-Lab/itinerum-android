@@ -2,14 +2,14 @@ package ca.itinerum.android;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,6 +32,7 @@ import java.util.List;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.R;
 import ca.itinerum.android.sync.PromptAnswerGroup;
 import ca.itinerum.android.sync.retrofit.Prompt;
 import ca.itinerum.android.sync.retrofit.PromptAnswer;
@@ -39,22 +40,23 @@ import ca.itinerum.android.utilities.DateUtils;
 import ca.itinerum.android.utilities.SharedPreferenceManager;
 import ca.itinerum.android.utilities.SystemUtils;
 
-public class PromptDetailsView extends NestedScrollView implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener, OnMapReadyCallback {
+public class PromptDetailsView extends ScrollView implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener, OnMapReadyCallback {
 
 	@BindView(R.id.container) LinearLayout mContainer;
 	@BindView(R.id.crosshair_mapview) CrosshairMapView mCrosshairMapView;
 	@BindView(R.id.map_container) FrameLayout mMapContainer;
 	@BindView(R.id.prompts_container) LinearLayout mPromptsContainer;
-	@BindView(R.id.button_date) TextView mButtonDate;
-	@BindView(R.id.button_time) TextView mButtonTime;
-	@BindView(R.id.button_submit) Button mButtonSubmit;
-	@BindView(R.id.button_cancel) Button mButtonCancel;
+	@BindView(R.id.button_date) AppCompatButton mButtonDate;
+	@BindView(R.id.button_time) AppCompatButton mButtonTime;
+	@BindView(R.id.button_submit) AppCompatButton mButtonSubmit;
+	@BindView(R.id.button_cancel) AppCompatButton mButtonCancel;
 	@BindView(R.id.map_masking_view) FrameLayout mMapMaskingView;
-	@BindView(R.id.button_map_cancel) Button mButtonMapCancel;
-	@BindView(R.id.button_map_save) Button mButtonMapSave;
-	@BindView(R.id.peek_container) LinearLayout mPeekContainer;
+	@BindView(R.id.button_map_cancel) AppCompatButton mButtonMapCancel;
+	@BindView(R.id.button_map_save) AppCompatButton mButtonMapSave;
+	@BindView(R.id.textview_map_instruction) AppCompatTextView mTextviewMapInstruction;
+	@BindView(R.id.textview_date) AppCompatTextView mTextviewDate;
+	@BindView(R.id.textview_time) AppCompatTextView mTextviewTime;
 	@BindView(R.id.masking_view) View mMaskingView;
-	@BindView(R.id.textview_map_instruction) TextView mTextviewMapInstruction;
 
 	@BindDimen(R.dimen.default_prompt_details_map_height) int DEFAULT_MAP_HEIGHT;
 	@BindDimen(R.dimen.padding_large) int PADDING;
@@ -62,7 +64,7 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 
 	private DetailsViewUpdateListener mListener;
 	private LatLng mLocation = new LatLng(0, 0);
-	private List<PromptDialogListView> mGeneratedPromptLists = new ArrayList<>();
+	private List<PromptDialogSelectableRecyclerView> mGeneratedPromptLists = new ArrayList<>();
 	private PromptAnswerGroup mPromptAnswers;
 	private GoogleMap mMap;
 	private boolean mScrollable = true;
@@ -107,17 +109,15 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 		mCrosshairMapView.setCrosshairVisible(false);
 		mCrosshairMapView.setMapReadyCallback(this);
 
-		mPeekContainer.setPadding(0, mPeekContainer.getPaddingTop() + mPeekTopPadding, 0, 0);
-
 		mButtonDate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (!mEditable) return;
-
 				if (mListener != null) mListener.onDateClicked(PromptDetailsView.this,
 						mRecordedDate.getYear(),
 						mRecordedDate.getMonthOfYear() - 1,
-						mRecordedDate.getDayOfMonth());
+						mRecordedDate.getDayOfMonth(),
+						null, null);
 			}
 		});
 
@@ -130,40 +130,22 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 				if (mListener != null) mListener.onTimeClicked(PromptDetailsView.this,
 						mRecordedDate.getHourOfDay(),
 						mRecordedDate.getMinuteOfHour(),
-						isToday);
+						isToday, null);
 			}
 		});
 
 		mButtonMapCancel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (!mEditable) return;
-				mCrosshairMapView.setMapGesturesEnabled(false);
-				mCrosshairMapView.setCrosshairVisible(false);
-				mScrollable = true;
-				mMapMaskingView.setVisibility(VISIBLE);
 
-				mButtonMapCancel.setVisibility(GONE);
-				mButtonMapSave.setVisibility(GONE);
+				minimizeMap();
 
-				mMapContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, DEFAULT_MAP_HEIGHT));
-
-				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLocation, 15f));
-
-				scrollTo(0, mMapScroll);
 			}
 		});
 
 		mButtonMapSave.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mCrosshairMapView.setMapGesturesEnabled(false);
-				mCrosshairMapView.setCrosshairVisible(false);
-				mScrollable = true;
-				mMapMaskingView.setVisibility(VISIBLE);
-
-				mButtonMapCancel.setVisibility(GONE);
-				mButtonMapSave.setVisibility(GONE);
 
 				mLocation = mCrosshairMapView.getMapCentrePoint();
 
@@ -177,11 +159,8 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 						.icon(bitmapDescriptor1)
 						.anchor(0.5f, 0.5f));
 
-				mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLocation, 15f));
 
-				mMapContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, DEFAULT_MAP_HEIGHT));
-
-				scrollTo(0, mMapScroll);
+				minimizeMap();
 			}
 		});
 
@@ -213,8 +192,15 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 				mButtonMapSave.setVisibility(VISIBLE);
 
 				mMapContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, PromptDetailsView.this.getHeight()));
-				mMapScroll = getScrollY();
-				scrollTo(0, mMapContainer.getTop());
+				mMapContainer.addOnLayoutChangeListener(new OnLayoutChangeListener() {
+					@Override
+					public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+						mMapScroll = getScrollY();
+						scrollTo(0, mMapContainer.getTop());
+						mMapContainer.removeOnLayoutChangeListener(this);
+					}
+				});
+
 			}
 		});
 
@@ -223,7 +209,26 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 			public void onClick(View view) {
 			}
 		});
+	}
 
+	public void minimizeMap() {
+		mCrosshairMapView.setMapGesturesEnabled(false);
+		mCrosshairMapView.setCrosshairVisible(false);
+		mScrollable = true;
+		mMapMaskingView.setVisibility(VISIBLE);
+
+		mButtonMapCancel.setVisibility(GONE);
+		mButtonMapSave.setVisibility(GONE);
+
+		mMapContainer.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, DEFAULT_MAP_HEIGHT));
+
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLocation, 15f));
+
+		scrollTo(0, mMapScroll);
+	}
+
+	public boolean isInMapMode() {
+		return mMapMaskingView.getVisibility() != VISIBLE;
 	}
 
 	protected List<PromptAnswer> getAnswers() {
@@ -232,7 +237,7 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 		List<PromptAnswer> answers = new ArrayList<>();
 
 		String timestamp = DateUtils.getCurrentFormattedTime();
-		for (PromptDialogListView promptList : mGeneratedPromptLists) {
+		for (PromptDialogSelectableRecyclerView promptList : mGeneratedPromptLists) {
 
 			// invalid response -> trigger alert
 
@@ -242,15 +247,18 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 					.withLatitude(mLocation.latitude)
 					.withLongitude(mLocation.longitude)
 					.withUploaded(false)
-					.withRecordedAt(mRecordedDate.toString(DateUtils.PATTERN));
+					.withUuid(mPromptAnswers.getUUID())
+					.withRecordedAt(mRecordedDate.toString(DateUtils.PATTERN))
+					.withPromptNumber(i);
 
 			if (mNewEntry) {
 				promptAnswer.setDisplayedAt(timestamp);
+				promptAnswer.setUserDefined(true);
 			} else {
 				promptAnswer.setId(mPromptAnswers.getPromptAnswers().get(i).getId());
 				promptAnswer.setDisplayedAt(mPromptAnswers.getPromptAnswers().get(i).getDisplayedAt());
-				promptAnswer.setPromptNumber(mPromptAnswers.getPromptAnswers().get(i).getPromptNumber());
 			}
+
 			i++;
 
 			answers.add(promptAnswer);
@@ -264,10 +272,10 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 	public void setEditable(boolean editable) {
 		mEditable = editable;
 
+		mButtonDate.setVisibility(editable ? VISIBLE : INVISIBLE);
+		mButtonTime.setVisibility(editable ? VISIBLE : INVISIBLE);
 		mMaskingView.setVisibility(editable ? GONE : VISIBLE);
 		mTextviewMapInstruction.setVisibility(editable ? VISIBLE : GONE);
-		mButtonDate.setBackgroundResource(editable ? R.drawable.button_rounded_corners : 0);
-		mButtonTime.setBackgroundResource(editable ? R.drawable.button_rounded_corners : 0);
 
 	}
 
@@ -281,12 +289,27 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 			isValid = false;
 		}
 
-		for (PromptDialogListView promptList : mGeneratedPromptLists) {
+		int[] firstInvalidLocation = {};
+
+		for (PromptDialogSelectableRecyclerView promptList : mGeneratedPromptLists) {
 			if (promptList.getPromptAnswer() == null || promptList.getPromptAnswer().getAnswer() == null) {
-				promptList.setBackgroundColor(getResources().getColor(R.color.highlight_incomplete));
 				isValid = false;
+                promptList.setIncomplete(true);
+				if (firstInvalidLocation.length == 0) {
+					firstInvalidLocation = new int[2];
+					((View)promptList.getParent()).getLocationInWindow(firstInvalidLocation);
+				}
+			} else {
+				promptList.setIncomplete(false);
 			}
 		}
+
+		if (firstInvalidLocation.length > 0) {
+			int[] location = new int[2];
+			getLocationOnScreen(location);
+			smoothScrollBy(0, firstInvalidLocation[1] - location[1]);
+		}
+
 		return isValid;
 	}
 
@@ -339,8 +362,8 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 	}
 
 	private void updateDateTimeUI() {
-		mButtonDate.setText(mRecordedDate.toString(DateTimeFormat.fullDate()));
-		mButtonTime.setText(mRecordedDate.toString(DateTimeFormat.shortTime()));
+		mTextviewDate.setText(mRecordedDate.toString(DateTimeFormat.fullDate()));
+		mTextviewTime.setText(mRecordedDate.toString(DateTimeFormat.shortTime()));
 	}
 
 	private void updateMapMarker() {
@@ -349,7 +372,7 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 
 		mMap.clear();
 
-		Bitmap img1 = SystemUtils.ColourBitmap(getContext(), R.drawable.marker, R.color.base_colour);
+		Bitmap img1 = SystemUtils.ColourBitmap(getContext(), R.drawable.marker, R.color.base);
 		BitmapDescriptor bitmapDescriptor1 = BitmapDescriptorFactory.fromBitmap(img1);
 
 		mMap.addMarker(new MarkerOptions()
@@ -402,12 +425,14 @@ public class PromptDetailsView extends NestedScrollView implements TimePickerDia
 		mMap.getUiSettings().setAllGesturesEnabled(false);
 
 		updateMapMarker();
+
+		scrollTo(0, 0);
 	}
 
 	public interface DetailsViewUpdateListener {
-		void onDateClicked(DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth);
+		void onDateClicked(DatePickerDialog.OnDateSetListener listener, int year, int monthOfYear, int dayOfMonth, DateTime minDateTime, String title);
 
-		void onTimeClicked(TimePickerDialog.OnTimeSetListener listener, int hourOfDay, int minute, boolean isToday);
+		void onTimeClicked(TimePickerDialog.OnTimeSetListener listener, int hourOfDay, int minute, boolean isToday, String title);
 
 		void onSubmit(boolean successful);
 

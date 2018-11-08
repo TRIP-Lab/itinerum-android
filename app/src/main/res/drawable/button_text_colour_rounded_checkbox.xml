@@ -1,0 +1,20 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Unchecked and pressed -->
+    <item android:state_pressed="true"
+          android:state_checked="false"
+          android:color="@color/rounded_checkbox_pressed" />
+
+    <!-- Checked and pressed -->
+    <item android:state_pressed="true"
+          android:state_checked="true"
+          android:color="@color/rounded_checkbox_pressed_checked" />
+
+    <!-- Checked -->
+    <item android:state_checked="true"
+          android:color="@color/rounded_checkbox_checked"/>
+
+    <!-- Default color -->
+    <item android:color="@color/rounded_checkbox" />
+
+</selector>

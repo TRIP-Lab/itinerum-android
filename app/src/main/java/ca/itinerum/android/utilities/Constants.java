@@ -1,18 +1,19 @@
 package ca.itinerum.android.utilities;
 
+import java.util.concurrent.TimeUnit;
+
 @SuppressWarnings("HardCodedStringLiteral")
 public class Constants
 {
 
 	/* Data Points Recording Constants */
-    public final static int SMALLEST_DISPLACEMENT = 25; // in meters 100 / 200
-	public static final int LARGEST_VELOCITY = 150; // 150 m/s = 540km/h
-    public final static int RETRY_INTERVAL = 60;
-	public final static int RECORDING_INTERVAL = 10;
-	/* The absolute timeout for a GPS point to be received in seconds */
-	public static final int ABSOLUTE_TIMEOUT = 120;
+    public final static int SMALLEST_DISPLACEMENT = 5; // in meters 100 / 200
+	public final static int LARGEST_DISPLACEMENT = 200; // in meters 100 / 200
+	public static final int LARGEST_VELOCITY = 75; // 75 m/s = 270km/h
+    public final static long RETRY_INTERVAL = TimeUnit.MINUTES.toMillis(1);
+//	public final static long RECORDING_INTERVAL = TimeUnit.SECONDS.toMillis(10);
 
 	// other point types
 
-	public static float TARGET_ACCURACY = 30f;
+	public static float TARGET_ACCURACY = 35f;
 }

@@ -39,8 +39,6 @@ public class GeofenceManager {
 
 	private Location mCurrentLocation;
 
-	private boolean mGeofenceIsActive;
-
 	private static final String GEOFENCE_NAME = "rolling-geofence";
 	private final int LOITERING_DELAY = 60*1000;
 	private final int DWELL_DELAY = 3*60*1000; //BuildConfig.DEBUG ? 10*1000 : 5*60*1000;
@@ -121,13 +119,12 @@ public class GeofenceManager {
 	 * @param location
 	 */
 
-	public void handleGeofenceForBadLocation(Location location) {
-
-//		Logger.l.d("handle active geofence exists for low accuracy point outside bounds", lowAccuracyPointOutsideBounds(location),  mGeofenceIsActive.toString());
+	public void handleGeofenceForBadLocation(@NonNull Location location) {
+		Logger.l.d("handleGeofenceForBadLocation mGeofenceIsActive", Session.getInstance().isGeofenceActive(), "outside bounds", lowAccuracyPointOutsideBounds(location));
 
 		// don't remove geofences for bad locations unless we're really far off.
-		if (!mGeofenceIsActive || (location.getAccuracy() < 500 && lowAccuracyPointOutsideBounds(location))) {
-//			removeGeofenceForCurrentLocation();
+		if (!Session.getInstance().isGeofenceActive() || (location.getAccuracy() < 500 && lowAccuracyPointOutsideBounds(location))) {
+			onGeofenceExitEvent();
 			mCurrentLocation = location;
 			addGeofenceForCurrentLocation();
 		}
@@ -139,12 +136,11 @@ public class GeofenceManager {
 	 * @param location
 	 */
 
-	public void handleGeofenceForGoodLocation(Location location) {
-		Logger.l.d("handleGeofenceForGoodLocation mGeofenceIsActive", mGeofenceIsActive, "outside bounds", highAccuracyPointOutsideBounds(location));
+	public void handleGeofenceForGoodLocation(@NonNull Location location) {
+		Logger.l.d("handleGeofenceForGoodLocation mGeofenceIsActive", Session.getInstance().isGeofenceActive(), "outside bounds", highAccuracyPointOutsideBounds(location));
 
-		if (!mGeofenceIsActive || highAccuracyPointOutsideBounds(location)) {
-
-//			removeGeofenceForCurrentLocation();
+		if (!Session.getInstance().isGeofenceActive() || highAccuracyPointOutsideBounds(location)) {
+			onGeofenceExitEvent();
 			mCurrentLocation = location;
 			addGeofenceForCurrentLocation();
 		}
@@ -170,18 +166,15 @@ public class GeofenceManager {
 		mCurrentGeofences.add(geofence);
 
 		GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-		builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+		builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_EXIT);
 		builder.addGeofence(geofence);
 		GeofencingRequest geofenceRequest = builder.build();
 
-		EventBus.getDefault().post(new LocationLoggingEvent.GeofenceEnter());
-		Session.getInstance().setGeofenceState(Session.GeofenceState.ACTIVE);
+		onGeofenceEnterEvent();
 
 		if (BuildConfig.SHOW_DEBUG) {
 			Session.getInstance().setGeofenceLatLng(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
 		}
-
-		mGeofenceIsActive = true;
 
 		mGeofencingClient.addGeofences(geofenceRequest, getGeofencePendingIntent()).addOnCompleteListener(new OnCompleteListener<Void>() {
 			@Override
@@ -196,7 +189,7 @@ public class GeofenceManager {
 //				((ApiException) e).getMessage();
 				e.getMessage();
 				Logger.l.e("failed to add geofence", e.getMessage());
-				mGeofenceIsActive = false;
+				Session.getInstance().setGeofenceState(Session.GeofenceState.NONE);
 			}
 		});
 	}
@@ -222,15 +215,15 @@ public class GeofenceManager {
 		mCurrentGeofences = new ArrayList<>();
 
 		Session.getInstance().setGeofenceState(Session.GeofenceState.NONE);
-		mGeofenceIsActive = false;
 		cancelAllGeofenceAlarms();
 	}
 
 	private PendingIntent getGeofencePendingIntent() {
-		if (mGeofencePendingIntent != null) return mGeofencePendingIntent;
-
-		Intent intent = new Intent(mContext, GeofenceTransitionsIntentService.class);
-		mGeofencePendingIntent = PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		if (mGeofencePendingIntent == null) {
+			Intent intent = new Intent(mContext, LocationLoggingService.class);
+			intent.setAction(LocationLoggingService.GEOFENCE_ACTION);
+			mGeofencePendingIntent = PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		}
 		return mGeofencePendingIntent;
 	}
 
@@ -276,4 +269,17 @@ public class GeofenceManager {
 		cancelAllGeofenceAlarms();
 	}
 
+	public void onGeofenceEnterEvent() {
+		Logger.l.d("geofence entered event");
+		Session.getInstance().setGeofenceState(Session.GeofenceState.ACTIVE);
+		scheduleGeofenceLoiteringAlarm();
+		RecordingUtils.cancelGeofenceNotification(mContext);
+	}
+
+	public void onGeofenceExitEvent() {
+		Logger.l.d("geofence exit event");
+		RecordingUtils.cancelGeofenceNotification(mContext);
+		Session.getInstance().setGeofenceState(Session.GeofenceState.NONE);
+		EventBus.getDefault().post(new LocationLoggingEvent.StartStop(true));
+	}
 }

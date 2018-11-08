@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<android.support.v7.widget.AppCompatTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/textview_prompt_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/TextAppearance.AppCompat.Title"
+    style="@style/Title.Small"
     android:padding="@dimen/padding_large"
     />
 

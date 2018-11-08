@@ -1,0 +1,21 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_back_vector"
+        app:tint="@android:color/white"
+        android:layout_margin="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/continue_button"
+        style="@style/StockButton.Bottom"
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content"/>
+
+</merge>

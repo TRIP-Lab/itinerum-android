@@ -5,67 +5,327 @@
         <!-- Customize your theme here. -->
         <!--<item name="android:colorPrimary">@color/base_colour</item>-->
         <!--<item name="android:colorPrimaryDark">@color/base_colour</item>-->
-        <item name="colorControlActivated">@color/base_colour</item>
-        <item name="preferenceTheme">@style/AppPreferenceTheme</item>
         <item name="actionBarTheme">@style/AppTheme.AppBarOverlay</item>
-        <item name="colorAccent">@color/base_colour</item>
+        <item name="colorAccent">@color/base</item>
+        <item name="preferenceTheme">@style/AppPreferenceTheme</item>
+        <item name="customSelectionRecyclerView">@style/SelectionRecyclerView</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Survey">
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="colorControlActivated">@color/list_item_indicator_enabled_dark</item>
+        <item name="colorControlNormal">@color/list_item_indicator_enabled_dark</item>
+        <item name="colorAccent">@color/survey_accent_colour</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Base">
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="colorPrimary">@color/base</item>
+        <item name="colorPrimaryDark">@color/base</item>
+        <item name="colorControlActivated">@color/base</item>
+        <item name="colorControlNormal">@color/list_item_indicator_enabled_dark</item>
+        <item name="colorAccent">@color/base</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.PromptDetails">
+        <item name="android:windowBackground">@color/background_light</item>
+        <item name="colorPrimary">@color/base</item>
+        <item name="colorPrimaryDark">@color/base</item>
+        <item name="colorControlActivated">@color/base</item>
+        <item name="colorControlNormal">@color/list_item_indicator_enabled_dark</item>
+        <item name="colorAccent">@color/base</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Base.Light">
+        <item name="android:windowBackground">@color/base</item>
+        <item name="colorPrimary">@color/base</item>
+        <item name="colorPrimaryDark">@color/base</item>
+        <item name="colorControlActivated">@color/list_item_indicator_enabled_light</item>
+        <item name="colorControlNormal">@color/list_item_indicator_light</item>
+        <item name="colorAccent">@color/base</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Settings">
+        <item name="colorControlActivated">@color/base</item>
+        <item name="colorControlNormal">@color/base</item>
+        <item name="colorAccent">@color/base</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar.Survey.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/base</item>
+    </style>
+
+    <style name="Edittext" parent="@style/Paragraph.DarkTheme">
+        <item name="colorAccent">@color/base</item>
+        <item name="colorControlActivated">@color/base</item>
+        <item name="colorControlNormal">@color/base</item>
+    </style>
+
+    <style name="Paragraph.MapSearchHint">
+        <item name="fontFamily">@font/nunito_sans</item>
+        <item name="android:textColor">#999999</item>
     </style>
 
     <style name="AppBar" parent="Widget.Design.AppBarLayout">
-        <item name="android:background">@color/base_colour</item>
+        <item name="android:background">@color/base</item>
     </style>
 
     <!-- Custom Preference Theme inherits from the v14 support library Material Theme -->
     <style name="AppPreferenceTheme" parent="@style/PreferenceThemeOverlay.v14.Material">
-        <item name="colorAccent">@color/base_colour</item>
+        <item name="colorAccent">@color/base</item>
     </style>
 
-    <style name="LargeTitle" parent="TextAppearance.AppCompat.Title">
+    <style name="SurveyCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/background_survey</item>
+        <item name="android:animateLayoutChanges">true</item>
+    </style>
+
+    <style name="Title" parent="TextAppearance.AppCompat.Title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">40dp</item>
+        <item name="android:paddingRight">40dp</item>
+        <item name="android:paddingTop">40dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">45sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:lineSpacingExtra">-18sp</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+        <item name="fontFamily">@font/nunito_sans_extrabold</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/text_colour_dark</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeStepGranularity">1sp</item>
+        <item name="autoSizeMaxTextSize">45sp</item>
+    </style>
+
+    <style name="Title.DarkTheme">
+        <item name="android:textColor">@color/text_colour_light</item>
+    </style>
+
+    <style name="Title.Small.PromptDetail">
+        <item name="android:textColor">@color/prompt_detail_title</item>
+    </style>
+
+    <style name="Title.Small">
+        <item name="android:textSize">26sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:lineSpacingExtra">-10sp</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+        <item name="fontFamily">@font/nunito_sans_extrabold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Title.Small.DarkTheme">
+        <item name="android:textColor">@color/text_colour_light</item>
+    </style>
+
+    <style name="Title.Card">
+        <item name="android:textColor">@color/card_title_text</item>
+        <item name="android:lineSpacingExtra">0sp</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+    </style>
+
+    <style name="Title.Small.Card">
+        <item name="android:textColor">@color/card_small_title_text</item>
+    </style>
+
+    <style name="Paragraph" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/nunito_sans</item>
+    </style>
+
+    <style name="Paragraph.Bold">
+        <item name="fontFamily">@font/nunito_sans_bold</item>
+    </style>
+
+    <style name="Paragraph.DarkTheme">
+        <item name="android:textColor">@color/text_colour_light</item>
+    </style>
+
+    <style name="Paragraph.Emphasis">
+        <item name="android:textSize">25sp</item>
+        <item name="android:lineSpacingExtra">-5sp</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeStepGranularity">1sp</item>
+        <item name="autoSizeMaxTextSize">25sp</item>
+    </style>
+
+    <style name="Paragraph.Emphasis.DarkTheme">
+        <item name="android:textColor">@color/text_colour_light</item>
+    </style>
+
+    <style name="Paragraph.Emphasis.DarkTheme.ExtraBold">
+        <item name="fontFamily">@font/nunito_sans_extrabold</item>
+    </style>
+
+    <style name="Title.ContentOverlay">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
         <item name="android:paddingLeft">@dimen/padding_small</item>
         <item name="android:paddingRight">@dimen/padding_small</item>
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/contentcard_title_text</item>
     </style>
 
-    <style name="BodyParagraph" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:layout_width">match_parent</item>
+    <style name="Title.ContentOverlay.Large">
+        <item name="android:textSize">80sp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:lineSpacingExtra">-40dp</item>
+        <item name="android:lineSpacingMultiplier">1</item>
+        <item name="android:textColor">@color/contentcard_large_text</item>
+    </style>
+
+    <style name="Paragraph.ContentOverlay">
+        <item name="android:textColor">@color/contentcard_totals_text</item>
+    </style>
+
+    <style name="StockButton">
+        <item name="android:layout_width">230dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_rounded_corners</item>
+        <item name="android:textColor">@drawable/button_text_colour_base</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">@dimen/padding_large</item>
+        <item name="android:paddingBottom">@dimen/padding_large</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:layout_marginTop">@dimen/padding_large</item>
+        <item name="fontFamily">@font/nunito_sans_extrabold</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="EmphasisParagraph" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:layout_width">match_parent</item>
+    <style name="StockButton.SlightlyRounded">
+        <item name="android:background">@drawable/background_slightly_rounded_button</item>
+        <item name="android:textColor">@drawable/text_colour_slightly_rounded_button</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="autoSizeStepGranularity">1sp</item>
+        <item name="autoSizeMaxTextSize">16sp</item>
+        <item name="autoSizeMinTextSize">10sp</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="android:lines">1</item>
+    </style>
+
+    <style name="StockButton.SlightlyRounded.Solid">
+        <item name="android:background">@drawable/background_slightly_rounded_solid_button</item>
+        <item name="android:layout_margin">8dp</item>
+    </style>
+
+    <style name="StockButton.SlightlyRounded.Solid.Resizing">
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeStepGranularity">1sp</item>
+        <item name="autoSizeMaxTextSize">16sp</item>
+        <item name="autoSizeMinTextSize">10sp</item>
+        <item name="android:textColor">@color/prompt_detail_resizing_button</item>
+    </style>
+
+    <style name="StockButton.Survey">
+        <item name="android:background">@drawable/background_rounded_corners</item>
+        <item name="android:textColor">@drawable/button_text_colour_base</item>
+        <item name="android:layout_marginBottom">40dp</item>
+        <item name="android:layout_gravity">bottom|center_horizontal</item>
+    </style>
+
+    <style name="StockButton.DarkTheme">
+        <item name="android:background">@drawable/background_rounded_corners_white</item>
+        <item name="android:textColor">@drawable/button_text_colour_light</item>
+    </style>
+
+    <style name="StockButton.Dialog">
+        <item name="android:layout_height">55dp</item>
+        <item name="android:background">@drawable/background_rounded_corners</item>
+        <item name="android:textColor">@drawable/button_text_colour_base</item>
+    </style>
+
+    <style name="StockButton.Prompt">
+        <item name="android:layout_height">55dp</item>
+        <item name="android:layout_gravity">center_horizontal|bottom</item>
+        <item name="android:layout_marginTop">-27.5dp</item>
+    </style>
+
+    <style name="StockButton.Bottom">
+        <item name="android:layout_marginBottom">40dp</item>
+        <item name="android:layout_gravity">bottom|center_horizontal</item>
+    </style>
+
+    <style name="StockButton.DarkTheme.Bottom">
+        <item name="android:layout_marginBottom">40dp</item>
+        <item name="android:layout_gravity">bottom|center_horizontal</item>
+    </style>
+
+    <style name="BackButton" parent="Theme.AppCompat.Light">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_gravity">top|left</item>
+        <item name="srcCompat">@drawable/ic_back_selector</item>
+        <item name="tint">@color/back_button</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
-    <style name="BackButton" parent="Base.Widget.AppCompat.ImageButton">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/transparent_grey</item>
-        <item name="android:src">@drawable/ic_arrow_back_black_24dp</item>
-        <item name="android:paddingLeft">4dp</item>
-        <item name="android:paddingRight">4dp</item>
+    <style name="BackButton.Survey">
+        <item name="tint">@color/back_button_survey</item>
     </style>
 
-    <style name="StockButton" parent="Base.Widget.AppCompat.Button">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/base_colour</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:paddingLeft">4dp</item>
-        <item name="android:paddingRight">4dp</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="StockButton.EditButton">
+        <item name="android:background">@drawable/background_editable</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    
+    <style name="Checkbox.Multiple" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/checkbox_multi_select_dark</item>
+        <item name="colorControlActivated">@color/checkbox_multi_select_checked_dark</item>
+    </style>
+
+    <style name="Checkbox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/checkbox_single_select_dark</item>
+        <item name="colorControlActivated">@color/checkbox_single_select_checked_dark</item>
+    </style>
+
+    <style name="Checkbox.Inverted" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/base</item>
+        <item name="colorControlNormal">@color/list_item_indicator_enabled_dark</item>
+    </style>
+
+    <style name="Checkbox.Light" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/checkbox_single_select_light</item>
+        <item name="colorControlNormal">@color/checkbox_single_select_checked_light</item>
+    </style>
+
+    <style name="Checkbox.Multiple.Light" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/checkbox_multi_select_light</item>
+        <item name="colorControlActivated">@color/checkbox_multi_select_checked_light</item>
+    </style>
+    
+    <style name="SelectionRecyclerView">
+        <item name="dark_mode">true</item>
+    </style>
+
+    <style name="SelectionRecyclerView.Light">
+        <item name="dark_mode">false</item>
+    </style>
 
 </resources>

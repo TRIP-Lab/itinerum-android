@@ -1,16 +1,19 @@
 package ca.itinerum.android.survey.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.BuildConfig;
 import ca.itinerum.android.R;
 import ca.itinerum.android.sync.retrofit.Survey;
 import ca.itinerum.android.utilities.SystemUtils;
@@ -21,8 +24,8 @@ import ca.itinerum.android.utilities.SystemUtils;
 
 public class TextEntryView extends BaseSurveyView {
 
-	@BindView(R.id.title) TextView mTitle;
-	@BindView(R.id.question) TextView mQuestion;
+	@BindView(R.id.title) AppCompatTextView mTitle;
+	@BindView(R.id.question) AppCompatTextView mQuestion;
 	@BindView(R.id.response) EditText mResponse;
 
 	public TextEntryView(Context context, Survey survey) {
@@ -45,8 +48,15 @@ public class TextEntryView extends BaseSurveyView {
 		super.onFinishInflate();
 		ButterKnife.bind(this);
 
-		mTitle.setVisibility(GONE);
+		mTitle.setText(getSurvey().getColName());
 		mQuestion.setText(getSurvey().getPrompt());
+
+		setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SystemUtils.hideKeyboardFrom(mContext, TextEntryView.this);
+			}
+		});
 
 		mResponse.addTextChangedListener(new TextWatcher() {
 			@Override
@@ -60,6 +70,10 @@ public class TextEntryView extends BaseSurveyView {
 			@Override
 			public void afterTextChanged(Editable s) {}
 		});
+
+		if (BuildConfig.DEBUG) mResponse.setText("test");
+
+		mResponse.setInputType(InputType.TYPE_CLASS_TEXT);
 	}
 
 	@Override
@@ -76,7 +90,7 @@ public class TextEntryView extends BaseSurveyView {
 
 	@Override
 	public boolean canAdvance() {
-		return !StringUtils.isBlank(mResponse.getText().toString());
+		return true;
 	}
 
 }

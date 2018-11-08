@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="62dp"
+            android:scaleType="center"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/title"
+            style="@style/Title.DarkTheme"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/paragraph"
+            style="@style/Paragraph.Emphasis.DarkTheme"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/continue_button"
+            style="@style/StockButton.Bottom"
+            android:text="@string/continue_button"
+            android:layout_gravity="bottom"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</FrameLayout>

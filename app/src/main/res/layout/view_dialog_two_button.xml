@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_card_rounded_corners">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/message"
+        android:gravity="center"
+        android:padding="@dimen/padding_large"
+        style="@style/Title.Small.DarkTheme"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/positive_button"
+        android:layout_margin="@dimen/padding_large"
+        android:layout_gravity="center_horizontal"
+        style="@style/StockButton.Dialog"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/negative_button"
+        android:layout_marginBottom="@dimen/padding_huge"
+        android:layout_gravity="center_horizontal"
+        style="@style/StockButton.Dialog"/>
+
+</LinearLayout>

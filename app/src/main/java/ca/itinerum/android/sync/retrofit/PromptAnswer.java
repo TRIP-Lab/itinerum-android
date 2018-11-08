@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 @Entity(tableName = "prompts")
 public class PromptAnswer implements Comparable<PromptAnswer> {
@@ -59,13 +58,13 @@ public class PromptAnswer implements Comparable<PromptAnswer> {
 
 	@NonNull
 	@ColumnInfo(name = "recorded_at")
-	@SerializedName("recorded_at")
+	@SerializedName("recordedAt")
 	@Expose
 	private String mRecordedAt = "";
 
 	@NonNull
 	@ColumnInfo(name = "displayed_at")
-	@SerializedName("displayed_at")
+	@SerializedName("displayedAt")
 	@Expose
 	private String mDisplayedAt = "";
 
@@ -77,16 +76,24 @@ public class PromptAnswer implements Comparable<PromptAnswer> {
 
 	@NonNull
 	@ColumnInfo(name = "prompt_num")
-	@SerializedName("prompt_num")
+	@SerializedName("promptNum")
 	@Expose
 	private int mPromptNumber;
 
+	@ColumnInfo(name = "cancelled_at")
+	@SerializedName("cancelledAt")
+	@Expose
+	private String mCancelledAt;
+
 	@NonNull
 	@ColumnInfo(name = "cancelled")
-	@Expose
 	private boolean mCancelled;
 
-	public PromptAnswer(long id, boolean uploaded, @NonNull String jsonAnswer, @NonNull String prompt, double latitude, double longitude, @NonNull String recordedAt, @NonNull String displayedAt, @NonNull String uuid, int promptNumber, boolean cancelled) {
+	@NonNull
+	@ColumnInfo(name = "user_defined")
+	private transient boolean mUserDefined;
+
+	public PromptAnswer(long id, boolean uploaded, @NonNull String jsonAnswer, @NonNull String prompt, double latitude, double longitude, @NonNull String recordedAt, @NonNull String displayedAt, @NonNull String uuid, int promptNumber, String cancelledAt, boolean cancelled, boolean userDefined) {
 		mId = id;
 		mUploaded = uploaded;
 		mJsonAnswer = jsonAnswer;
@@ -97,7 +104,9 @@ public class PromptAnswer implements Comparable<PromptAnswer> {
 		mDisplayedAt = displayedAt;
 		mUuid = uuid;
 		mPromptNumber = promptNumber;
+		mCancelledAt = cancelledAt;
 		mCancelled = cancelled;
+		mUserDefined = userDefined;
 
 		if (!(StringUtils.isBlank(mJsonAnswer))) {
 			mAnswer = getAnswer();
@@ -105,9 +114,7 @@ public class PromptAnswer implements Comparable<PromptAnswer> {
 	}
 
 	@Ignore
-	public PromptAnswer() {
-		mUuid = UUID.randomUUID().toString();
-	}
+	public PromptAnswer() {}
 
 	@NonNull
 	public String getJsonAnswer() {
@@ -260,6 +267,33 @@ public class PromptAnswer implements Comparable<PromptAnswer> {
 
 	public PromptAnswer withCancelled(boolean cancelled) {
 		setCancelled(cancelled);
+		return this;
+	}
+
+	public String getCancelledAt() {
+		return mCancelledAt;
+	}
+
+	public void setCancelledAt(@NonNull String cancelledAt) {
+		mCancelledAt = cancelledAt;
+	}
+
+	public PromptAnswer withCancelledAt(@NonNull String cancelledAt) {
+		mCancelledAt = cancelledAt;
+		return this;
+	}
+
+	@NonNull
+	public boolean isUserDefined() {
+		return mUserDefined;
+	}
+
+	public void setUserDefined(boolean userDefined) {
+		mUserDefined = userDefined;
+	}
+
+	public PromptAnswer withUserDefined(boolean userDefined) {
+		setUserDefined(userDefined);
 		return this;
 	}
 

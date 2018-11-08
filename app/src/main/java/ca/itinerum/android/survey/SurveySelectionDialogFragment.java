@@ -1,14 +1,16 @@
 package ca.itinerum.android.survey;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,10 +29,8 @@ import ca.itinerum.android.utilities.SystemUtils;
 
 public class SurveySelectionDialogFragment extends NamedDialogFragment {
 
-	protected static final String NAME = "name";
-
 	@BindView(R.id.select_survey_edittext) EditText mSelectSurveyEdittext;
-	@BindView(R.id.fragment_continue_button) Button mContinueButton;
+	@BindView(R.id.continue_button) public AppCompatButton mContinueButton;
 
 	private OnFragmentInteractionListener mListener;
 
@@ -42,19 +42,14 @@ public class SurveySelectionDialogFragment extends NamedDialogFragment {
 		return fragment;
 	}
 
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.fragment_survey_selection, container, false);
 		ButterKnife.bind(this, v);
+
+		getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 		mContinueButton.setText(R.string.submit_button);
 

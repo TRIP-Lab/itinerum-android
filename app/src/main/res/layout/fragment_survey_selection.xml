@@ -5,22 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="ca.itinerum.android.survey.SurveyActivity">
+    tools:context="ca.itinerum.android.survey.SurveyActivity"
+    android:background="@drawable/background_card_rounded_corners">
 
-    <TextView
-        android:id="@+id/select_survey_title"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/LargeTitle"
+        style="@style/Title.DarkTheme"
         android:layout_gravity="center"
         android:padding="8dp"
         android:text="@string/survey_selection_title"/>
 
-    <TextView
-        android:id="@+id/select_survey_description"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/EmphasisParagraph"
+        style="@style/Paragraph.Emphasis.DarkTheme"
         android:layout_gravity="center"
         android:padding="8dp"
         android:text="@string/survey_selection_description"/>
@@ -33,14 +34,16 @@
         android:inputType="textNoSuggestions|textFilter"
         android:maxLines="1"
         android:hint="@string/survey_selection_hint"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="#88ffffff"/>
 
-    <Button
-        android:id="@+id/fragment_continue_button"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/continue_button"
         android:layout_gravity="center_horizontal"
         android:text="@string/send_button"
         android:layout_width="match_parent"
-        style="@style/StockButton"
+        style="@style/StockButton.DarkTheme"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>

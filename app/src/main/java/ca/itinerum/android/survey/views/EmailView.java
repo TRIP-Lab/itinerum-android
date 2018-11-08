@@ -22,7 +22,8 @@ public class EmailView extends TextEntryView {
 	}
 
 	private void init() {
-		mQuestion.setText(R.string.question_email_title);
+		mTitle.setText(R.string.question_email_title);
+		mQuestion.setText(R.string.question_email_subtitle);
 		mResponse.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
 		if (BuildConfig.DEBUG) //noinspection HardCodedStringLiteral
@@ -30,6 +31,7 @@ public class EmailView extends TextEntryView {
 	}
 
 	private boolean isValidEmail(CharSequence text) {
+//		if (!BuildConfig.EMAIL_MANDATORY) return true;
 		return StringUtils.isNotEmpty(text) && PatternsCompat.EMAIL_ADDRESS.matcher(text).matches();
 	}
 

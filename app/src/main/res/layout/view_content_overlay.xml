@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_medium">
+
+        <ca.itinerum.android.common.ContentOverlayCardView
+            android:id="@+id/validated_trips_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/title_points_recorded"
+            android:background="@drawable/background_card_rounded_corners"
+            android:layout_margin="@dimen/padding_medium"
+            android:elevation="@dimen/elevation_content_card"/>
+
+        <ca.itinerum.android.common.ContentOverlayCardView
+            android:id="@+id/days_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/title_days_remaining"
+            android:background="@drawable/background_card_rounded_corners"
+            android:layout_margin="@dimen/padding_medium"
+            android:elevation="@dimen/elevation_content_card"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/past_trips_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/padding_large"
+        android:layout_marginRight="@dimen/padding_large"
+        android:background="@drawable/background_card_rounded_corners"
+        android:padding="@dimen/padding_medium"
+        android:elevation="@dimen/elevation_content_card">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/past_trips_card_title"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small"
+            android:text="@string/title_data_range"
+            style="@style/Title.ContentOverlay"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ca.itinerum.android.common.CheckableButton
+                android:id="@+id/past_trips_card_button_today"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_small"
+                android:text="@string/datetime_enum_today"
+                android:layout_margin="@dimen/padding_medium"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="@dimen/padding_large"
+                android:checked="true"
+                style="@style/StockButton.SlightlyRounded"
+                android:theme="@style/StockButton.SlightlyRounded"/>
+
+            <ca.itinerum.android.common.CheckableButton
+                android:id="@+id/past_trips_card_button_yesterday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_small"
+                android:text="@string/datetime_enum_yesterday"
+                android:layout_margin="@dimen/padding_medium"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="@dimen/padding_large"
+                style="@style/StockButton.SlightlyRounded"
+                android:theme="@style/StockButton.SlightlyRounded"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/padding_medium">
+
+
+            <ca.itinerum.android.common.CheckableButton
+                android:id="@+id/past_trips_card_button_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_small"
+                android:text="@string/datetime_enum_all"
+                style="@style/StockButton.SlightlyRounded"
+                android:theme="@style/StockButton.SlightlyRounded"/>
+
+            <ca.itinerum.android.common.CheckableButton
+                android:id="@+id/past_trips_card_button_custom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_small"
+                android:text="@string/datetime_enum_custom"
+                style="@style/StockButton.SlightlyRounded"
+                android:theme="@style/StockButton.SlightlyRounded"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/drawer_image"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_back_vector"
+        android:layout_gravity="center"/>
+
+</merge>

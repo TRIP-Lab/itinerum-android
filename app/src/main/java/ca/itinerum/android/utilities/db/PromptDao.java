@@ -30,14 +30,26 @@ public interface PromptDao {
 	@Query("SELECT * FROM prompts WHERE cancelled = '0'")
 	List<PromptAnswer> getAllRegisteredPromptAnswers();
 
+	@Query("SELECT * FROM prompts WHERE cancelled = '0' AND user_defined = '0'")
+	List<PromptAnswer> getAllAutomaticPromptAnswers();
+
+	/** Count the number of automatically answered prompts. NOTE: this is total and should be divided by the number of actual prompts
+	 *
+	 * @return Number of automatically answered prompts
+	 */
+	@Query("SELECT COUNT(*) FROM prompts WHERE cancelled = '0' AND user_defined = '0'")
+	int getAllAutomaticPromptAnswersCount();
 	/**
 	 *
 	 * @param fromDate
 	 * @param toDate
-	 * @return a Flowable containing a list of PromptAnswer objects that weren't cancelled
+	 * @return a Flowable containing a list of PromptAnswer objects that weren't cancelled and aren't user defined
 	 */
 	@Query("SELECT * FROM prompts WHERE :fromDate < recorded_at AND recorded_at < :toDate AND cancelled = '0'")
 	Flowable<List<PromptAnswer>> getAllRegisteredPromptAnswersFlowable(String fromDate, String toDate);
+
+	@Query("SELECT * FROM prompts WHERE cancelled = '0' AND user_defined = '0'")
+	Flowable<List<PromptAnswer>> getAllAutomaticPromptAnswersFlowable();
 
 	@Query("SELECT * FROM prompts WHERE :fromDate < recorded_at AND recorded_at < :toDate")
 	Flowable<List<PromptAnswer>> getAllPromptAnswersFlowable(String fromDate, String toDate);
@@ -48,7 +60,7 @@ public interface PromptDao {
 	@Query("SELECT * FROM prompts WHERE uploaded = '0' AND cancelled = '1'")
 	List<PromptAnswer> getAllUnsyncedCancelledPromptAnswers();
 
-	@Query("SELECT * FROM prompts ORDER BY _id DESC LIMIT 1")
+	@Query("SELECT * FROM prompts WHERE cancelled = '0' AND user_defined = '0' ORDER BY _id DESC LIMIT 1")
 	PromptAnswer getLastPromptAnswer();
 
 	@Query("SELECT COUNT() FROM prompts")

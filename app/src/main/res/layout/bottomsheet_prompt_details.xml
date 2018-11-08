@@ -28,14 +28,14 @@
             android:padding="@dimen/padding_small"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
-                android:textColor="@color/base_colour"
+                android:textColor="@color/base"
                 android:text="@string/validated_trip"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textview_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:padding="@dimen/padding_small"
             android:background="#f9f9f9">
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/button_more_info_prompt_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 android:text="@string/more_info"
                 android:textColor="#444444"
                 android:textAllCaps="true"
-                android:background="?android:selectableItemBackground"/>
+                android:background="?attr/selectableItemBackground"/>
 
         </FrameLayout>
 

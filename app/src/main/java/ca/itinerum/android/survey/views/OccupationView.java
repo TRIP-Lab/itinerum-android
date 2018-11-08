@@ -1,17 +1,18 @@
 package ca.itinerum.android.survey.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+
+import java.util.Arrays;
 
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.BuildConfig;
 import ca.itinerum.android.R;
+import ca.itinerum.android.common.SelectionRecyclerView;
 import ca.itinerum.android.sync.retrofit.Survey;
 
 /**
@@ -20,13 +21,11 @@ import ca.itinerum.android.sync.retrofit.Survey;
 
 public class OccupationView extends BaseSurveyView {
 
-	@BindView(R.id.title) TextView mTitle;
-	@BindView(R.id.question) TextView mQuestion;
-	@BindView(R.id.list_view) ListView mListView;
+	@BindView(R.id.title) AppCompatTextView mTitle;
+	@BindView(R.id.question) AppCompatTextView mQuestion;
+	@BindView(R.id.list_view) SelectionRecyclerView mListView;
 
 	@BindArray(R.array.question_occupation) String[] OCCUPATION;
-
-	private ArrayAdapter<String> mAdapter;
 
 	public OccupationView(Context context, Survey survey) {
 		this(context, null, 0);
@@ -48,15 +47,14 @@ public class OccupationView extends BaseSurveyView {
 		super.onFinishInflate();
 		ButterKnife.bind(this);
 
-		mTitle.setVisibility(GONE);
-		mQuestion.setText(R.string.occupation_title);
+		mTitle.setText(R.string.occupation_title);
+		mQuestion.setText(R.string.occupation_prompt);
 
-		mAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_single_choice, OCCUPATION);
-		mListView.setAdapter(mAdapter);
+		mListView.setData(Arrays.asList(OCCUPATION), false);
 
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mListView.setOnItemClickListener(new OnClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onClick(View v) {
 				mListener.onCanAdvance(true);
 			}
 		});
@@ -70,7 +68,9 @@ public class OccupationView extends BaseSurveyView {
 	@Override
 	public void setResult(Object result) {
 		if (result != null && result instanceof Integer) {
-			mListView.setItemChecked((int) result, true);
+			mListView.setCheckedItemPosition((int) result, true);
+		} else if (BuildConfig.DEBUG) {
+			mListView.setCheckedItemPosition(0, true);
 		}
 	}
 
@@ -78,4 +78,6 @@ public class OccupationView extends BaseSurveyView {
 	public boolean canAdvance() {
 		return (mListView.getCheckedItemPosition() != -1);
 	}
+
+
 }

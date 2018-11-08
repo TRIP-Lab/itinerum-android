@@ -3,11 +3,11 @@ package ca.itinerum.android;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -15,6 +15,8 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.BuildConfig;
+import ca.itinerum.android.R;
 
 /**
  * Created by stewjacks on 2016-08-23.
@@ -22,8 +24,8 @@ import butterknife.ButterKnife;
 
 public class AboutDialog extends DialogFragment {
 
-	@BindView(R.id.message) TextView mMessage;
-	@BindView(R.id.version) TextView mVersion;
+	@BindView(R.id.message) AppCompatTextView mMessage;
+	@BindView(R.id.version) AppCompatTextView mVersion;
 	@BindView(R.id.brand_logo) ImageView mBrandLogo;
 	@BindView(R.id.avatar) SimpleDraweeView mAvatar;
 	private String mMessageText;

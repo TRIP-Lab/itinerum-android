@@ -1,0 +1,86 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="27.5dp"
+    android:clipToPadding="false"
+    tools:context="ca.itinerum.android.survey.SurveyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/background_card_rounded_corners"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/padding_medium"
+                android:paddingLeft="@dimen/padding_large"
+                android:paddingRight="@dimen/padding_large"
+                android:paddingTop="@dimen/padding_large"
+                android:layout_gravity="left|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/prompt_nav_button_tint"
+                app:srcCompat="@drawable/ic_back_selector"/>
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/dismiss_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:paddingBottom="@dimen/padding_medium"
+                android:paddingLeft="@dimen/padding_large"
+                android:paddingRight="@dimen/padding_large"
+                android:paddingTop="@dimen/padding_large"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/prompt_close_button_tint"
+                app:srcCompat="@drawable/ic_clear_white_24dp"/>
+
+        </FrameLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Paragraph.Emphasis.DarkTheme"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:text="@string/survey_selection_title"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ca.itinerum.android.PromptDialogSelectableRecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <FrameLayout
+                android:id="@+id/list_mask"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/list_scroll_mask_dark"
+                android:layout_gravity="bottom"
+                android:clickable="false"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/continue_button"
+        android:text="@string/continue_button"
+        style="@style/StockButton.Prompt"/>
+
+</LinearLayout>

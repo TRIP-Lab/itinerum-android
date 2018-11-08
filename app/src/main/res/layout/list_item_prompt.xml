@@ -1,41 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:id="@+id/container"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="?android:attr/listPreferredItemHeight"
-              android:layout_margin="1dp"
+              android:layout_height="@dimen/list_height"
+              android:paddingLeft="@dimen/padding_xl"
+              android:paddingRight="@dimen/padding_xl"
+              android:paddingTop="@dimen/padding_large"
+              android:paddingBottom="@dimen/padding_large"
+              android:background="?attr/selectableItemBackground"
               >
 
-    <ImageView
-        android:id="@+id/imageview_indicator"
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textview_position"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="@dimen/padding_small"
-        android:src="@drawable/ic_location_on_black_24dp"
-        android:tint="@android:color/white"
-        android:scaleType="fitCenter"
-        />
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_gravity="center"
+        style="@style/Paragraph.Bold"/>
 
-    <FrameLayout
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textview_date"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/textview_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:transitionName="time"
-            android:padding="4dp"
-            android:textColor="@android:color/white"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:transitionName="date"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:gravity="center"
+        style="@style/Paragraph"
         />
 
-    </FrameLayout>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textview_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:transitionName="time"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:gravity="center"
+        style="@style/Paragraph"
+    />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/button_edit"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:padding="12dp"
+        app:srcCompat="@drawable/ic_edit_white_24dp"
+        app:tint="#000000"
+        android:scaleType="fitCenter"
+        android:background="@drawable/circle_outline_light"
+        android:layout_gravity="center"
+        android:clickable="false"
+        />
 
 </LinearLayout>

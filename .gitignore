@@ -2,6 +2,7 @@
 local.properties
 .idea/workspace.xml
 .idea/libraries
+.idea/caches/
 .idea/inspectionProfiles/
 .DS_Store
 build/*
@@ -13,3 +14,6 @@ build/*
 
 /app/vanilla
 /app/schemas
+/app/montreal
+/app/fastt
+

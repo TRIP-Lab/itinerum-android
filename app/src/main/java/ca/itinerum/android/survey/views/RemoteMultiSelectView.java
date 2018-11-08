@@ -25,7 +25,7 @@ public class RemoteMultiSelectView extends MultiSelectView {
 		HashSet<String> results = new HashSet<>();
 		SparseBooleanArray isChecked = mListView.getCheckedItemPositions();
 
-		for (int i = 0; i < mAdapter.getCount(); i++) {
+		for (int i = 0; i < mListView.getSize(); i++) {
 			if (isChecked.get(i)) results.add(mSurvey.getFields().getChoices().get(i));
 		}
 
@@ -36,9 +36,11 @@ public class RemoteMultiSelectView extends MultiSelectView {
 	public void setResult(Object result) {
 		if (result instanceof HashSet) {
 			HashSet<String> set = (HashSet<String>) result;
-			for (int i = 0; i < mAdapter.getCount(); i++) {
-				mListView.setItemChecked(i, (set.contains(mAdapter.getItem(i))));
+			SparseBooleanArray array = new SparseBooleanArray();
+			for (int i = 0; i < mListView.getSize(); i++) {
+				array.put(i, (set.contains(mListView.getDataset().get(i).getValue())));
 			}
+			mListView.setCheckedItemPositions(array);
 		}
 	}
 }

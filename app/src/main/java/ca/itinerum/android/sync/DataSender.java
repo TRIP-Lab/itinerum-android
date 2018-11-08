@@ -1,16 +1,11 @@
 package ca.itinerum.android.sync;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
 
 import org.joda.time.DateTime;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import ca.itinerum.android.sync.retrofit.Coordinate;
@@ -21,7 +16,7 @@ import ca.itinerum.android.sync.retrofit.UpdateResponse;
 import ca.itinerum.android.utilities.DateUtils;
 import ca.itinerum.android.utilities.Logger;
 import ca.itinerum.android.utilities.SharedPreferenceManager;
-import ca.itinerum.android.utilities.db.LocationDatabase;
+import ca.itinerum.android.utilities.db.ItinerumDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,21 +37,20 @@ public class DataSender
     
     /**
      * Sends the data to the remote server.
-     * 
-     * @throws IOException if data could not be sent.
+     *
      */
-    public void sync() throws IOException {
+    public void sync() {
 		syncChunk(SharedPreferenceManager.getInstance(mContext).getLastSyncDate(), new DateTime());
     }
 
-    private void syncChunk(DateTime fromDate, DateTime toDate) throws IOException {
+    private void syncChunk(DateTime fromDate, DateTime toDate) {
 
         // Adding Point Update values to request
 
-		List<Coordinate> points = LocationDatabase.getInstance(mContext).locationDao().getAllCoordinatesBetweenDates(DateUtils.formatDateForBackend(fromDate), DateUtils.formatDateForBackend(toDate));
+		List<Coordinate> points = ItinerumDatabase.getInstance(mContext).locationDao().getAllCoordinatesBetweenDates(DateUtils.formatDateForBackend(fromDate), DateUtils.formatDateForBackend(toDate));
 
-		final List<PromptAnswer> prompts = LocationDatabase.getInstance(mContext).promptDao().getAllUnsyncedRegisteredPromptAnswers();
-		final List<PromptAnswer> cancelledPrompts = LocationDatabase.getInstance(mContext).promptDao().getAllUnsyncedCancelledPromptAnswers();
+		final List<PromptAnswer> prompts = ItinerumDatabase.getInstance(mContext).promptDao().getAllUnsyncedRegisteredPromptAnswers();
+		final List<PromptAnswer> cancelledPrompts = ItinerumDatabase.getInstance(mContext).promptDao().getAllUnsyncedCancelledPromptAnswers();
 
 		Update update = new Update();
 		update.setUuid(SharedPreferenceManager.getInstance(mContext).getUUID());
@@ -89,7 +83,7 @@ public class DataSender
 
 					PromptAnswer[] p = new PromptAnswer[allPrompts.size()];
 					p = allPrompts.toArray(p);
-					LocationDatabase.getInstance(mContext).promptDao().update(p);
+					ItinerumDatabase.getInstance(mContext).promptDao().update(p);
 				}
 			}
 

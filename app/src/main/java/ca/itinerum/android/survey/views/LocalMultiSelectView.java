@@ -2,9 +2,12 @@ package ca.itinerum.android.survey.views;
 
 import android.content.Context;
 import android.util.SparseBooleanArray;
+import android.view.View;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
+import ca.itinerum.android.survey.SurveyHelper;
 import ca.itinerum.android.sync.retrofit.Survey;
 
 /**
@@ -20,12 +23,22 @@ public class LocalMultiSelectView extends MultiSelectView {
 		onFinishInflate();
 	}
 
+	public void setArrayResource(String[] options) {
+		mListView.setData(Arrays.asList(options), true);
+	}
+
+	@Override
+	protected void onFinishInflate() {
+		super.onFinishInflate();
+		setTitleText(SurveyHelper.getUserVisibleSurveyTitle(getContext(), mSurvey));
+	}
+
 	@Override
 	public HashSet<Integer> getSurveyResponse() {
 		HashSet<Integer> results = new HashSet<>();
 		SparseBooleanArray isChecked = mListView.getCheckedItemPositions();
 
-		for (int i = 0; i < mAdapter.getCount(); i++) {
+		for (int i = 0; i < mListView.getSize(); i++) {
 			if (isChecked.get(i)) results.add(i);
 		}
 
@@ -36,9 +49,11 @@ public class LocalMultiSelectView extends MultiSelectView {
 	public void setResult(Object result) {
 		if (result instanceof HashSet) {
 			HashSet<String> set = (HashSet<String>) result;
-			for (int i = 0; i < mAdapter.getCount(); i++) {
-				mListView.setItemChecked(i, (set.contains(mAdapter.getItem(i))));
+			SparseBooleanArray array = new SparseBooleanArray();
+			for (int i = 0; i < mListView.getSize(); i++) {
+				array.put(i, set.contains(i));
 			}
+			mListView.setCheckedItemPositions(array);
 		}
 	}
 }

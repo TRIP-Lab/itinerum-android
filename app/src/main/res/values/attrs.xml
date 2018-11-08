@@ -6,4 +6,21 @@
         <attr name="peek_top_padding" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="ContentOverlayCardView">
+        <attr name="totals" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="AboutCard">
+        <attr name="title" format="string"/>
+        <attr name="selected" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="SelectionRecyclerView">
+        <attr name="dark_mode" format="boolean"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="CustomTheme">
+        <attr name="customSelectionRecyclerView" format="reference"/>
+    </declare-styleable>
+
 </resources>

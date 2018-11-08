@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -18,6 +18,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ca.itinerum.android.BuildConfig;
+import ca.itinerum.android.R;
 import ca.itinerum.android.utilities.PausePlayFab;
 
 /**
@@ -26,25 +28,26 @@ import ca.itinerum.android.utilities.PausePlayFab;
 
 public class MapTripView extends FrameLayout implements OnMapReadyCallback {
 	@BindView(R.id.mapview) MapView mMapview;
-	@BindView(R.id.pause_masking_view) TextView mPauseMaskingView;
+	@BindView(R.id.pause_masking_view) AppCompatTextView mPauseMaskingView;
 	@BindView(R.id.progress_bar) ProgressBar mProgressBar;
-	@BindView(R.id.powered_by) TextView mPoweredBy;
-	@BindView(R.id.points_details_text) TextView mPointsDetailsText;
-	@BindView(R.id.version) TextView mVersion;
-	@BindView(R.id.uuid) TextView mUuid;
-	@BindView(R.id.toggle_gps) Button mToggleGps;
-	@BindView(R.id.mode_prompt_button) Button mModePromptButton;
+	@BindView(R.id.powered_by) AppCompatTextView mPoweredBy;
+	@BindView(R.id.points_details_text) AppCompatTextView mPointsDetailsText;
+	@BindView(R.id.version) AppCompatTextView mVersion;
+	@BindView(R.id.uuid) AppCompatTextView mUuid;
+	@BindView(R.id.toggle_gps) AppCompatButton mToggleGps;
+	@BindView(R.id.mode_prompt_button) AppCompatButton mModePromptButton;
 	@BindView(R.id.fab) PausePlayFab mFab;
 
-	@BindView(R.id.status_text) TextView mStatusText;
+	@BindView(R.id.status_text) AppCompatTextView mStatusText;
 
 	@BindView(R.id.debug_view) LinearLayout mDebugView;
-	@BindView(R.id.debug_geofence_active) TextView mDebugGeofenceActive;
-	@BindView(R.id.debug_geofence_loitering) TextView mDebugGeofenceLoitering;
-	@BindView(R.id.debug_geofence_dwell) TextView mDebugGeofenceDwell;
-	@BindView(R.id.debug_last_sync) TextView mDebugLastSync;
-	@BindView(R.id.debug_next_sync) TextView mDebugNextSync;
-	@BindView(R.id.current_mode_text) TextView mCurrentModeText;
+	@BindView(R.id.debug_geofence_active) AppCompatTextView mDebugGeofenceActive;
+	@BindView(R.id.debug_geofence_loitering) AppCompatTextView mDebugGeofenceLoitering;
+	@BindView(R.id.debug_geofence_dwell) AppCompatTextView mDebugGeofenceDwell;
+	@BindView(R.id.debug_geofence_purpose) AppCompatTextView mDebugGeofencePurpose;
+	@BindView(R.id.debug_last_sync) AppCompatTextView mDebugLastSync;
+	@BindView(R.id.debug_next_sync) AppCompatTextView mDebugNextSync;
+	@BindView(R.id.current_mode_text) AppCompatTextView mCurrentModeText;
 
 	private GoogleMap mMap;
 	private OnMapReadyCallback mOnMapReadyCallback;
@@ -72,8 +75,7 @@ public class MapTripView extends FrameLayout implements OnMapReadyCallback {
 
 		mVersion.setText(BuildConfig.VERSION_NAME);
 
-		mPoweredBy.setVisibility(View.VISIBLE);
-
+		mPoweredBy.setVisibility(BuildConfig.SHOW_POWERED_BY ? View.VISIBLE : View.GONE);
 		mPoweredBy.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {

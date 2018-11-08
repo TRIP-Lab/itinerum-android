@@ -22,7 +22,7 @@ public class Triplab {
 	/**
 	 * All API data requests are made through this URL
 	 */
-	public static final String sBaseURL = BuildConfig.UPLOAD_URL;
+	public static final String sBaseURL = BuildConfig.BUILD_TYPE.equals("alpha") ? "https://api.testing.itinerum.ca" : "https://api.itinerum.ca";
 
 	/***
 	 * Static assets are accessible through the dashboard URL

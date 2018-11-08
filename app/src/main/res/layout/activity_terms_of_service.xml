@@ -1,45 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background"
-    android:fillViewport="true"
-    android:clickable="true">
+    >
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/ethics_view_container"
-            layout="@layout/view_ethics"
-            />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/bottom_buttons_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/fragment_back_button"
-                style="@style/BackButton"
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"/>
+            <include
+                android:id="@+id/ethics_view_container"
+                layout="@layout/view_ethics"
+                />
 
-            <Button
-                android:id="@+id/fragment_continue_button"
-                style="@style/StockButton"
-                android:text="@string/continue_button"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:layout_weight="4"/>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/continue_button"
+                android:text="@string/agree"
+                android:layout_marginBottom="0dp"
+                android:layout_gravity="center_horizontal"
+                style="@style/StockButton.DarkTheme"
+                />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/decline_button"
+                android:text="@string/decline"
+                android:textColor="@color/negative_button_text_colour"
+                android:layout_gravity="center_horizontal"
+                style="@style/StockButton.DarkTheme"
+                />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/back_button"
+        style="@style/BackButton"/>
+
+</FrameLayout>

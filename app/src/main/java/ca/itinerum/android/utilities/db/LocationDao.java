@@ -32,7 +32,7 @@ public interface LocationDao {
 	@Query("SELECT * FROM points WHERE :minDate < timestamp AND timestamp < :maxDate")
 	Flowable<List<LocationPoint>> getAllPointsBetweenDatesFlowable(String minDate, String maxDate);
 
-	@Query("SELECT * FROM points WHERE haccuracy < :minAccuracy AND :minDate < timestamp AND timestamp < :maxDate")
+	@Query("SELECT * FROM points WHERE haccuracy < :minAccuracy AND :minDate < timestamp AND timestamp < :maxDate ORDER BY timestamp ASC")
 	Flowable<List<LocationPoint>> getAllPointsBetweenDatesFlowable(int minAccuracy, String minDate, String maxDate);
 
 	@Query("SELECT * FROM points WHERE :minDate < timestamp AND timestamp < :maxDate")
@@ -44,7 +44,7 @@ public interface LocationDao {
 	@Query("SELECT * FROM points WHERE :minDate < timestamp AND timestamp < :maxDate")
 	List<LocationPoint> getAllPointsBetweenDates(String minDate, String maxDate);
 
-	@Query("SELECT * FROM points WHERE :minDate < timestamp AND timestamp < :maxDate")
+	@Query("SELECT * FROM points WHERE :minDate < timestamp AND timestamp < :maxDate ORDER BY timestamp ASC")
 	List<Coordinate> getAllCoordinatesBetweenDates(String minDate, String maxDate);
 
 	@Delete

@@ -16,28 +16,29 @@
         android:layout_margin="8dp"
         />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/ethics_title"
-        style="@style/LargeTitle"
-        android:layout_margin="8dp"
-        android:gravity="center"/>
+        style="@style/Title.DarkTheme"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/ethics_header"
-        style="@style/EmphasisParagraph"
-        android:layout_margin="8dp"/>
+        style="@style/Paragraph.Emphasis.DarkTheme"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/ethics_body"
-        style="@style/BodyParagraph"
-        android:layout_margin="8dp"
-        android:autoLink="email"/>
+        style="@style/Paragraph.DarkTheme"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:autoLink="all"/>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/ethics_postamble"
         android:text="@string/ethics_postamble"
-        style="@style/EmphasisParagraph"
-        android:layout_margin="8dp"
+        style="@style/Paragraph.Emphasis.DarkTheme"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
         />
 
 </LinearLayout>

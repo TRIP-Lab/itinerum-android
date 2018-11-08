@@ -6,8 +6,8 @@ public abstract class LocationLoggingEvent {
 	 * Called from the fragment button click events
 	 */
 	public static class PauseResume {
-		public boolean resume;
-		public PauseResume(boolean resume) { this.resume = resume; }
+		public boolean pause;
+		public PauseResume(boolean pause) { this.pause = pause; }
 	}
 
 	/**
@@ -19,17 +19,7 @@ public abstract class LocationLoggingEvent {
 			this.start = start;
 		}
 	}
-
-	/**
-	 * Triggered when a geofence is created
-	 */
-	public static class GeofenceEnter {}
-
-	/**
-	 * Triggered when a user leaves a defined geofence
-	 */
-	public static class GeofenceExit {}
-
+	
 	/**
 	 * Triggered at a defined interval after a geofence is created
 	 */
@@ -44,5 +34,7 @@ public abstract class LocationLoggingEvent {
 	 * This will trigger a message to the user that they have dwelled, assuming the activity is open.
 	 */
 	public static class ShowGeofencePromptInActivity {}
+
+	public static class PromptImmediate {}
 }
 

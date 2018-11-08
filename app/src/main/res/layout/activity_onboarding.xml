@@ -1,0 +1,114 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_dark">
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/back_button"
+        style="@style/BackButton.Survey"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        style="@style/Title.DarkTheme"
+        android:paddingTop="@dimen/padding_large"
+        tools:text="@string/about_title"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/focus_button_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_logo_vector"
+            app:tint="@color/base"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal"
+            android:layout_margin="28dp"
+            android:layout_gravity="left|center_vertical"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/content_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            tools:src="@drawable/onboard_welcome"/>
+
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/paragraph"
+        style="@style/Paragraph.Emphasis.DarkTheme"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="40dp"
+        android:paddingRight="@dimen/padding_large"
+        tools:text="@string/about_paragraph"
+        />
+
+    <FrameLayout
+        android:id="@+id/fab_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/trip_list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_logo_vector"
+            app:tint="@color/base"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="28dp"
+            android:layout_marginLeft="28dp"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/app_settings_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_settings_vector"
+            app:tint="@color/base"
+            app:backgroundTint="@android:color/white"
+            app:borderWidth="1dp"
+            app:fabSize="normal"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="28dp"
+            />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/app_info_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_info_vector"
+            app:tint="@color/base"
+            app:backgroundTint="@android:color/white"
+            app:fabSize="normal"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="28dp"
+            android:layout_marginRight="28dp"
+            />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/continue_button"
+        style="@style/StockButton.Survey"
+        tools:text="@string/onboarding_button"/>
+
+</LinearLayout>
+

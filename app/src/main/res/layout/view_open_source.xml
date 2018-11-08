@@ -21,14 +21,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_small"
                 android:text="@string/dagger_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,14 +36,14 @@
                 android:autoLink="web"
                 android:text="@string/dagger_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_small"
                 android:text="@string/dagger_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,14 +65,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/apachecommons_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -80,7 +80,7 @@
                 android:autoLink="web"
                 android:text="@string/apachecommons_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -102,14 +102,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/fresco_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -117,14 +117,14 @@
                 android:autoLink="web"
                 android:text="@string/fresco_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:padding="@dimen/padding_small"
                 android:text="@string/fresco_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -146,14 +146,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/rxjava_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -161,14 +161,14 @@
                 android:autoLink="web"
                 android:text="@string/rxjava_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:padding="@dimen/padding_small"
                 android:text="@string/rxjava_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -190,14 +190,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/materialdatetimepicker_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -205,14 +205,14 @@
                 android:autoLink="web"
                 android:text="@string/materialdatetimepicker_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:padding="@dimen/padding_small"
                 android:text="@string/materialdatetimepicker_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -234,14 +234,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/fancybuttons_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -249,7 +249,7 @@
                 android:autoLink="web"
                 android:text="@string/fancybuttons_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -271,14 +271,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/butterknife_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -286,14 +286,14 @@
                 android:autoLink="web"
                 android:text="@string/butterknife_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:padding="@dimen/padding_small"
                 android:text="@string/butterknife_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -315,14 +315,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/retrofit_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -330,14 +330,14 @@
                 android:autoLink="web"
                 android:text="@string/retrofit_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:padding="@dimen/padding_small"
                 android:text="@string/retrofit_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -359,14 +359,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/androidmaputils_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -374,7 +374,7 @@
                 android:autoLink="web"
                 android:text="@string/androidmaputils_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -396,14 +396,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/eventbus_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -411,14 +411,14 @@
                 android:autoLink="web"
                 android:text="@string/eventbus_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:padding="@dimen/padding_small"
                 android:text="@string/eventbus_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -440,14 +440,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/okhttp_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -455,7 +455,7 @@
                 android:autoLink="web"
                 android:text="@string/okhttp_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -477,14 +477,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/androidjob_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -492,14 +492,14 @@
                 android:autoLink="web"
                 android:text="@string/androidjob_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:padding="@dimen/padding_small"
                 android:text="@string/androidjob_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -521,14 +521,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/joda_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -536,7 +536,7 @@
                 android:autoLink="web"
                 android:text="@string/joda_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -558,14 +558,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Base.TextAppearance.AppCompat.Title"
                 android:padding="@dimen/padding_small"
                 android:text="@string/sectionedrecycler_title"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -573,14 +573,14 @@
                 android:autoLink="web"
                 android:text="@string/sectionedrecycler_url"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_small"
                 android:text="@string/sectionedrecycler_license"/>
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.AppCompat.Body1"

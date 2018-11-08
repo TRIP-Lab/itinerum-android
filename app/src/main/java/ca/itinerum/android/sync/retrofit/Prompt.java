@@ -90,6 +90,12 @@ public class Prompt implements Parcelable {
 		in.readStringList(this.choices);
 	}
 
+	public Prompt(List<String> choices, String prompt, int id) {
+		this.choices = choices;
+		this.prompt = prompt;
+		this.id = id;
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;

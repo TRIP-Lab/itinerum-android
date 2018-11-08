@@ -2,12 +2,12 @@ package ca.itinerum.android.survey;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +23,7 @@ import ca.itinerum.android.utilities.SystemUtils;
 public class SurveySelectionFragment extends NamedFragment {
 
 	@BindView(R.id.select_survey_edittext) EditText mSelectSurveyEdittext;
-	@BindView(R.id.fragment_continue_button) Button mContinueButton;
+	@BindView(R.id.continue_button) AppCompatButton mContinueButton;
 
 	private OnFragmentInteractionListener mListener;
 

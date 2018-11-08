@@ -1,66 +1,64 @@
 package ca.itinerum.android.survey.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ca.itinerum.android.R;
+import ca.itinerum.android.common.SelectionRecyclerView;
 import ca.itinerum.android.sync.retrofit.Survey;
 
 /**
  * Created by stewjacks on 2017-01-19.
  */
 
-public abstract class MultiSelectView extends BaseSurveyView {
+public abstract class MultiSelectView extends SelectView {
 
-	@BindView(R.id.question) TextView mQuestion;
-	@BindView(R.id.title) TextView mTitle;
-	@BindView(R.id.list_view) ListView mListView;
-	protected ArrayAdapter<String> mAdapter;
+	private int mMinResponses = 0;
 
-	public MultiSelectView(Context context, Survey survey) {
-		this(context, null, 0);
-		mSurvey = survey;
-		onFinishInflate();
+	public MultiSelectView(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
 	}
+
 
 	public MultiSelectView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		inflate(context, R.layout.view_list, this);
 	}
 
 	@Override
 	protected void onFinishInflate() {
 		super.onFinishInflate();
-		ButterKnife.bind(this);
 
-		mTitle.setVisibility(GONE);
-		mQuestion.setText(mSurvey.getPrompt());
+		if (mSurvey.getFields().getChoices() != null && mSurvey.getFields().getChoices().size() > 0) {
+			mListView.setData(mSurvey.getFields().getChoices(), true);
+		}
 
-		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-		mAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_multiple_choice, mSurvey.getFields().getChoices());
-		mListView.setAdapter(mAdapter);
-
-
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				mListener.onCanAdvance(mListView.getCheckedItemPositions().size() > 0);
-			}
-		});
 	}
 
 	@Override
 	public boolean canAdvance() {
-		// presumably they can select none from a multiselect list
-		return true;
+		// presumably they can select none from a multisele;ct list, if applicable
+		if (mMinResponses == 0) return true;
+
+		int size = 0;
+		SparseBooleanArray results = mListView.getCheckedItemPositions();
+		for (int i = 0; i < results.size(); i++) {
+			if (results.get(i)) size++;
+		}
+
+		return size >= mMinResponses;
 	}
 
+	public void setMinResponses(int minResponses) {
+		mMinResponses = minResponses;
+	}
+
+	public int getMinResponses() {
+		return mMinResponses;
+	}
 }

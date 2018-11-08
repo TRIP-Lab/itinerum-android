@@ -1,14 +1,17 @@
 package ca.itinerum.android.survey;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -17,14 +20,12 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.List;
 
-import butterknife.BindColor;
-import butterknife.BindDimen;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ca.itinerum.android.DMApplication;
-import ca.itinerum.android.MapActivity;
+import ca.itinerum.android.BuildConfig;
 import ca.itinerum.android.R;
+import ca.itinerum.android.onboarding.OnboardActivity;
 import ca.itinerum.android.survey.views.BaseSurveyView;
 import ca.itinerum.android.sync.retrofit.ErrorMessage;
 import ca.itinerum.android.sync.retrofit.Survey;
@@ -38,27 +39,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SurveyActivity extends Activity implements SurveyAdvanceListener {
+public class SurveyActivity extends AppCompatActivity implements SurveyAdvanceListener {
 
 	//NOTE: These are annoying requirements b/c we only show the school and work locations maps if the user is a worker and/or student.
 	public boolean mIsEmployed;
 	public boolean mIsStudent;
 
-	@BindView(R.id.progress_bar) ProgressBar mProgressBar;
-	@BindView(R.id.fragment_container) FrameLayout mContainer;
-	@BindView(R.id.fragment_back_button) ImageButton mFragmentBackButton;
-	@BindView(R.id.fragment_continue_button) Button mFragmentContinueButton;
-
-	@BindColor(R.color.base_colour) int CONTINUE_BUTTON_COLOUR;
-	@BindColor(android.R.color.darker_gray) int DISABLE_BUTTON_COLOUR;
+	@BindView(R.id.progress_bar) FrameLayout mProgressBar;
+	@BindView(R.id.back_button) AppCompatImageButton mBackButton;
+	@BindView(R.id.continue_button) AppCompatButton mContinueButton;
+	@BindView(R.id.container) FrameLayout mContainer;
+	@BindView(R.id.container_fullframe) FrameLayout mContainerFullframe;
+	@BindView(R.id.survey_progress_bar) ProgressBar mSurveyProgressBar;
+	@BindView(R.id.list_mask) FrameLayout mListMask;
 
 	@BindString(R.string.continue_button) String CONTINUE_BTN;
 	@BindString(R.string.submit_button) String SUBMIT_BTN;
 
-	@BindDimen(R.dimen.padding_medium) int PADDING;
-
 	private List<Survey> mSurvey;
-	private ArrayMap<String, Object> mSurveyResults;
+	public ArrayMap<String, Object> mSurveyResults;
 	private int mCurrentQuestion = 0;
 	private BaseSurveyView mCurrentView;
 	private boolean mCanAdvance = false;
@@ -78,17 +77,27 @@ public class SurveyActivity extends Activity implements SurveyAdvanceListener {
 		mSurvey = sp.getSurvey();
 		if (mSurvey == null) finishSurvey();
 
-		mFragmentContinueButton.setOnClickListener(new View.OnClickListener() {
+		mSurveyProgressBar.setMax(mSurvey.size());
+		mSurveyProgressBar.setProgress(mCurrentQuestion + 1);
+
+		mContinueButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				getQuestionResultAndAdvance();
 			}
 		});
 
-		mFragmentBackButton.setOnClickListener(new View.OnClickListener() {
+		mBackButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
+			}
+		});
+
+		mProgressBar.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return true;
 			}
 		});
 	}
@@ -96,21 +105,36 @@ public class SurveyActivity extends Activity implements SurveyAdvanceListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// these two lines are sanity checks for onBackButtonPressed()
+		if (mCurrentQuestion >= mSurvey.size()) mCurrentQuestion = mSurvey.size() - 1;
+		mProgressBar.setVisibility(View.GONE);
+
 		showQuestion(mCurrentQuestion);
 	}
 
 	private void showQuestion(int currentQuestion) {
+		if (mSurveyProgressBar != null) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+				mSurveyProgressBar.setProgress(currentQuestion + 1, true);
+			else mSurveyProgressBar.setProgress(currentQuestion + 1);
+		}
 		mCanAdvance = false;
-		mContainer.removeAllViews();
+//		mContainerInline.removeAllViews();
+		mContainerFullframe.removeAllViews();
 		mCurrentView = SurveyHelper.getSurveyView(this, mSurvey.get(currentQuestion));
 
 		if (mSurveyResults.containsKey(mSurvey.get(currentQuestion).getColName())) {
 			mCurrentView.setResult(mSurveyResults.get(mSurvey.get(currentQuestion).getColName()));
+		} else if (BuildConfig.DEBUG) { //this is to speed up debug testing
+			mCurrentView.setResult(null);
 		}
 
 		FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-		mContainer.addView(mCurrentView, p);
+		mListMask.setVisibility(mCurrentView.isFullframe() ? View.INVISIBLE : View.VISIBLE);
+
+		mContainerFullframe.addView(mCurrentView, p);
+
 		mCurrentQuestion = currentQuestion;
 		mCurrentView.setAdvanceListener(this);
 
@@ -139,6 +163,7 @@ public class SurveyActivity extends Activity implements SurveyAdvanceListener {
 						mIsStudent = true;
 						break;
 					case 3:
+						if (BuildConfig.FLAVOR.equals("montreal")) break; //this is a hack so the reordered questions work as this option was removed
 						mIsEmployed = true;
 						mIsStudent = true;
 						break;
@@ -149,13 +174,18 @@ public class SurveyActivity extends Activity implements SurveyAdvanceListener {
 		}
 
 		mCurrentQuestion++;
-		while (mCurrentQuestion < mSurvey.size()) {
-			if (SurveyHelper.shouldShowQuestion(mSurvey.get(mCurrentQuestion), mIsEmployed, mIsStudent)) {
-				showQuestion(mCurrentQuestion);
-				return;
+		if (mCurrentQuestion < mSurvey.size()) {
+			//TODO: this has the potential for an infinite loop?
+			while (mCurrentQuestion < mSurvey.size()) {
+				if (SurveyHelper.shouldShowQuestion(mSurvey.get(mCurrentQuestion), mIsEmployed, mIsStudent)) {
+					showQuestion(mCurrentQuestion);
+					return;
+				}
+				mCurrentQuestion++;
 			}
-			mCurrentQuestion = Math.min(mCurrentQuestion + 1, mSurvey.size() - 1);
 		}
+
+		mCurrentQuestion = Math.min(mCurrentQuestion, mSurvey.size());
 
 		finishSurvey();
 	}
@@ -189,8 +219,9 @@ public class SurveyActivity extends Activity implements SurveyAdvanceListener {
 							if (error != null) {
 								//TODO: localize and make sure this actually works
 								String errorMessage = "Error submitting survey. Please try again";
-								if (error.getError() != null) errorMessage = error.getError();
-								else if (error.getMessage() != null) errorMessage = error.getMessage();
+								if (error.getErrors() != null && error.getErrors().length > 0)
+									errorMessage = error.getErrors()[0];
+//								else if (error.getMessage() != null) errorMessage = error.getMessage();
 								Logger.l.e(errorMessage);
 								final String message = errorMessage;
 								SurveyActivity.this.runOnUiThread(new Runnable() {
@@ -210,9 +241,28 @@ public class SurveyActivity extends Activity implements SurveyAdvanceListener {
 				SharedPreferenceManager.getInstance(SurveyActivity.this).setQuestionnaireCompleteDateToNow();
 				SharedPreferenceManager.getInstance(SurveyActivity.this).setCompletedQuestionnaire(mSurveyResults); //doubt I'll ever come back for this.
 
-				((DMApplication) getApplication()).startLoggingService();
+				startActivity(new Intent(SurveyActivity.this, OnboardActivity.class));
 
-				startActivity(new Intent(SurveyActivity.this, MapActivity.class));
+
+				// Montreal-specific check for survey response from user
+				if (BuildConfig.FLAVOR.equals("montreal")) {
+					Object survey = null;
+					if (mSurveyResults.containsKey("Newsletter")) {
+						survey = mSurveyResults.get("Newsletter");
+					} else if (mSurveyResults.containsKey("Infolettre")) {
+						survey = mSurveyResults.get("Infolettre");
+					}
+
+					if (survey instanceof String) {
+						if (((String) survey).contains("Yes") || ((String) survey).contains("Oui")) {
+							String url = getString(R.string.tester_site);
+							Intent i = new Intent(Intent.ACTION_VIEW);
+							i.setData(Uri.parse(url));
+							startActivity(i);
+						}
+					}
+				}
+
 				SurveyActivity.this.finish();
 
 			}
@@ -232,34 +282,40 @@ public class SurveyActivity extends Activity implements SurveyAdvanceListener {
 
 	@Override
 	public void onBackPressed() {
-			mCurrentQuestion--;
-			while (mCurrentQuestion >= 0) {
-				if (SurveyHelper.shouldShowQuestion(mSurvey.get(mCurrentQuestion), mIsEmployed, mIsStudent)) {
-					showQuestion(mCurrentQuestion);
-					return;
-				}
-				mCurrentQuestion--;
+		mCurrentQuestion--;
+		while (mCurrentQuestion >= 0) {
+			if (SurveyHelper.shouldShowQuestion(mSurvey.get(mCurrentQuestion), mIsEmployed, mIsStudent)) {
+				showQuestion(mCurrentQuestion);
+				return;
 			}
+			mCurrentQuestion--;
+		}
 		super.onBackPressed();
 	}
 
 	private void lockButton() {
-		mFragmentContinueButton.setBackgroundColor(DISABLE_BUTTON_COLOUR);
-		mFragmentContinueButton.setEnabled(false);
-		mFragmentContinueButton.setClickable(false);
-		mFragmentContinueButton.setAlpha(0.5f);
+		mContinueButton.setEnabled(false);
+		mContinueButton.setClickable(false);
+		mContinueButton.setAlpha(0.5f);
 	}
 
 	private void unlockButton() {
-		mFragmentContinueButton.setEnabled(true);
-		mFragmentContinueButton.setClickable(true);
-		mFragmentContinueButton.setBackgroundColor(CONTINUE_BUTTON_COLOUR);
-		mFragmentContinueButton.setAlpha(1f);
+		mContinueButton.setEnabled(true);
+		mContinueButton.setClickable(true);
+		mContinueButton.setAlpha(1f);
 	}
 
 	private void updateContinueButton() {
-		mFragmentBackButton.setVisibility(mCurrentQuestion == 0 ? View.GONE : View.VISIBLE);
-		mFragmentContinueButton.setText(mSurvey.size() - 1 == mCurrentQuestion ? SUBMIT_BTN : CONTINUE_BTN);
+		mBackButton.setVisibility(mCurrentQuestion == 0 ? View.INVISIBLE : View.VISIBLE);
+		mContinueButton.setText(mSurvey.size() - 1 == mCurrentQuestion ? SUBMIT_BTN : CONTINUE_BTN);
+//		if (SurveyHelper.isMapView(mSurvey.get(mCurrentQuestion))) {
+//
+//			mContinueButton.getBackground().setColorFilter(ContextCompat.getColor(this, R.color.base), PorterDuff.Mode.SRC_IN);
+//			mContinueButton.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+//		} else {
+//		mContinueButton.getBackground().setColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC_IN);
+//		mContinueButton.setTextColor(ContextCompat.getColor(this, R.color.base));
+//		}
 
 		if (mCanAdvance) unlockButton();
 		else lockButton();

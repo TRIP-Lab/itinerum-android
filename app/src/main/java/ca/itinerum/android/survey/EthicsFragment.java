@@ -4,10 +4,13 @@ package ca.itinerum.android.survey;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,13 +24,14 @@ import ca.itinerum.android.R;
 public class EthicsFragment extends NamedFragment {
 	private OnFragmentInteractionListener mListener;
 
-	@BindView(R.id.fragment_continue_button) Button mFragmentContinueButton;
+	@BindView(R.id.continue_button) AppCompatButton mFragmentContinueButton;
+	@BindView(R.id.fragment_decline_button) AppCompatButton mFragmentDeclineButton;
 
 	/**
 	 * Use this factory method to create a new instance of
 	 * this fragment using the provided parameters.
 	 *
-	 * @return A new instance of fragment OccupationFragment.
+	 * @return A new instance of fragment EthicsFragment.
 	 */
 	// TODO: Rename and change types and number of parameters
 	public static EthicsFragment newInstance(String name) {
@@ -51,26 +55,34 @@ public class EthicsFragment extends NamedFragment {
 		mFragmentContinueButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				onButtonPressed();
+				onButtonPressed(true);
+			}
+		});
+		mFragmentDeclineButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onButtonPressed(false);
 			}
 		});
 
 		return v;
 	}
 
-	private void onButtonPressed() {
+	private void onButtonPressed(boolean result) {
 		if (mListener != null) {
-			mListener.onFragmentInteraction(getName(), null);
+			Map<String, Object> results = new HashMap<>();
+			results.put(getName(), result);
+			mListener.onFragmentInteraction(getName(), results);
 		}
 	}
 
 	@Override
-	public void onAttach(Context activity) {
-		super.onAttach(activity);
-		if (activity instanceof OnFragmentInteractionListener) {
-			mListener = (OnFragmentInteractionListener) activity;
+	public void onAttach(Context context) {
+		super.onAttach(context);
+		if (context instanceof OnFragmentInteractionListener) {
+			mListener = (OnFragmentInteractionListener) context;
 		} else {
-			throw new RuntimeException(activity.toString()
+			throw new RuntimeException(context.toString()
 					+ " must implement OnFragmentInteractionListener");
 		}
 	}
@@ -79,5 +91,10 @@ public class EthicsFragment extends NamedFragment {
 	public void onDetach() {
 		super.onDetach();
 		mListener = null;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
 	}
 }
