@@ -205,6 +205,9 @@ public class RecordingUtils {
 
 		int maximumNumberOfPrompts = pm.getMaximumNumberOfPrompts();
 		int numberOfPrompts = pm.getNumberOfPrompts();
+
+		if (numberOfPrompts == 0) return false;
+
 		int numberOfRecordedPrompts = ItinerumDatabase.getInstance(context).promptDao().getAllAutomaticPromptAnswersCount() / numberOfPrompts;
 
 		// if we haven't completed prompts, check cutoff. Cutoff trumps user request.

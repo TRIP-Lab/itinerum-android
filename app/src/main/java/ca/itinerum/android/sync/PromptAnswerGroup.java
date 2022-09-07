@@ -142,6 +142,8 @@ public class PromptAnswerGroup {
 		ArrayList<PromptAnswerGroup> group = new ArrayList<>();
 		Collections.sort(promptAnswers);
 
+		promptSize = Math.max(promptSize, 1);
+
 		for (int i = 0; i < promptAnswers.size() / promptSize ; i++) {
 			group.add(new PromptAnswerGroup(promptAnswers.subList(i * promptSize, (i + 1) * promptSize)));
 		}

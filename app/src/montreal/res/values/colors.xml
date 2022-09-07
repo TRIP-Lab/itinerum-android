@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="base">#003375</color>
+    <color name="accent_colour">#54585a</color>
+    <color name="background_dark">#f9f9f9</color>
+    <color name="background_light">@color/base</color>
+    <color name="text_colour_light">#333333</color>
+    <color name="text_colour_dark">#ffffff</color>
+    <color name="accent_colour_dark">@color/base</color>
+    <color name="accent_colour_light">#ffffff</color>
+
+    <color name="map_toolbar">@color/base</color>
+    <color name="map_card_background">@color/card_background</color>
+
+    <color name="survey_accent_colour">@color/base</color>
+
+    <color name="button_background_light">@color/base</color>
+    <color name="button_background_dark">@color/base</color>
+    <color name="card_small_title_text">@color/text_colour_light</color>
+
+    <color name="rounded_light_outline">@color/base</color>
+
+    <color name="slightly_rounded_background">@color/card_background</color>
+    <color name="slightly_rounded_border">#333333</color>
+    <color name="slightly_rounded_selected_background">@color/base</color>
+    <color name="slightly_rounded_selected_border">@color/base</color>
+    <color name="slightly_rounded_text">@color/text_colour_light</color>
+    <color name="slightly_rounded_selected_text">@color/text_colour_dark</color>
+
+    <color name="fab_tint">@color/base</color>
+    <color name="fab_background_tint">#ffffff</color>
+
+    <color name="card_background">@color/background_dark</color>
+    <color name="card_text">@color/text_colour_light</color>
+    <color name="card_title_text">@color/text_colour_dark</color>
+    <color name="card_title_background">@color/base</color>
+    <color name="contentcard_title_text">@color/text_colour_light</color>
+    <color name="contentcard_large_text">@color/base</color>
+    <color name="contentcard_totals_text">@color/text_colour_light</color>
+
+    <color name="fragment_background">#fefffe</color>
+    <color name="header_background">#eeeeee</color>
+    <color name="logo_banner_background">#ffffff</color>
+    <color name="ethics_text_banner_background">@color/background_dark</color>
+    <color name="ethics_text_banner_tint">@color/text_colour_light</color>
+
+    <color name="back_button">@color/base</color>
+
+    <color name="stop_colour">#bf8c9eff</color>
+
+    <color name="highlight_incomplete">#ffebee</color>
+    <color name="toolbar_default">#212121</color>
+    <color name="divider">#d8d8d8</color>
+
+    <color name="list_mask_light">#adadad</color>
+    <color name="list_mask_dark">@color/background_dark</color>
+
+    <!-- Survey specific colours -->
+    <color name="background_survey">@color/background_dark</color>
+    <color name="toolbar_survey">#212121</color>
+    <color name="text_colour_survey">@color/text_colour_light</color>
+    <color name="background_location_picker_bubble">#ffffff</color>
+    <color name="back_button_survey">@color/base</color>
+
+    <color name="button_text_light">@color/base</color>
+    <color name="button_text_light_checked">@color/button_text_dark</color>
+    <color name="button_text_light_pressed">@color/text_colour_dark</color>
+    <color name="button_text_light_pressed_checked">@color/base</color>
+
+    <color name="button_text_dark">@color/text_colour_dark</color>
+    <color name="button_text_dark_checked">@color/text_colour_light</color>
+    <color name="button_text_dark_pressed">@color/text_colour_dark</color>
+    <color name="button_text_dark_pressed_checked">@color/text_colour_light</color>
+
+    <color name="rounded_checkbox">@color/text_colour_dark</color>
+    <color name="rounded_checkbox_checked">@color/text_colour_light</color>
+    <color name="rounded_checkbox_pressed">@color/text_colour_dark</color>
+    <color name="rounded_checkbox_pressed_checked">@color/text_colour_light</color>
+
+    <!-- List item variants -->
+    <color name="list_item_background_light">#fefefe</color>
+    <color name="list_item_selected_light">@color/base</color>
+    <color name="list_item_indicator_enabled_light">#fefefe</color>
+    <color name="list_item_indicator_light">@color/base</color>
+    <color name="list_item_text_color_selected_light">@color/text_colour_dark</color>
+    <color name="list_item_text_color_light">@color/text_colour_light</color>
+    <color name="checkbox_single_select_light">@color/background_survey</color>
+    <color name="checkbox_single_select_checked_light">@color/background_survey</color>
+    <color name="checkbox_multi_select_light">@color/base</color>
+    <color name="checkbox_multi_select_checked_light">@color/background_survey</color>
+
+    <color name="list_item_text_color_selected">#ffffff</color>
+    <color name="list_item_text_color_unselected">#ffffff</color>
+    <color name="list_item_background_dark">@color/base</color>
+    <color name="list_item_indicator_enabled_dark">#fefefe</color>
+    <color name="list_item_text_color_selected_dark">@color/text_colour_dark</color>
+    <color name="list_item_text_color_dark">@color/text_colour_light</color>
+    <color name="checkbox_single_select_dark">@color/background_dark</color>
+    <color name="checkbox_single_select_checked_dark">@color/background_dark</color>
+    <color name="checkbox_multi_select_dark">@color/background_light</color>
+    <color name="checkbox_multi_select_checked_dark">@color/background_dark</color>
+
+    <color name="prompt_detail_title">@color/text_colour_light</color>
+
+    <color name="negative_button_text_colour">@color/text_colour_light</color>
+    <color name="prompt_detail_resizing_button">@color/text_colour_dark</color>
+    <color name="prompt_nav_button_tint">@color/text_colour_light</color>
+    <color name="prompt_close_button_tint">@color/base</color>
+
+    <color name="prompt_details_background">@color/background_dark</color>
+    <color name="card_background_light">@color/background_dark</color>
+    <color name="selection_recyclerview_indicator">#0000ff</color>
+
+    <color name="complete_asset_tint">#000000</color>
+    <color name="survey_progress_color">@color/base</color>
+
+</resources>

@@ -1,0 +1,6 @@
+<resources>
+    <style name="Checkbox.Inverted" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/list_item_indicator_enabled_dark</item>
+        <item name="colorControlNormal">@color/base</item>
+    </style>
+</resources>

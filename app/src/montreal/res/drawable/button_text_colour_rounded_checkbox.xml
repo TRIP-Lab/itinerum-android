@@ -1,0 +1,19 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Unfocused and pressed -->
+    <item android:state_pressed="true"
+          android:state_checked="false"
+          android:color="@color/text_colour_light" />
+
+    <!-- Checked -->
+    <item android:state_checked="true"
+          android:color="@color/button_text_light_checked" />
+
+    <item android:state_checked="true"
+          android:state_pressed="true"
+          android:color="@color/button_text_light_checked" />
+
+    <!-- Default color -->
+    <item android:color="@color/text_colour_light" />
+
+</selector>

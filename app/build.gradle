@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
@@ -53,6 +54,21 @@ android {
             buildConfigField "boolean", "AGE_CONSTRAINT", "false"
             buildConfigField "String", "ABSOLUTE_CUTOFF", "\"\""
 
+        }
+
+        montreal {
+            versionName project.VERSION_NAME + "-mtl"
+            applicationId "ca.qc.montreal.datamb"
+            buildConfigField "boolean", "SHOULD_SHOW_SURVEY", "true"
+            buildConfigField "int", "RECORDING_MAX_NUM_OF_DAYS", "30"
+            buildConfigField "int", "RECORDING_MAX_NUM_OF_TRIPS", "25"
+            buildConfigField "boolean", "SHOW_CONSENT", "true"
+            buildConfigField "boolean", "SHOW_PAUSE_PLAY_FAB", "false"
+            buildConfigField "boolean", "SHOW_PAUSE_PLAY_MENU", "true"
+            buildConfigField "boolean", "EMAIL_MANDATORY", "false"
+            buildConfigField "boolean", "SHOW_POWERED_BY", "true"
+            buildConfigField "boolean", "AGE_CONSTRAINT", "true"
+            buildConfigField "String", "ABSOLUTE_CUTOFF", "\"2023-10-28T23:59:59-04:00\""
         }
     }
 
@@ -152,6 +168,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
 
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4'
+
     implementation 'com.google.maps.android:android-maps-utils:0.4.3'
 
     implementation 'com.facebook.fresco:fresco:1.7.1' //keep this at 1.7.1 until weird native issue is resolved
@@ -180,3 +200,5 @@ dependencies {
 
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.1.3'
 }
+
+apply plugin: 'com.google.gms.google-services'

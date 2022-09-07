@@ -12,8 +12,10 @@ import android.support.multidex.MultiDexApplication;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.crashlytics.android.Crashlytics;
 import com.evernote.android.job.JobManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.firebase.FirebaseApp;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,6 +35,7 @@ import ca.itinerum.android.utilities.SharedPreferenceManager;
 import ca.itinerum.android.utilities.SystemUtils;
 import ca.itinerum.android.utilities.db.ItinerumDatabase;
 import ca.itinerum.android.utilities.db.ModePromptHelper;
+import io.fabric.sdk.android.Fabric;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class DMApplication extends MultiDexApplication implements Application.ActivityLifecycleCallbacks {
@@ -51,6 +54,8 @@ public class DMApplication extends MultiDexApplication implements Application.Ac
 		super.onCreate();
 
 		mSharedPreferenceManager = SharedPreferenceManager.getInstance(this);
+
+		FirebaseApp.initializeApp(this);
 
 		Fresco.initialize(this);
 
@@ -122,11 +127,11 @@ public class DMApplication extends MultiDexApplication implements Application.Ac
 			deleteDatabase(ModePromptHelper.DATABASE_NAME);
 		}
 
-		// Montreal version should do a hard reset for upgrades
+		// Itinerum Montreal version should do a hard reset for upgrades
 		if (oldVersion < 105 && BuildConfig.FLAVOR.equals("montreal")) {
 			SystemUtils.leaveCurrentSurvey(this);
 			deleteDatabase(ModePromptHelper.DATABASE_NAME);
-			Logger.l.w("MTL upgraded from", oldVersion, "to", newVersion, "and dumped all existing data");
+			Logger.l.w("ItinerumMTL upgraded from", oldVersion, "to", newVersion, "and dumped all existing data");
 		}
 
 

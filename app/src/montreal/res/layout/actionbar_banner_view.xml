@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logo_text"
+        android:scaleType="centerInside"
+        android:tint="@android:color/white"
+        android:layout_marginRight="@dimen/padding_large"
+        android:paddingTop="@dimen/padding_large"
+        android:paddingBottom="@dimen/padding_large"/>
+
+
+</LinearLayout>

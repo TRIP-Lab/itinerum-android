@@ -541,6 +541,11 @@ public class LocationLoggingService extends Service {
 
 		EventBus.getDefault().post(new LocationLoggingEvent.StartStop(false));
 
+		// if the current survey has no prompt questions, don't prompt the user at stops.
+		if (sp.getNumberOfPrompts() == 0) {
+			return;
+		}
+
 		// check to make sure we haven't recorded all trips already, and that we aren't continuing recording
 		if (!sp.getOngoingPrompts() && (RecordingUtils.hasFinishedAutomaticPrompts(this))) {
 			Logger.l.d("all trips recorded");

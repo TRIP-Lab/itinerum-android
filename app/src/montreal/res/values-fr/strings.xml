@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_code">itinerummtltf2018</string>
+
+    <string name="ethics_title">Modalités d’utilisation de Itinerum MTL</string>
+    <string name="ethics_preamble">Prenez le temps de lire attentivement les renseignements ci-dessous avant de décider de participer ou non à cette étude de transport menée par Concordia.</string>
+    <string name="ethics_body">
+        Itinerum MTL est une application mobile développée dans le cadre d’un projet de recherche mené par l’Université Concordia. Son utilisation est assujettie aux règles d’éthique de l’Université Concordia.
+
+        \n\nA. BUT
+
+        \n\nLe but de ce projet de recherche est de recueillir et d’analyser des données sur les comportements liés aux déplacements d’usagers sur le réseau de transport à l’aide de leur téléphone intelligent. Grâce à ces données (départ, destination, nombre de déplacements, modes de transport, etc.),  nous serons mieux outillés pour prédire la demande de mobilité et planifier le développement du réseau de transport en fonction des besoins des usagers.
+
+        \n\nB. PROCÉDURE
+
+
+        \n\nD. CONDITIONS DE PARTICIPATION
+
+
+        \n\nE. DÉCLARATION DE CONSENTEMENT
+
+
+        \n\n<b>J’ACCEPTE CES CONDITIONS</b> (obligatoire pour participer à l’étude)
+
+    </string>
+
+    <string name="ethics_postamble"></string>
+
+    <string name="welcome_title">Merci d’avoir téléchargé Itinerum MTL.</string>
+    <string name="welcome_paragraph">Votre participation est grandement appréciée. Afin de faciliter l’analyse de vos données, veuillez répondre aux questions suivantes.</string>
+
+    <string name="welcome_onboard_title">Bienvenue sur Itinerum MTL</string>
+    <string name="welcome_onboard_paragraph">Nous sommes presque prêts à commencer. Révisons rapidement les fonctionnalités de base de Itinerum MTL.</string>
+
+    <string name="about_title">What is Itinerum?</string>
+    <string name="about_paragraph">Itinerum is a spatialized data collection app which is used to create studies that help to better understand how people get around in an urban environment.</string>
+
+    <string name="help_1_title">@string/using_itinerum_title</string>
+    <string name="help_1_paragraph">L’application s’exécute en arrière-plan et enregistre automatiquement vos déplacements.</string>
+    <string name="help_2_title"></string>
+    <string name="help_2_paragraph">Having an active SIM card improves location recording results even if you don\’t have a data plan.</string>
+    <string name="help_3_title">@string/using_itinerum_title</string>
+    <string name="help_3_paragraph">Vous pouvez participer à cette étude du 17 sept. au 28 oct.</string>
+    <string name="help_4_title"></string>
+    <string name="help_4_paragraph"></string>
+
+    <string name="using_itinerum_title">Comment utiliser Itinerum MTL</string>
+    <string name="using_itinerum_1_title"></string>
+    <string name="using_itinerum_2_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_3_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_4_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_1_paragraph"></string>
+    <string name="using_itinerum_2_paragraph">Ce bouton vous permet d’ajouter des trajets ou de modifier les informations d’un trajet.</string>
+    <string name="using_itinerum_3_paragraph">Celui-ci vous donne accès aux réglages de Itinerum MTL.</string>
+    <string name="using_itinerum_4_paragraph">Celui-ci vous permet de relire les informations sur l’enquête en tout temps.</string>
+    <string name="thanks_title">Merci\n\nAllons-y !</string>
+    <string name="thanks_paragraph">Pour en savoir davantage, consultez notre <a href="https://www.itinerum.ca/fr/faq.html">foire aux questions</a></string>
+
+    <string name="should_pause_message">Mettre en pause l’enregistrement peut affecter l’éligibilité pour le tirage au sort</string>
+
+    <string name="survey_complete_title">Étude complétée.</string>
+    <string name="survey_complete_message">Merci d’avoir utilisé Itinerum MTL!</string>
+
+    <string name="feedback_title">Commentaires (Android) sur Itinerum MTL</string>
+
+    <string name="constant_notification_message">Itinerum MTL est toujours actif</string>
+    <string name="paused_notification_message">Itinerum MTL est en pause</string>
+
+    <string name="question_email_title">Courriel</string>
+    <string name="question_email_subtitle">Courriel (pour participer au tirage au sort)</string>
+
+    <string name="about_details">
+        En utilisant Itinerum MTL, vous êtes au cœur d’un projet de recherche en cours! Itinerum MTL est une adaptation d’Itinerum, une application d’enquête de trajet développée à l’Université Concordia. En permettant à l’application d’être exécutée en arrière-plan sur votre téléphone, vous partagerez de l’information à propos de vos déplacements pendant une période maximale de 30 jours. L’application nous permettra de développer et tester différentes méthodes qui nous permettront de mieux comprendre les comportements liés au déplacement des gens à l’aide de leur téléphone intelligent. Ultimement, votre participation nous aidera à optimiser la planification du transport urbain.
+        \n\nSi vous souhaitez nous rapporter un problème technique, veuillez nous envoyer un courriel à l’adresse : zachary.patterson@concordia.ca
+        \n\nFoire aux questions:
+        \nhttps://www.itinerum.ca/fr/index.html
+    </string>
+
+    <string name="max_trips_completed_message" formatted="false">Félicitations ! Vous avez validé %d déplacements. Vous êtes admissible au tirage au sort. Aimeriez-vous continuer à valider vos déplacements ?</string>
+    <string name="no_ongoing_message" formatted="false">Vous ne recevrez plus de notifications mais vous pourrez continuer à participer jusqu’à %d jours. Si vous ne souhaitez plus participer à l’étude, vous pouvez tout simplement désinstaller l’application.</string>
+    <string name="tester_site">https://www.itinerum.ca/fr/index.html</string>
+
+    <string name="get_going_ethics_paragraph">Itinerum MTL est asujetti à des règles éthiques. Veuillez les consulter et les accepter avant de continuer.</string>
+    <string name="pref_title_leave">Quitter l’étude</string>
+
+    <string name="about_app_title">À propos Itinerum MTL</string>
+
+    <!--Changes to hardcoded mode question-->
+
+    <string name="occupation_title">Occupation principale</string>
+    <string name="occupation_prompt">Vous êtes...</string>
+    <string-array name="question_occupation">
+        <item>Travailleur à temps plein</item>
+        <item>Travailleur à temps partiel</item>
+        <item>Étudiant</item>
+        <item>Retraité</item>
+        <item>À la maison</item>
+    </string-array>
+
+    <string-array name="primary_mode_question">
+        <item>Auto / Moto</item>
+        <item>Auto électrique (plaque verte)</item>
+        <item>Bus</item>
+        <item>Métro</item>
+        <item>Train</item>
+        <item>À pied</item>
+        <item>Vélo</item>
+        <item>Autre</item>
+    </string-array>
+
+    <string-array name="secondary_mode_question">
+        <item>Non</item>
+        <item>Auto / Moto</item>
+        <item>Auto électrique (plaque verte)</item>
+        <item>Bus</item>
+        <item>Métro</item>
+        <item>Train</item>
+        <item>À pied</item>
+        <item>Vélo</item>
+        <item>Autre</item>
+    </string-array>
+
+</resources>

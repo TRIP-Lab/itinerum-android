@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Itinerum MTL</string>
+    <string name="default_code">itinerummtlte2018</string>
+    <string name="mapKey" translatable="false">0cKUmhW1P0QHi3T7ALM7kklzvknNCuWJwqNIZ6w</string>
+    <string name="map_title" translatable="false">Itinerum MTL</string>
+
+    <string-array name="preamble_activities" translatable="false" >
+        <item>WelcomeActivity</item>
+        <item>SystemAccessActivity</item>
+        <item>LetsGoActivity</item>
+        <item>SurveyActivity</item>
+    </string-array>
+
+    <string name="welcome_title">Thank you for downloading Itinerum MTL.</string>
+    <string name="welcome_paragraph">Your participation is appreciated. To help our research, please answer the following questions.</string>
+
+    <string name="facebook_app_id" translatable="false">203601710066184</string>
+
+    <string name="info_url" translatable="false">https://www.itinerum.ca/index.html</string>
+
+    <!-- Notification Message -->
+    <string name="notification_title" translatable="false">Itinerum MTL</string>
+
+    <!-- Feedback -->
+    <string name="feedback_email" translatable="false">zachary.patterson@concordia.ca</string>
+    <string name="feedback_title">Android Comments about Itinerum MTL</string>
+
+    <string name="ethics_title">TERMS OF USE OF ITINERUM MTL</string>
+    <string name="ethics_preamble">You are invited to closely read the following information before deciding whether or not to participate in a transportation study conducted by Concordia.</string>
+    <string name="ethics_body">
+        Itinerum MTL is an application developed by Concordia University. Its use is governed by the ethics guidelines of Concordia University.
+
+        \n\nA. PURPOSE
+
+        \n\nThe purpose of this research project is to collect and analyse travel behaviour data of users on the transportation network with smartphones. Based on this data (origin and destination of trips, number of trips, transportation modes, etc.) we will be better able to predict mobility demand and plan the development of the transport network as a function of the needs of users.
+
+        \n\nB. PROCEDURES
+
+
+        \n\nC. CONTEST
+
+        \n\nD. CONDITIONS OF PARTICIPATION
+
+        \n\nE. DECLARATION OF CONSENT
+
+        \n\n<b>I ACCEPT THESE CONDITIONS</b> (mandatory to participate in the study)
+    </string>
+
+    <string name="ethics_postamble"></string>
+
+    <string name="welcome_onboard_title">Welcome\non board</string>
+    <string name="welcome_onboard_paragraph">Almost done! Let’s just quickly go over the basics on how to use Itinerum MTL.</string>
+
+    <string name="help_1_title">@string/using_itinerum_title</string>
+    <string name="help_1_paragraph">The app will remain open in the background in order to automatically record your trips.</string>
+    <string name="help_2_title"></string>
+    <string name="help_2_paragraph">Having an active SIM card improves location recording results even if you don’t have a data plan.</string>
+    <string name="help_3_title">@string/using_itinerum_title</string>
+    <string name="help_3_paragraph"></string>
+    <string name="help_4_title"></string>
+    <string name="help_4_paragraph"></string>
+
+    <string name="using_itinerum_title">Using\n Itinerum MTL</string>
+    <string name="using_itinerum_1_title"></string>
+    <string name="using_itinerum_2_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_3_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_4_title">@string/using_itinerum_title</string>
+    <string name="using_itinerum_1_paragraph">Please try and keep your phone outside of your pocket or on your dashboard to ensure the best connection whenever possible.</string>
+    <string name="using_itinerum_2_paragraph">This button lets you add trips or edit trip information.</string>
+    <string name="using_itinerum_3_paragraph">This one let’s you access the settings for your Itinerum app.</string>
+    <string name="using_itinerum_4_paragraph">And this one allows you to review the study information at any time.</string>
+    <string name="thanks_title">Thanks\n\nLet’s get started!</string>
+    <string name="thanks_paragraph">For more information, consult our <a href="https://www.itinerum.ca/faq.html">FAQs</a></string>
+
+    <string name="question_email_title">Email</string>
+    <string name="question_email_subtitle">Please provide your email (for raffle)</string>
+
+    <string name="constant_notification_message">Itinerum MTL is still running! Tap for more info</string>
+    <string name="paused_notification_message">Itinerum MTL is paused</string>
+
+    <string name="should_pause_message">Pausing recording stops data collection and can prevent raffle eligibility</string>
+
+    <string name="survey_complete_title">Survey complete.</string>
+    <string name="survey_complete_message">Thank you for using Itinerum MTL!</string>
+
+
+    <string name="about_details">
+        By using Itinerum MTL, you are at the heart of an ongoing research project! Itinerum MTL is an implementation of Itinerum, a travel survey application developed at Concordia University. By allowing the app to run in the background of your phone, you will share information on your trips for up to 30 days. The application will allow us to test and develop methods to better understand travel behaviour through the use of smartphones. Ultimately, your participation will help us improve transportation planning.
+        \n\nIf you would like to report a technical problem, please send an email to: zachary.patterson@concordia.ca
+        \n\nFrequently Asked Questions:
+        \nhttps://www.itinerum.ca/faq.html
+    </string>
+
+    <string name="max_trips_completed_message" formatted="false">Congratulations! You have validated %d trips. You will be entered in the draw for prizes. Would you like to continue validating trips?</string>
+    <string name="no_ongoing_message" formatted="false">You will no longer be prompted to validate trips but can still participate in the study for up to %d days. If you no longer wish to participate, you can uninstall the app.</string>
+    <string name="tester_site">https://www.itinerum.ca/index.html</string>
+
+    <string name="get_going_ethics_paragraph">Itinerum MTL follows these research ethics. Please review and agree to them to use the application</string>
+    <string name="get_going_survey_paragraph">An access code for the survey you wish to participate in is required. Please tap here to enter a code.</string>
+    <string name="content_totals">of %d</string>
+    <string name="correct">Correct</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="start">Start</string>
+    <string name="lets_get_started">Start</string>
+    <string name="edit_time">Edit Arrival Time</string>
+    <string name="edit_date">Edit Arrival Date</string>
+    <string name="dialog_add_destination_warning_message">Adding a destination will not increment the number of validated trips.</string>
+
+    <string name="about_survey_title">About survey</string>
+    <string name="about_app_title">About Itinerum MTL</string>
+
+    <!--Changes to hardcoded mode question-->
+
+    <string name="occupation_title">Main occupation</string>
+    <string name="occupation_prompt">You are...</string>
+    <string-array name="question_occupation">
+        <item>A full-time worker</item>
+        <item>A part-time worker</item>
+        <item>A student</item>
+        <item>Retired</item>
+        <item>At home</item>
+    </string-array>
+
+    <string name="primary_mode_question">What mode or (combination of modes) do you typically use to commute to your %s location?</string>
+    <string-array name="primary_mode_question">
+        <item>Car / Motorcycle</item>
+        <item>Electric car (green licence plate)</item>
+        <item>Bus</item>
+        <item>Metro</item>
+        <item>Train</item>
+        <item>On foot</item>
+        <item>Bicycle</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="secondary_mode_question">Do you use any alternative mode (or combination of modes) of travel to your %s location?</string>
+    <string-array name="secondary_mode_question">
+        <item>No</item>
+        <item>Car / Motorcycle</item>
+        <item>Electric car (green licence plate)</item>
+        <item>Bus</item>
+        <item>Metro</item>
+        <item>Train</item>
+        <item>On foot</item>
+        <item>Bicycle</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>

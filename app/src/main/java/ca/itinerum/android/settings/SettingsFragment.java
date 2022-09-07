@@ -203,7 +203,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 			findPreference("crash").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
-//					Crashlytics.getInstance().crash(); // Force a crash
+					Crashlytics.getInstance().crash(); // Force a crash
 					return false;
 				}
 			});

@@ -263,18 +263,23 @@ public class MapActivity extends AppCompatActivity implements GoogleMap.OnCamera
 		mNumberOfPrompts = mPreferenceManager.getNumberOfPrompts();
 		mNumberOfDays = RecordingUtils.getRecordingDays(this);
 
-		mPromptAnswersDisposable = ItinerumDatabase.getInstance(this).promptDao().getAllAutomaticPromptAnswersFlowable()
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(
-						new Consumer<List<PromptAnswer>>() {
-							@Override
-							public void accept(List<PromptAnswer> promptAnswers) throws Exception {
-								if (mContentCard == null || mNumberOfPrompts <= 0) return;
-								mContentCard.setValidatedTrips(promptAnswers.size() / mNumberOfPrompts);
-								mContentCard.setTotalValidatedTrips(mMaximumNumberOfPrompts);
-							}
-						});
+		if (mMaximumNumberOfPrompts > 0) {
+
+			mPromptAnswersDisposable = ItinerumDatabase.getInstance(this).promptDao().getAllAutomaticPromptAnswersFlowable()
+					.subscribeOn(Schedulers.io())
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(
+							new Consumer<List<PromptAnswer>>() {
+								@Override
+								public void accept(List<PromptAnswer> promptAnswers) throws Exception {
+									if (mContentCard == null || mNumberOfPrompts <= 0) return;
+									mContentCard.setValidatedTrips(promptAnswers.size() / mNumberOfPrompts);
+									mContentCard.setTotalValidatedTrips(mMaximumNumberOfPrompts);
+								}
+							});
+		} else {
+			mContentCard.mValidatedTripsCard.setVisibility(View.GONE);
+		}
 
 
 		mDatesSet = false;
